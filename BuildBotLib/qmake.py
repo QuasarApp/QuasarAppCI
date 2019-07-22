@@ -121,7 +121,7 @@ def androidQmake(props):
         "CONFIG+=qtquickcompiler",
         'SIGN_PATH="' + secret.getValue('SIGPATH') + '"',
         'SIGN_ALIES="quasarapp"',
-        'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPATH') + '"'
+        'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
 
     ]
 
