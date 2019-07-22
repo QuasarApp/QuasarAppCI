@@ -37,7 +37,7 @@ class buildBotIdentity(BuildBotModule):
         )
 
         self.masterConf['www']['auth'] = util.UserPasswordAuth([
-            ('EndrII', util.Secret("ENDRII").value),
-            ('ZIG', util.Secret("ZIG").value)
+            ('EndrII', util.Interpolate('%(secret:ENDRII)s')),
+            ('ZIG', util.Interpolate('%(secret:ZIG)s'))
             ])
 

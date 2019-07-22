@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
 import BuildBotLib.basemodule as base
-from buildbot.plugins import util, steps
+from buildbot.plugins import secrets, util, steps
 from pathlib import Path
 import datetime
 import os
@@ -115,9 +115,9 @@ def androidQmake(props):
         '-spec', 'android-clang',
         "-r",
         "CONFIG+=qtquickcompiler",
-        'SIGN_PATH="' + util.Secret("SIGPATH").value + '"',
+        util.Interpolate('SIGN_PATH="%(secret:SIGPATH)s"'),
         'SIGN_ALIES="quasarapp"',
-        'SIGN_STORE_PASSWORD="' + util.Secret("SIGPASS").value + '"'
+        util.Interpolate('SIGN_STORE_PASSWORD="%(secret:SIGPATH)s"')
     ]
 
     return command
