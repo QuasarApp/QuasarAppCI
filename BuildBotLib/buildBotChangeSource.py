@@ -32,5 +32,11 @@ class buildBotChangeSource(BuildBotModule):
                 branches = True, # получаем изменения со всех веток
                 pollInterval = 63
             ),
+            changes.GitPoller(
+                repourl = 'https://github.com/usermeme/chat-vironit.git',
+                project = 'Chat',
+                branch = 'master',
+                pollInterval = 64
+            )
         ]
 

@@ -36,7 +36,7 @@ class buildBotIdentity(BuildBotModule):
                 roleMatchers = [
                     util.RolesFromUsername(roles=['admins'], usernames=['EndrII']),
                     util.RolesFromUsername(roles=['admins'], usernames=['ZIG']),
-                    util.ForceBuildEndpointMatcher(roles=['user'], usernames=['Roma'])
+                    util.ForceBuildEndpointMatcher(roles=['user'], usernames=['Roma']),
                     util.StopBuildEndpointMatcher(roles=['user'], usernames=['Roma'])
 
                 ]
