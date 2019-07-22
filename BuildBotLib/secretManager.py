@@ -3,7 +3,6 @@ import json
 from pathlib import Path
 
 class SecretManager:
-    jsfile = {}
 
     def __init__(self, jsFile):
         contents = Path(jsFile).read_text()

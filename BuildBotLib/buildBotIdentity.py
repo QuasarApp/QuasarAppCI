@@ -36,10 +36,10 @@ class buildBotIdentity(BuildBotModule):
                 ]
         )
 
-        SecretManager secret("/home/andrei/buildBotSecret/secret.json");
+        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
         self.masterConf['www']['auth'] = util.UserPasswordAuth([
             ('EndrII', secret.getValue("ENDRII")),
             ('ZIG', secret.getValue("ZIG"))
-            ])value
+            ])
 
