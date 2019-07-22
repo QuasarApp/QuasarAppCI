@@ -44,7 +44,7 @@ class buildBotShedulers(BuildBotModule):
                 name='NPM Deployer',
                 change_filter=util.ChangeFilter(branch='master', project='Chat'),
                 builderNames=['NPM'],
-                properties = [],
+                properties = {},
                 treeStableTimer = None
             )
 
