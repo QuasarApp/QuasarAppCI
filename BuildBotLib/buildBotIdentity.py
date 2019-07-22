@@ -29,12 +29,17 @@ class buildBotIdentity(BuildBotModule):
 
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules = [
+                    util.AnyEndpointMatcher(role="admins"),
                     util.AnyEndpointMatcher(role="admins")
+
                 ],
                 roleMatchers = [
                     util.RolesFromUsername(roles=['admins'], usernames=['EndrII']),
+                    util.RolesFromUsername(roles=['admins'], usernames=['ZIG']),
                     util.RolesFromUsername(roles=['admins'], usernames=['ZIG'])
-                ]
+
+                ],
+                util.GitHubAuth("clientid", "clientsecret")
         )
 
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")

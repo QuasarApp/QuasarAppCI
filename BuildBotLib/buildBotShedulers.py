@@ -22,16 +22,34 @@ class buildBotShedulers(BuildBotModule):
         )
 
 
-    def getShedulers(self, builders, prop):
+    def initScheduler(self):
 
         self.masterConf['schedulers'] = self.shedulers + [
             schedulers.AnyBranchScheduler(
                 name='Tester',
-                builderNames=builders,
-                properties=prop,
+                builderNames=['Tester'],
+                properties= {
+                    'clean': True,
+                    'test': True,
+                    'release': False,
+                    'deploy': False,
+                    'Linux': True,
+                    'Windows': True,
+                    'Android': True
+
+                },
+                treeStableTimer = None
+            ),
+            schedulers.SingleBranchScheduler(
+                name='NPM Deployer',
+                change_filter=util.ChangeFilter(branch='master')
+                builderNames=['NPM'],
+                properties = []
                 treeStableTimer = None
             )
+
         ]
 
         return self.getMasterConf();
+
 

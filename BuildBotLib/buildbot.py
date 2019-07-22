@@ -71,17 +71,5 @@ class BuildBot:
 
     def getMaster(self):
 
-        prop = {
-            'clean': True,
-            'test': True,
-            'release': False,
-            'deploy': False,
-            'Linux': True,
-            'Windows': True,
-            'Android': True
-
-        }
-
-        self.masterConf.update(self.shedulers.getShedulers(['Tester'], prop));
-
+        self.masterConf.update(self.shedulers.initScheduler());
         return self.masterConf
