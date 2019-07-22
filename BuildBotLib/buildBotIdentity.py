@@ -2,7 +2,6 @@
 from buildbot.www import authz, auth
 from buildbot.plugins import *
 from BuildBotLib.buildBotModule import *
-from BuildBotLib.buildBotModule import secretManager
 
 ####### PROJECT IDENTITY
 
