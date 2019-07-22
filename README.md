@@ -1,2 +1,2 @@
-# QuasarAppCI
+# buildServer
 buildBot server of quasarapp

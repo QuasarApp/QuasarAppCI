@@ -1,0 +1,20 @@
+{
+    "files": [
+    "buildbot.py",
+    "basemodule.py",
+    "../master.cfg",
+    "README.md",
+    "testmodule.py",
+    "qmake.py",
+    "stepsLib.py",
+    "quasarAppCoin.py",
+    "buildBotWorkers.py",
+    "buildBotServices.py",
+    "buildBotIdentity.py",
+    "buildBotModule.py",
+    "buildBotDB.py",
+    "buildBotShedulers.py",
+    "buildBotChangeSource.py",
+    "qtUpdater.py"
+    ]
+}

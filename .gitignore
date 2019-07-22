@@ -1,0 +1,10 @@
+gitpoller-work/
+*.tac
+*.log*
+*.sqlite
+*.swp
+gitpoller-workdir/
+*.pid
+*.user
+*__pycache__*
+*.pyc
