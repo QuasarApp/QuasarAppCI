@@ -16,6 +16,7 @@
     "buildBotShedulers.py",
     "buildBotChangeSource.py",
     "qtUpdater.py",
-    "secretManager.py"
+    "secretManager.py",
+    "NPM.py"
     ]
 }

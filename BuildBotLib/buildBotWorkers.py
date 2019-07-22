@@ -15,7 +15,8 @@ class buildBotWorkers(BuildBotModule):
         self.masterConf['workers'] = [
             worker.Worker("github-worker", "pass"),
             worker.Worker("Tester", "pass"),
-            worker.Worker("qtBuilder", "pass")
+            worker.Worker("qtBuilder", "pass"),
+            worker.Worker("NPM", "pass")
 
             ]
 
