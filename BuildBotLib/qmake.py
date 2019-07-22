@@ -107,19 +107,26 @@ def LinuxSteps() :
 
     return list;
 
+@util.renderer
+def androidQmake(props):
+
+    command = [
+        'qmake-android',
+        '-spec', 'android-clang',
+        "-r",
+        "CONFIG+=qtquickcompiler",
+        util.Interpolate('SIGN_PATH="%(secret:SIGPATH)s"'),
+        'SIGN_ALIES="quasarapp"',
+        util.Interpolate('SIGN_STORE_PASSWORD="%(secret:SIGPATH)s"')
+    ]
+
+    return command
+
 def AndroidSteps() :
 
     list = [
         steps.ShellCommand(
-            command = [
-                'qmake-android',
-                '-spec', 'android-clang',
-                "-r",
-                "CONFIG+=qtquickcompiler",
-                'SIGN_PATH="' + util.Interpolate("%(secret:SIGPATH)s") + '"',
-                'SIGN_ALIES="quasarapp"',
-                'SIGN_STORE_PASSWORD="' + util.Interpolate("%(secret:SIGPASS)s") + '"',
-            ],
+            command = androidQmake,
             haltOnFailure = True,
             doStepIf = lambda step : isAndroid(step),
 
