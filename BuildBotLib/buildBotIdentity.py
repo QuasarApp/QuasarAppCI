@@ -25,27 +25,28 @@ class buildBotIdentity(BuildBotModule):
 
         # minimalistic config to activate new web UI
         self.masterConf['www'] = dict(port=8010,
-                        plugins=dict(waterfall_view={}, console_view={}, grid_view={}))
+                        plugins=dict(waterfall_view={}, console_view={}, grid_view={}, badges={}))
 
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules = [
                     util.AnyEndpointMatcher(role="admins"),
-                    util.AnyEndpointMatcher(role="admins")
+                    util.AnyEndpointMatcher(role="user")
 
                 ],
                 roleMatchers = [
                     util.RolesFromUsername(roles=['admins'], usernames=['EndrII']),
                     util.RolesFromUsername(roles=['admins'], usernames=['ZIG']),
-                    util.RolesFromUsername(roles=['admins'], usernames=['ZIG'])
+                    util.ForceBuildEndpointMatcher(roles=['user'], usernames=['Roma'])
+                    util.StopBuildEndpointMatcher(roles=['user'], usernames=['Roma'])
 
-                ],
-                util.GitHubAuth("clientid", "clientsecret")
+                ]
         )
 
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
         self.masterConf['www']['auth'] = util.UserPasswordAuth([
             ('EndrII', secret.getValue("ENDRII")),
-            ('ZIG', secret.getValue("ZIG"))
+            ('ZIG', secret.getValue("ZIG")),
+            ('Roma', secret.getValue("Roma"))
             ])
 
