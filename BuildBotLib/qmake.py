@@ -108,8 +108,6 @@ def LinuxSteps() :
     return list;
 
 def AndroidSteps() :
-#    !isEmpty( SIGN_PATH ): !isEmpty( SIGN_PASSWORD ): !isEmpty( SIGN_STORE_PASSWORD ) {
-#    'ONLINE="~/repo"'
 
     list = [
         steps.ShellCommand(
@@ -118,9 +116,9 @@ def AndroidSteps() :
                 '-spec', 'android-clang',
                 "-r",
                 "CONFIG+=qtquickcompiler",
-                'SIGN_PATH="' + util.Secret("SIGPATH") + '"',
+                'SIGN_PATH="' + Interpolate("%(secret:SIGPATH)s") + '"',
                 'SIGN_ALIES="quasarapp"',
-                'SIGN_STORE_PASSWORD="' + util.Secret("SIGPASS") + '"',
+                'SIGN_STORE_PASSWORD="' + Interpolate("%(secret:SIGPASS)s") + '"',
             ],
             haltOnFailure = True,
             doStepIf = lambda step : isAndroid(step),
