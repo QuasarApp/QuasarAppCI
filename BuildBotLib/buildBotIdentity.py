@@ -35,8 +35,9 @@ class buildBotIdentity(BuildBotModule):
                     util.RolesFromUsername(roles=['admins'], usernames=['ZIG'])
                 ]
         )
+
         self.masterConf['www']['auth'] = util.UserPasswordAuth([
-            ('EndrII', util.Secret("ENDRII")),
-            ('ZIG', util.Secret("ZIG"))
+            ('EndrII', util.Secret("ENDRII").value),
+            ('ZIG', util.Secret("ZIG").value)
             ])
 

@@ -115,9 +115,9 @@ def androidQmake(props):
         '-spec', 'android-clang',
         "-r",
         "CONFIG+=qtquickcompiler",
-        util.Interpolate('SIGN_PATH="%(secret:SIGPATH)s"'),
+        'SIGN_PATH="' + util.Secret("SIGPATH").value + '"',
         'SIGN_ALIES="quasarapp"',
-        util.Interpolate('SIGN_STORE_PASSWORD="%(secret:SIGPATH)s"')
+        'SIGN_STORE_PASSWORD="' + util.Secret("SIGPASS").value + '"'
     ]
 
     return command

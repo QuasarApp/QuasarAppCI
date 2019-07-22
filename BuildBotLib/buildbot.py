@@ -53,12 +53,6 @@ class BuildBot:
         self.masterConf.update(self.sources.getMasterConf());
 
 
-    def addChangeSource(self, rep):
-        self.masterConf['change_source'].append(GitPoller(
-                rep,
-                workdir='gitpoller-workdir', branch='master',
-                pollInterval=300))
-
     def addBuilder(self, worker, factory):
         module = self.importWithReload(factory);
         self.masterConf['builders'].append(
@@ -70,8 +64,6 @@ class BuildBot:
         )
         self.shedulers.addScheduler(module.getPropertyes(), worker)
         self.builders.append(worker);
-
-#        self.addChangeSource(module.getRepo())
 
 
     def addService(self, service):
