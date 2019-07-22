@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from BuildBotLib.buildBotModule import *
 from buildbot.schedulers import *
-from buildbot.plugins import schedulers
+from buildbot.plugins import schedulers, util
 
 class buildBotShedulers(BuildBotModule):
     codebases = {}
