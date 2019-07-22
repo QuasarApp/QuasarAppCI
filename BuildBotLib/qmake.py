@@ -7,6 +7,7 @@ import datetime
 import os
 import subprocess
 
+
 def isClean(step):
     return step.getProperty('clean');
 

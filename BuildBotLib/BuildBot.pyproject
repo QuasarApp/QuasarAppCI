@@ -15,6 +15,7 @@
     "buildBotDB.py",
     "buildBotShedulers.py",
     "buildBotChangeSource.py",
-    "qtUpdater.py"
+    "qtUpdater.py",
+    "secretManager.py"
     ]
 }

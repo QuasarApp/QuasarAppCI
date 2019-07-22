@@ -2,6 +2,7 @@
 from buildbot.www import authz, auth
 from buildbot.plugins import *
 from BuildBotLib.buildBotModule import *
+from BuildBotLib.buildBotModule import secretManager
 
 ####### PROJECT IDENTITY
 
@@ -36,8 +37,10 @@ class buildBotIdentity(BuildBotModule):
                 ]
         )
 
+        SecretManager secret("/home/andrei/buildBotSecret/secret.json");
+
         self.masterConf['www']['auth'] = util.UserPasswordAuth([
-            ('EndrII', util.Interpolate('%(secret:ENDRII)s')),
-            ('ZIG', util.Interpolate('%(secret:ZIG)s'))
-            ])
+            ('EndrII', secret.getValue("ENDRII")),
+            ('ZIG', secret.getValue("ZIG"))
+            ])value
 
