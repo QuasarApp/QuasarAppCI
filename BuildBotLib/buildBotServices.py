@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from BuildBotLib.buildBotModule import *
-from buildbot.plugins import reporters, util, secrets
+from buildbot.plugins import reporters, util
+from BuildBotLib.secretManager import *
 
 class buildBotServices(BuildBotModule):
     def __init__(self):
@@ -13,11 +14,9 @@ class buildBotServices(BuildBotModule):
         # has a variety to choose from, like IRC bots.
 
         self.masterConf['services'] = []
-        self.masterConf['secretsProviders'] = [
-            secrets.SecretInAFile(dirname="/home/andrei/buildBotSecret")
-        ]
+        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
-        gc = reporters.GitHubCommentPush(token=util.Secret("gitHub"),
+        gc = reporters.GitHubCommentPush(token=secret.getValue('gitHub'),
                                          startDescription='Build started.',
                                          endDescription='Build done.')
 

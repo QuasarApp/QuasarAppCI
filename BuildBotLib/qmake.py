@@ -6,6 +6,7 @@ from pathlib import Path
 import datetime
 import os
 import subprocess
+from BuildBotLib.secretManager import *
 
 
 def isClean(step):
@@ -111,14 +112,17 @@ def LinuxSteps() :
 @util.renderer
 def androidQmake(props):
 
+    secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+
     command = [
         'qmake-android',
         '-spec', 'android-clang',
         "-r",
         "CONFIG+=qtquickcompiler",
-        util.Interpolate('SIGN_PATH="%(secret:SIGPATH)s"'),
+        'SIGN_PATH="' + secret.getValue('SIGPATH') + '"',
         'SIGN_ALIES="quasarapp"',
-        util.Interpolate('SIGN_STORE_PASSWORD="%(secret:SIGPATH)s"')
+        'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPATH') + '"'
+
     ]
 
     return command
