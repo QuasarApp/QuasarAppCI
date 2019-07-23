@@ -24,6 +24,8 @@ def getFactory():
             submodules=True,
             name = 'git operations',
             description = 'operations of git like pull clone fetch',
+            doStepIf = lambda step : not isStopForce(step),
+
         )
     );
 
