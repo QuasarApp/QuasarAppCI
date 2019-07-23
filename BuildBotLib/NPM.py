@@ -8,6 +8,10 @@ import os
 import subprocess
 from BuildBotLib.secretManager import *
 
+def isStopForce(step):
+    return step.getProperty('stopForce');
+
+
 def getFactory():
     factory = base.getFactory();
 
@@ -41,6 +45,7 @@ def getFactory():
                 'npm',
                 "i"
                 ],
+            doStepIf = lambda step : not isStopForce(step),
             haltOnFailure = True,
             name = 'npm install',
             description = 'install all dependecies',
@@ -53,6 +58,7 @@ def getFactory():
                 'npm',
                 "start"
                 ],
+            doStepIf = lambda step : not isStopForce(step),
             haltOnFailure = True,
             name = 'npm start',
             description = 'install new versio to server',
@@ -66,4 +72,9 @@ def getRepo():
 
 def getPropertyes():
     return [
+        util.BooleanParameter(
+            name = 'stopForce',
+            label = 'Stop Force',
+            default = False
+        )
     ]
