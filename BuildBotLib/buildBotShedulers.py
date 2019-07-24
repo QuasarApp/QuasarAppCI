@@ -43,7 +43,7 @@ class buildBotShedulers(BuildBotModule):
             ),
             schedulers.SingleBranchScheduler(
                 name='NPM Deployer',
-                change_filter=util.ChangeFilter(branch='master', project='Chat-npm'),
+                change_filter=util.ChangeFilter(branch='master', project='npm-Chat'),
                 builderNames=['NPM'],
                 properties = {},
                 treeStableTimer = None
