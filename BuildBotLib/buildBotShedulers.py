@@ -38,11 +38,12 @@ class buildBotShedulers(BuildBotModule):
                     'Android': True
 
                 },
+                change_filter=util.ChangeFilter(project_re='*-qmake'),
                 treeStableTimer = None
             ),
             schedulers.SingleBranchScheduler(
                 name='NPM Deployer',
-                change_filter=util.ChangeFilter(branch='master', project='Chat'),
+                change_filter=util.ChangeFilter(branch='master', project='Chat-npm'),
                 builderNames=['NPM'],
                 properties = {},
                 treeStableTimer = None
