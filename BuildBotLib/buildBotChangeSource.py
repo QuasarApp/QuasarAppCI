@@ -10,31 +10,31 @@ class buildBotChangeSource(BuildBotModule):
         self.masterConf['change_source'] = [
             changes.GitPoller(
                 repourl = 'git@github.com:QuasarApp/Snake.git',
-                project = 'Snake-qmake',
+                project = 'qmake-Snake',
                 branches = True, # получаем изменения со всех веток
                 pollInterval = 60
             ),
             changes.GitPoller(
                 repourl = 'git@github.com:QuasarApp/Console-QtDeployer.git',
-                project = 'CQtDeployer-qmake',
+                project = 'qmake-CQtDeployer',
                 branches = True, # получаем изменения со всех веток
                 pollInterval = 61
             ),
             changes.GitPoller(
                 repourl = 'git@github.com:QuasarApp/Qt-Secret.git',
-                project = 'Qt-Secret-qmake',
+                project = 'qmake-Qt-Secret',
                 branches = True, # получаем изменения со всех веток
                 pollInterval = 62
             ),
             changes.GitPoller(
                 repourl = 'git@github.com:QuasarApp/Hanoi-Towers.git',
-                project = 'Hanoi-Towers-qmake',
+                project = 'qmake-Hanoi-Towers',
                 branches = True, # получаем изменения со всех веток
                 pollInterval = 63
             ),
             changes.GitPoller(
                 repourl = 'https://github.com/usermeme/chat-vironit.git',
-                project = 'Chat-npm',
+                project = 'npm-Chat',
                 branch = 'master',
                 pollInterval = 64
             )

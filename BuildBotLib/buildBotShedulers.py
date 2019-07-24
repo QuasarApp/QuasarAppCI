@@ -27,6 +27,7 @@ class buildBotShedulers(BuildBotModule):
         self.masterConf['schedulers'] = self.shedulers + [
             schedulers.AnyBranchScheduler(
                 name='Tester',
+                change_filter=util.ChangeFilter(project_re="qmake-*"),
                 builderNames=['Tester'],
                 properties= {
                     'clean': True,
@@ -38,7 +39,6 @@ class buildBotShedulers(BuildBotModule):
                     'Android': True
 
                 },
-                change_filter=util.ChangeFilter(project_re='*-qmake'),
                 treeStableTimer = None
             ),
             schedulers.SingleBranchScheduler(
