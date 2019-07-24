@@ -58,7 +58,8 @@ def getFactory():
         steps.ShellCommand(
             command = [
                 'npm',
-                "start"
+                "run",
+                "start:detach"
                 ],
             doStepIf = lambda step : not isStopForce(step),
             haltOnFailure = True,
