@@ -94,5 +94,10 @@ def getPropertyes():
             name = 'stopForce',
             label = 'Stop Force',
             default = False
+        ),
+        util.BooleanParameter(
+            name = 'showLog',
+            label = 'show logs of the docker',
+            default = False
         )
     ]
