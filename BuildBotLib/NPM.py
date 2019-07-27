@@ -11,6 +11,8 @@ from BuildBotLib.secretManager import *
 def isStopForce(step):
     return step.getProperty('stopForce');
 
+def isLog(step):
+    return step.getProperty('showLog');
 
 def getFactory():
     factory = base.getFactory();
@@ -26,6 +28,19 @@ def getFactory():
             description = 'operations of git like pull clone fetch',
             doStepIf = lambda step : not isStopForce(step),
 
+        )
+    );
+
+    factory.addStep(
+        steps.ShellCommand(
+            command = [
+                'docker-compose',
+                "logs"
+                ],
+            doStepIf = lambda step : (not isStopForce(step)) and isLog(step),
+            haltOnFailure = True,
+            name = 'docker logs',
+            description = 'docker logs',
         )
     );
 
