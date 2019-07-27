@@ -26,7 +26,7 @@ def getFactory():
             submodules=True,
             name = 'git operations',
             description = 'operations of git like pull clone fetch',
-            doStepIf = lambda step : not isStopForce(step),
+            doStepIf = lambda step : not isStopForce(step) and not isLog(step),
 
         )
     );
@@ -50,6 +50,7 @@ def getFactory():
                 'npm',
                 "stop"
                 ],
+            doStepIf = lambda step : (not isLog(step)) ,
             haltOnFailure = True,
             name = 'npm stop',
             description = 'stop old version',
@@ -62,7 +63,7 @@ def getFactory():
                 'npm',
                 "i"
                 ],
-            doStepIf = lambda step : not isStopForce(step),
+            doStepIf = lambda step : not isStopForce(step) and not isLog(step),
             haltOnFailure = True,
             name = 'npm install',
             description = 'install all dependecies',
@@ -76,7 +77,7 @@ def getFactory():
                 "run",
                 "start:detach"
                 ],
-            doStepIf = lambda step : not isStopForce(step),
+            doStepIf = lambda step : not isStopForce(step) and not isLog(step),
             haltOnFailure = True,
             name = 'npm start',
             description = 'install new versio to server',
