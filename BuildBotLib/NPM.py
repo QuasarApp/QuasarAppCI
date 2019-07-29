@@ -18,6 +18,19 @@ def getFactory():
     factory = base.getFactory();
 
     factory.addStep(
+        steps.ShellCommand(
+            command = [
+                'npm',
+                "stop"
+                ],
+            doStepIf = lambda step : (not isLog(step)) ,
+            haltOnFailure = True,
+            name = 'npm stop',
+            description = 'stop old version',
+        )
+    );
+    
+    factory.addStep(
         steps.Git(
             repourl=util.Interpolate('%(prop:repository)s'),
             branch=util.Interpolate('%(prop:branch)s'),
@@ -41,19 +54,6 @@ def getFactory():
             haltOnFailure = True,
             name = 'docker logs',
             description = 'docker logs',
-        )
-    );
-
-    factory.addStep(
-        steps.ShellCommand(
-            command = [
-                'npm',
-                "stop"
-                ],
-            doStepIf = lambda step : (not isLog(step)) ,
-            haltOnFailure = True,
-            name = 'npm stop',
-            description = 'stop old version',
         )
     );
 
