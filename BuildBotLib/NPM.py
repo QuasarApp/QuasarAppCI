@@ -16,19 +16,6 @@ def isLog(step):
 
 def getFactory():
     factory = base.getFactory();
-
-    factory.addStep(
-        steps.ShellCommand(
-            command = [
-                'npm',
-                "stop"
-                ],
-            doStepIf = lambda step : (not isLog(step)) ,
-            haltOnFailure = True,
-            name = 'npm stop',
-            description = 'stop old version',
-        )
-    );
     
     factory.addStep(
         steps.Git(
@@ -41,6 +28,19 @@ def getFactory():
             description = 'operations of git like pull clone fetch',
             doStepIf = lambda step : not isStopForce(step) and not isLog(step),
 
+        )
+    );
+    
+    factory.addStep(
+        steps.ShellCommand(
+            command = [
+                'npm',
+                "stop"
+                ],
+            doStepIf = lambda step : (not isLog(step)) ,
+            haltOnFailure = True,
+            name = 'npm stop',
+            description = 'stop old version',
         )
     );
 
