@@ -2,6 +2,7 @@
 from BuildBotLib.buildBotModule import *
 from buildbot.plugins import util
 from buildbot.plugins import changes
+import os
 
 class buildBotChangeSource(BuildBotModule):
     def __init__(self):
@@ -23,6 +24,7 @@ class buildBotChangeSource(BuildBotModule):
             changes.GitPoller(
                 repourl = 'git@github.com:QuasarApp/Qt-Secret.git',
                 project = 'qmake-Qt-Secret',
+                gitbin = os.path.dirname(os.path.realpath(__file__)) + "/git/gitBin.sh",
                 branches = True, # получаем изменения со всех веток
                 pollInterval = 62
             ),

@@ -17,6 +17,8 @@
     "buildBotChangeSource.py",
     "qtUpdater.py",
     "secretManager.py",
-    "NPM.py"
+    "NPM.py",
+    "git/gitBin.sh"
+
     ]
 }
