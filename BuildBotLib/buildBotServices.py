@@ -16,7 +16,7 @@ class buildBotServices(BuildBotModule):
         self.masterConf['services'] = []
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
-        contextVal = Interpolate("buildbot/%(prop:buildername)s")
+        contextVal = util.Interpolate("buildbot/%(prop:buildername)s")
         gc = reporters.GitHubStatusPush(token=secret.getValue('gitHub'),
                                             context = contextVal,
                                             verbose = True,
