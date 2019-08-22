@@ -51,7 +51,6 @@ def LinuxSteps() :
         steps.ShellCommand(
             command = [
                 'qmake-linux',
-                "QMAKE_CXX='ccache g++'",
                 "-r",
                 "CONFIG+=qtquickcompiler",
                 'ONLINE="~/repo"'
@@ -184,7 +183,6 @@ def WinSteps() :
             command = [
                 'qmake-windows',
                 '-spec', 'win32-g++',
-                "QMAKE_CXX='ccache x86_64-w64-mingw32-g++'",
                 "-r",
                 "CONFIG+=qtquickcompiler",
                 'ONLINE="~/repo"'
