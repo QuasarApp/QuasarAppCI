@@ -48,7 +48,7 @@ def getArrayQtParams(text):
     array = text.split('\n')
     res = []
 
-    excludePlugins = ['freetype'];
+    excludePlugins = ['freetype', 'xcb'];
 
     for item in array:
         index = item.find('/qt')
@@ -158,7 +158,7 @@ def getTargetDir(configureOptions, branch, platform):
 
 @util.renderer
 def getLinuxConfigOptions(props):
-    list = ['-fontconfig'];
+    list = ['-fontconfig', '-qt-xcb' ];
     list += getGeneralConfigureOptions(props);
     list += getTargetDir(list, props.getProperty('branch'), "Linux");
 
