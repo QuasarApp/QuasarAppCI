@@ -9,28 +9,6 @@ import os
 import datetime
 
 
-# Windows build command
-#./configure -opensource -confirm-license -release -nomake examples -nomake tests -skip qtactiveqt -skip qtwebglplugin -skip qtlocation -skip qtvirtualkeyboard -skip qtwinextras -opengl desktop -prefix ~/Qt/5.12.3/win64 -xplatform win32-g++ -device-option CROSS_COMPILE=x86_64-w64-mingw32-
-
-# Linux
-# libclang-dev sudo apt install libclang-6.0-dev llvm-6.0 libxcomposite-dev и libwayland-dev
-# '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev gperf bison flex
-# ./configure -skip qtpim -opensource -confirm-license -release -qt-doubleconversion -qt-pcre -qt-zlib -qt-freetype -qt-harfbuzz -qt-libpng -qt-libjpeg -qt-assimp -qt-tiff -qt-webp -qt-webengine-icu -qt-webengine-ffmpeg -qt-webengine-opus -qt-webengine-webp -nomake examples -nomake tests -prefix ~/Qt/5.14.3/win64
-
-
-#android
-# ./configure -opensource -confirm-license -release -xplatform android-clang --disable-rpath -nomake tests -nomake examples -android-ndk /home/andrei/Android/NDK/android-ndk-r19c -android-sdk /home/andrei/Android/SDK -skip qttranslations -skip qtserialport -no-warnings-are-errors -android-arch arm64-v8a -qt-doubleconversion -qt-pcre -qt-zlib -qt-freetype -qt-harfbuzz -qt-libpng -qt-libjpeg -qt-assimp -qt-tiff -qt-webp -qt-webengine-icu -qt-webengine-ffmpeg -qt-webengine-opus -qt-webengine-webp
-# 10:47:23: The process "/home/andrei/Downloads/android-ndk-r19c-linux-x86_64/android-ndk-r19c/prebuilt/linux-x86_64/bin/make" exited normally.
-# 10:47:23: Starting: "/media/D/Qt/5.12.4/android_arm64_v8a/bin/androiddeployqt" --input /media/D/own/build-SnakeMain-Android_for_arm64_v8a_Clang_Qt_5_12_4_for_Android_ARM64_v8a-Debug/Snake/android-libsnake.so-deployment-settings.json --output /media/D/own/build-SnakeMain-Android_for_arm64_v8a_Clang_Qt_5_12_4_for_Android_ARM64_v8a-Debug/android-build --android-platform android-29 --jdk /usr --gradle
-# 15:41:18: The process "/home/andrei/Downloads/android-ndk-r19c-linux-x86_64/android-ndk-r19c/prebuilt/linux-x86_64/bin/make" exited normally.
-# 15:41:18: Starting: "/media/D/Qt/5.12.4/android_arm64_v8a/bin/androiddeployqt"
-# --input /media/D/own/build-SnakeMain-Android_for_arm64_v8a_Clang_Qt_5_12_4_for_Android_ARM64_v8a-Release/Snake/android-libsnake.so-deployment-settings.json
-# --output /media/D/own/build-SnakeMain-Android_for_arm64_v8a_Clang_Qt_5_12_4_for_Android_ARM64_v8a-Release/android-build
-# --android-platform android-29
-# --jdk /usr
-# --gradle
-# --sign '******' --storepass '******' --keypass '******'
-
 qtDefaultHelp = [[]]
 LAST_TARGET_DIR = [""]
 
@@ -177,7 +155,7 @@ def getWindowsConfigOptions(props):
     "-opengl", "desktop",
     "-xplatform","win32-g++",
     "-device-option", "CROSS_COMPILE=x86_64-w64-mingw32-",
-
+    "-no-pch"
     ];
 
     list += getGeneralConfigureOptions(props);
