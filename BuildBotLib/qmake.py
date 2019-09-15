@@ -86,6 +86,7 @@ def LinuxSteps() :
             command= ['make', 'test'],
             doStepIf = lambda step : isTest(step) and  isLinux(step),
             name = 'tests ',
+            workdir = './TestWorkDir',
             haltOnFailure = True,
             description = 'run autotests of project',
         ),
