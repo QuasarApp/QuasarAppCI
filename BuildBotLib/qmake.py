@@ -83,10 +83,10 @@ def LinuxSteps() :
             description = 'deploy project ',
         ),
         steps.Compile(
-            command= ['make', 'test'],
+            command= ['make', '-C', 'TestWorkDir', 'test'],
             doStepIf = lambda step : isTest(step) and  isLinux(step),
             name = 'tests ',
-            workdir = './TestWorkDir',
+            workdir = 'TestWorkDir',
             haltOnFailure = True,
             description = 'run autotests of project',
         ),
