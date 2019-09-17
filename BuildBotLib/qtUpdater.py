@@ -419,7 +419,7 @@ def getPropertyes():
             name = 'Android',
             label = 'Android version Qt',
             default = True
-        )
+        ),
         
         util.BooleanParameter(
             name = 'configureonly',
