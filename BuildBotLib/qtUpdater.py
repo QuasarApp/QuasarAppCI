@@ -21,6 +21,8 @@ def isLinux(step):
 def isAndroid(step):
     return step.getProperty('Android');
 
+def isConfigureonly(step):
+    return step.getProperty('configureonly');
 
 def getArrayQtParams(text):
     array = text.split('\n')
@@ -212,7 +214,7 @@ def windowsSteps():
             command = base.makeCommand,
             name = 'Build Qt for Windows',
             haltOnFailure = True,
-            doStepIf = lambda step : isWin(step),
+            doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
 
             description = 'run make for project',
         ),
@@ -221,7 +223,7 @@ def windowsSteps():
             command = ['make', 'install', '-j2'],
             name = 'Install Qt for Windows',
             haltOnFailure = True,
-            doStepIf = lambda step : isWin(step),
+            doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
 
             description = 'run make for project',
         ),
@@ -229,7 +231,7 @@ def windowsSteps():
         steps.ShellCommand(
             command = cpGCCWindows,
             haltOnFailure = True,
-            doStepIf = lambda step : isWin(step),
+            doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
             name = 'Copy gcc libs for Windows',
             description = 'Copy extra libs',
         ),
@@ -237,14 +239,14 @@ def windowsSteps():
         steps.ShellCommand(
             command = cpThreadWindows,
             haltOnFailure = True,
-            doStepIf = lambda step : isWin(step),
+            doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
             name = 'Copy thread libs for Windows',
             description = 'Copy extra libs',
         ),
         steps.ShellCommand(
             command = lsWindows,
             haltOnFailure = True,
-            doStepIf = lambda step : isWin(step),
+            doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
             name = 'Create ls links for Windows',
             description = 'deploy qt',
         ),
@@ -280,7 +282,7 @@ def linuxSteps():
             command = base.makeCommand,
             name = 'Build Qt for Linux',
             haltOnFailure = True,
-            doStepIf = lambda step : isLinux(step),
+            doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
 
             description = 'run make for project',
         ),
@@ -289,7 +291,7 @@ def linuxSteps():
             command = ['make', 'install', '-j2'],
             name = 'Install Qt for Linux',
             haltOnFailure = True,
-            doStepIf = lambda step : isLinux(step),
+            doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
 
             description = 'run make for project',
         ),
@@ -297,7 +299,7 @@ def linuxSteps():
         steps.ShellCommand(
             command = cpIcuLinux,
             haltOnFailure = True,
-            doStepIf = lambda step : isLinux(step),
+            doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
             name = 'Copy ICU libs for Linux',
             description = 'Copy extra libs',
         ),
@@ -305,7 +307,7 @@ def linuxSteps():
         steps.ShellCommand(
             command = lsLinux,
             haltOnFailure = True,
-            doStepIf = lambda step : isLinux(step),
+            doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
             name = 'Create ls links for Linux',
             description = 'deploy qt',
         ),
@@ -341,7 +343,7 @@ def androidSteps():
             command = base.makeCommand,
             name = 'Build Qt for Android',
             haltOnFailure = True,
-            doStepIf = lambda step : isAndroid(step),
+            doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
 
             description = 'run make for project',
         ),
@@ -350,14 +352,14 @@ def androidSteps():
             command = ['make', 'install', '-j2'],
             name = 'Install Qt for Android',
             haltOnFailure = True,
-            doStepIf = lambda step : isAndroid(step),
+            doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
 
             description = 'run make for project',
         ),
         steps.ShellCommand(
             command = lsAndroid,
             haltOnFailure = True,
-            doStepIf = lambda step : isAndroid(step),
+            doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
             name = 'Create ls links for Android',
             description = 'deploy qt',
         ),
@@ -418,4 +420,12 @@ def getPropertyes():
             label = 'Android version Qt',
             default = True
         )
+        
+        util.BooleanParameter(
+            name = 'configureonly',
+            label = 'disable build and install qt (confugure only)',
+            default = False
+        )
+        
+        
     ]
