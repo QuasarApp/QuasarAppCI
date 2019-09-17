@@ -138,7 +138,7 @@ def getTargetDir(configureOptions, branch, platform):
 
 @util.renderer
 def getLinuxConfigOptions(props):
-    list = ['-fontconfig', '-qt-xcb' ];
+    list = ['-fontconfig', '-qt-xcb', '-dbus-linked' ];
     list += getGeneralConfigureOptions(props);
     list += getTargetDir(list, props.getProperty('branch'), "Linux");
 
