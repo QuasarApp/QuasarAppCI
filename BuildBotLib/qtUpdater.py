@@ -223,7 +223,7 @@ def windowsSteps():
             command = ['make', 'install', '-j2'],
             name = 'Install Qt for Windows',
             haltOnFailure = True,
-            timeout = 3600,
+            timeout = 360000,
             doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
 
             description = 'run make for project',
@@ -283,7 +283,7 @@ def linuxSteps():
             command = base.makeCommand,
             name = 'Build Qt for Linux',
             haltOnFailure = True,
-            timeout = 3600,
+            timeout = 360000,
             doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
 
             description = 'run make for project',
@@ -345,7 +345,7 @@ def androidSteps():
             command = base.makeCommand,
             name = 'Build Qt for Android',
             haltOnFailure = True,
-            timeout = 3600,
+            timeout = 360000,
             doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
 
             description = 'run make for project',
