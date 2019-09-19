@@ -88,7 +88,7 @@ def lsAndroid(props):
 
 @util.renderer
 def cpGCCWindows(props):
-    if not isWin(props):
+    if not isWin(props) or isConfigureonly(props):
         return ['echo', " "]
 
     resFiles = base.copyRegExp("/usr/lib/gcc/x86_64-w64-mingw32/7.3-win32/*.dll", LAST_TARGET_DIR[0] + "/bin/")
@@ -96,7 +96,7 @@ def cpGCCWindows(props):
 
 @util.renderer
 def cpThreadWindows(props):
-    if not isWin(props):
+    if not isWin(props) or isConfigureonly(props):
         return ['echo', " "]
 
     resFiles = base.copyRegExp("/usr/x86_64-w64-mingw32/lib/*.dll", LAST_TARGET_DIR[0] + "/bin/")
@@ -104,7 +104,7 @@ def cpThreadWindows(props):
 
 @util.renderer
 def cpIcuLinux(props):
-    if not isLinux(props):
+    if not isLinux(props) or isConfigureonly(props):
         return ['echo', " "]
 
     resFiles = base.copyRegExp("/usr/lib/x86_64-linux-gnu/libicu*", LAST_TARGET_DIR[0] + "/lib/")
