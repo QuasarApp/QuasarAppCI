@@ -119,6 +119,7 @@ def getGeneralConfigureOptions(props):
     "-nomake", "tests",
     "-skip", "qtdocgallery",
     "-skip", "qtpim",
+    "-skip", "qtwebengine",
     "-ccache"
     ];
 
