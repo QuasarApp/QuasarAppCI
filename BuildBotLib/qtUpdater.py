@@ -28,7 +28,7 @@ def getArrayQtParams(text):
     array = text.split('\n')
     res = []
 
-    excludePlugins = ['freetype', 'xcb'];
+    excludePlugins = ['freetype', 'xcb', 'webengine'];
 
     for item in array:
         index = item.find('/qt')
