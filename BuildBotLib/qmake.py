@@ -46,7 +46,7 @@ def destDir(props):
 @util.renderer
 def destDirUrl(props):
     path = destDirPrivate(props);
-    return "http://quasarapp.ddns.net:3031/" + path;
+    return "http://quasarapp.ddns.net:3031" + path;
 
 @util.renderer
 def permission(props):
