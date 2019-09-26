@@ -33,7 +33,7 @@ def isAndroid(step):
 
 def destDirPrivate(props):
     repo = str(props.getProperty('repository'));
-    now = datetime.datetime.now().strftime("(%H %M) %m-%d-%Y")
+    now = datetime.datetime.now().strftime("(%H_%M)_%m-%d-%Y")
 
     return repo[repo.rfind('/'): len(repo) - 4] + "/" + now;
 
