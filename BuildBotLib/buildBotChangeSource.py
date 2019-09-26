@@ -17,7 +17,7 @@ class buildBotChangeSource(BuildBotModule):
                 pollInterval = 60
             ),
             changes.GitPoller(
-                repourl = 'git@github.com:QuasarApp/Console-QtDeployer.git',
+                repourl = 'git@github.com:QuasarApp/CQtDeployer.git',
                 project = 'qmake-CQtDeployer',
                 gitbin = os.path.dirname(os.path.realpath(__file__)) + "/git/gitBin.sh",
                 branches = True, # получаем изменения со всех веток
