@@ -8,7 +8,6 @@ import os
 import subprocess
 from BuildBotLib.secretManager import *
 
-
 def isClean(step):
     return step.getProperty('clean');
 
@@ -32,13 +31,22 @@ def isLinux(step):
 def isAndroid(step):
     return step.getProperty('Android');
 
-@util.renderer
-def destDir(props):
-    home = str(Path.home())
+def destDirPrivate(props):
     repo = str(props.getProperty('repository'));
     now = datetime.datetime.now().strftime("(%H %M) %m-%d-%Y")
 
-    return home + '/shared/' + repo[repo.rfind('/'): len(repo) - 4] + "/" + now
+    return repo[repo.rfind('/'): len(repo) - 4] + "/" + now;
+
+@util.renderer
+def destDir(props):
+    home = str(Path.home())
+
+    return home + '/shared/' + destDirPrivate(props);
+
+@util.renderer
+def destDirUrl(props):
+    path = destDirPrivate(props);
+    return "http://quasarapp.ddns.net:3031/" + path;
 
 @util.renderer
 def permission(props):
@@ -252,9 +260,10 @@ def getFactory():
     factory.addSteps(AndroidSteps());
 
     factory.addStep(
-        steps.CopyDirectory(
-            src = util.Interpolate('build/%(prop:copyFolder)s'),
-            dest = destDir,
+        steps.DirectoryUpload(
+            workersrc = util.Interpolate('build/%(prop:copyFolder)s'),
+            masterdest = destDir,
+            url = destDirUrl,
             doStepIf = lambda step : isDeploy(step),
             name = 'copy buildet files',
             description = 'copy buildet files to shared folder',
