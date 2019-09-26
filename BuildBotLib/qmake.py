@@ -261,7 +261,7 @@ def getFactory():
 
     factory.addStep(
         steps.DirectoryUpload(
-            workersrc = util.Interpolate('build/%(prop:copyFolder)s'),
+            workersrc = util.Interpolate('%(prop:copyFolder)s'),
             masterdest = destDir,
             url = destDirUrl,
             doStepIf = lambda step : isDeploy(step),
