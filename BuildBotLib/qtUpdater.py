@@ -172,8 +172,8 @@ def getAndroidConfigOptions(props):
     list = [
     "-xplatform", "android-clang",
     "--disable-rpath",
-    "-android-ndk", "/home/andrei/Android/NDK/android-ndk-r19c",
-    "-android-sdk", "/home/andrei/Android/SDK",
+   # "-android-ndk", "/home/andrei/Android/NDK/android-ndk-r19c",
+   # "-android-sdk", "/home/andrei/Android/SDK",
     "-skip", "qttranslations",
     "-skip", "qtserialport",
     "-no-warnings-are-errors",
