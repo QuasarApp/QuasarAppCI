@@ -7,6 +7,7 @@
     "testmodule.py",
     "qmake.py",
     "cmake.py",
+    "make.py",
     "stepsLib.py",
     "quasarAppCoin.py",
     "buildBotWorkers.py",

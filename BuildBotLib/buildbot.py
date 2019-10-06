@@ -2,7 +2,6 @@ from buildbot.plugins import util
 import logging
 import importlib
 import sys
-from BuildBotLib.testmodule import *
 import os
 from buildbot.changes.gitpoller import GitPoller
 
@@ -27,9 +26,9 @@ class BuildBot:
     builders = []
 
 
-    def importWithReload(self, name):
-        module = importlib.import_module(name);
-        return module;
+#    def importWithReload(self, name):
+#        module = importlib.import_module(name);
+#        return module;
 
     def __init__(self):
         self.masterConf = BuildmasterConfig = {}
@@ -54,15 +53,15 @@ class BuildBot:
 
 
     def addBuilder(self, worker, factory):
-        module = self.importWithReload(factory);
+#        module = self.importWithReload(factory);
         self.masterConf['builders'].append(
             util.BuilderConfig(
                 name = worker,
                 workernames = [worker],
-                factory = module.getFactory()
+                factory = factory.getFactory()
             )
         )
-        self.shedulers.addScheduler(module.getPropertyes(), worker)
+        self.shedulers.addScheduler(factory.getPropertyes(), worker)
         self.builders.append(worker);
 
 

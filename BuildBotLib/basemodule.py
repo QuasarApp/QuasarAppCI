@@ -4,32 +4,36 @@ import multiprocessing
 import glob
 import shutil
 
-def getFactory():
-    return util.BuildFactory()
+class BaseModule:
+    def __init__(self):
+        self;
 
-def getRepo():
-    return "";
+    def getFactory(self):
+        return util.BuildFactory()
 
-def getPropertyes():
-    return []
+    def getRepo(self):
+        return "";
 
-@util.renderer
-def makeCommand(props):
-    command = ['make']
-    cpus = multiprocessing.cpu_count()
+    def getPropertyes(self):
+        return []
 
-    if cpus:
-        command.extend(['-j', str(cpus)])
-    else:
-        command.extend(['-j', '1'])
-    return command
+    def copyRegExp(self, source, dist):
 
-def copyRegExp(source, dist):
+        res = []
 
-    res = []
+        for file in glob.glob(source):
+            res.append(file)
+            shutil.copy(file, dist)
 
-    for file in glob.glob(source):
-        res.append(file)
-        shutil.copy(file, dist)
+        return res;
 
-    return res;
+    @util.renderer
+    def makeCommand(self, props):
+        command = ['make']
+        cpus = multiprocessing.cpu_count()
+
+        if cpus:
+            command.extend(['-j', str(cpus)])
+        else:
+            command.extend(['-j', '1'])
+        return command
