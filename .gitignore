@@ -1,3 +1,4 @@
+*.user.*
 gitpoller-work/
 *.tac
 *.log*
