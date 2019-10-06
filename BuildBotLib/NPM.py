@@ -1,6 +1,6 @@
 # This Python file uses the following encoding: utf-8
 
-import BuildBotLib.basemodule as BaseModule
+from BuildBotLib.basemodule import BaseModule
 from buildbot.plugins import secrets, util, steps
 from pathlib import Path
 import datetime
