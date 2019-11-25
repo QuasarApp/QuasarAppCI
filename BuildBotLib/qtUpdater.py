@@ -153,7 +153,6 @@ def getWindowsConfigOptions(props):
     "-skip", "qtwebglplugin",
     "-skip", "qtlocation",
     "-skip", "qtvirtualkeyboard",
-    "-skip", "qtwinextras",
     "-skip", "qtactiveqt",
     "-opengl", "desktop",
     "-xplatform","win32-g++",
