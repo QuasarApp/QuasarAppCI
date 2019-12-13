@@ -17,7 +17,7 @@ class buildBotWorkers(BuildBotModule):
             worker.Worker("Tester", "pass"),
             worker.Worker("qtBuilder", "pass"),
             worker.Worker("NPM", "pass"),
-            worker.Worker("AssetsInstaller", "pass")
+            worker.Worker("assets-builder", "pass")
 
             ]
 
