@@ -18,7 +18,9 @@ def NDKDownloadCMD(props):
     format = link[link.rfind('.'):]
 
     if module == "AndroidNDK":
+        os.remove("temp." + format)
         res = ["curl", link, "--output", "temp." + format]
+
     return res
 
 
