@@ -15,7 +15,7 @@ def NDKDownloadCMD(props):
         shutil.rmtree(module)
 
     res = []
-    format = link[link.rfind('.'):]
+    format = link[link.rfind('.'):].lower()
 
     if module == "AndroidNDK":
         if os.path.isfile(module):
