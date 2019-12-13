@@ -37,7 +37,7 @@ def ExtractCMD(props):
     res = ["echo", "format '" + format + "' not supported"]
 
     if format == ".zip":
-        res = ["unsip", "-d", module]
+        res = ["unzip", "-d", module]
 
     return res
 
