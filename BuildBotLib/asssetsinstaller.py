@@ -28,7 +28,7 @@ def NDKDownloadCMD(props):
 @util.renderer
 def ExtractCMD(props):
 
-    arr = os.listdir()
+    arr = os.listdir("./")
     format = ""
     module = props.getProperty("module")
 
@@ -39,7 +39,7 @@ def ExtractCMD(props):
 
     res = ["echo", "format '" + format + "' not supported"]
 
-    if format == "zip":
+    if format == ".zip":
         res = ["unsip", "-d", module]
 
     return res
