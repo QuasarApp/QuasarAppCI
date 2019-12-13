@@ -11,7 +11,8 @@ def NDKDownloadCMD(props):
     link = props.getProperty("revision")
     module = props.getProperty("module")
 
-    shutil.rmtree(module)
+    if os.path.isfile(module):
+        shutil.rmtree(module)
 
     res = []
     format = link[link.rfind('.'):]
