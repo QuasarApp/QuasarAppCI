@@ -36,10 +36,11 @@ def ExtractCMD(props):
         if ix == 0:
             format = file[file.rfind('.'):]
 
-    res = []
+    res = ["echo", "format '" + format + "' not supported"]
 
     if format == "zip":
         res = ["unsip", "-d", module]
+
     return res
 
 
