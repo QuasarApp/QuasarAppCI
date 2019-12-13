@@ -4,13 +4,14 @@ import BuildBotLib.basemodule as base
 from buildbot.plugins import util, steps
 import os
 import shutil
+import subprocess
 
 LAST_FORMAT = [""]
 
 
 @util.renderer
 def NDKDownloadCMD(props):
-    link = props.getProperty("revision")
+    link = props.getProperty("link")
     module = props.getProperty("module")
 
     if os.path.isfile(module):
@@ -39,40 +40,50 @@ def ExtractCMD(props):
     if format == ".zip":
         res = ["unzip", "temp" + format, "-d", module]
 
+    all_subdirs = base.allSubdirsOf(module)
+    latest_subdir = max(all_subdirs, key=os.path.getmtime)
+    subprocess.getoutput(["ln -sf " + latest_subdir + " current"])
+
     return res
 
 
 def getFactory():
-    factory = base.getFactory();
+    factory = base.getFactory()
 
     factory.addStep(
-            steps.ShellCommand(
-            command = NDKDownloadCMD,
-            name = 'download new item',
-            description = 'download new item',
+        steps.ShellCommand(
+            command=NDKDownloadCMD,
+            name='download new item',
+            description='download new item',
         )
-    );
+    )
 
     factory.addStep(
-            steps.ShellCommand(
-            command = ExtractCMD,
-            name = 'extract new item',
-            description = 'extract new item',
+        steps.ShellCommand(
+            command=ExtractCMD,
+            name='extract new item',
+            description='extract new item',
         )
-    );
+    )
 
     return factory
 
 
 def getRepo():
-    return "";
+    return ""
 
 
 def getPropertyes():
     return [
         util.ChoiceStringParameter(
-            name = 'module',
+            name='module',
             choices=["AndroidNDK", "AndroidSDK"],
-            default = "AndroidNDK"
+            default="AndroidNDK"
+        ),
+
+        util.StringParameter(
+            name='link',
+            label="url to download item",
+            default=""
         ),
     ]

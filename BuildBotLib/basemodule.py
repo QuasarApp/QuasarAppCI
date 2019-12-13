@@ -1,17 +1,21 @@
-import sys
+import os
 from buildbot.plugins import util
 import multiprocessing
 import glob
 import shutil
 
+
 def getFactory():
     return util.BuildFactory()
 
+
 def getRepo():
-    return "";
+    return ""
+
 
 def getPropertyes():
     return []
+
 
 @util.renderer
 def makeCommand(props):
@@ -24,6 +28,7 @@ def makeCommand(props):
         command.extend(['-j', '1'])
     return command
 
+
 def copyRegExp(source, dist):
 
     res = []
@@ -32,4 +37,14 @@ def copyRegExp(source, dist):
         res.append(file)
         shutil.copy(file, dist)
 
-    return res;
+    return res
+
+
+def allSubdirsOf(b='.'):
+    result = []
+    for d in os.listdir(b):
+        bd = os.path.join(b, d)
+        if os.path.isdir(bd):
+            result.append(bd)
+
+    return result
