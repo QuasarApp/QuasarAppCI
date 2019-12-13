@@ -5,6 +5,8 @@ from buildbot.plugins import util, steps
 import os
 import shutil
 
+LAST_FORMAT = [""]
+
 
 @util.renderer
 def NDKDownloadCMD(props):
@@ -16,6 +18,7 @@ def NDKDownloadCMD(props):
 
     res = []
     format = link[link.rfind('.'):].lower()
+    LAST_FORMAT[0] = format
 
     if module == "AndroidNDK":
         if os.path.isfile(module):
@@ -28,14 +31,8 @@ def NDKDownloadCMD(props):
 @util.renderer
 def ExtractCMD(props):
 
-    arr = os.listdir("./")
-    format = ""
+    format = LAST_FORMAT[0]
     module = props.getProperty("module")
-
-    for file in arr:
-        ix = file.find("temp.")
-        if ix == 0:
-            format = file[file.rfind('.'):]
 
     res = ["echo", "format '" + format + "' not supported"]
 
