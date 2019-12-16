@@ -15,7 +15,7 @@ def NDKDownloadCMD(props):
     module = props.getProperty("module")
     dirpath = props.getProperty("builddir")
 
-    if os.path.isdir(dirpath + "/" + module):
+    if os.path.exists(dirpath + "/" + module):
         shutil.rmtree(dirpath + "/" + module)
 
     res = []
@@ -23,7 +23,7 @@ def NDKDownloadCMD(props):
     LAST_FORMAT[0] = format
 
     if module == "AndroidNDK":
-        if os.path.isfile(dirpath + "/temp" + format):
+        if os.path.exists(dirpath + "/temp" + format):
             os.remove(dirpath + "/temp" + format)
         res = ["curl", link, "--output", "temp" + format]
 
