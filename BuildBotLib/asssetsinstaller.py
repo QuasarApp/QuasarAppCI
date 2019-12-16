@@ -3,7 +3,6 @@
 import BuildBotLib.basemodule as base
 from buildbot.plugins import util, steps
 import os
-import subprocess
 
 LAST_FORMAT = [""]
 
@@ -24,14 +23,12 @@ def RemoveOldData(props):
 @util.renderer
 def NDKDownloadCMD(props):
     link = props.getProperty("link")
-    module = props.getProperty("module")
 
     res = []
     format = link[link.rfind('.'):].lower()
     LAST_FORMAT[0] = format
 
-    if module == "AndroidNDK":
-        res = ["curl", link, "--output", "temp" + format]
+    res = ["curl", link, "--output", "temp" + format]
 
     return res
 
