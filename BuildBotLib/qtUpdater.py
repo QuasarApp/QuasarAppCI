@@ -172,12 +172,11 @@ def getAndroidConfigOptions(props):
     list = [
     "-xplatform", "android-clang",
     "--disable-rpath",
-    "-android-ndk", "/home/andrei/Android/NDK/android-ndk-r19c",
+    "-android-ndk", "/home/andrei/worker/Assets/assets-builder/build/AndroidNDK/current",
     "-android-sdk", "/home/andrei/Android/SDK",
     "-skip", "qttranslations",
     "-skip", "qtserialport",
-    "-no-warnings-are-errors",
-    "-android-arch","arm64-v8a"
+    "-no-warnings-are-errors"
     ];
 
     list += getGeneralConfigureOptions(props);
