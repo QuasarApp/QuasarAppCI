@@ -40,9 +40,12 @@ def ExtractCMD(props):
     if format == ".zip":
         res = ["unzip", "temp" + format, "-d", module]
 
-        all_subdirs = base.allSubdirsOf("./" + module)
+        dirpath = props.getProperty("builddir")
+
+        all_subdirs = base.allSubdirsOf(dirpath + "/" + module)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
-        subprocess.getoutput(["ln -sf " + latest_subdir + " ./current"])
+        subprocess.getoutput(["ln -sf " + latest_subdir + " " +
+                              dirpath + "/current"])
 
     return res
 
