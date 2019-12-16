@@ -40,12 +40,26 @@ def ExtractCMD(props):
     if format == ".zip":
         res = ["unzip", "temp" + format, "-d", module]
 
+    return res
+
+
+@util.renderer
+def ConfigureCMD(props):
+
+    format = LAST_FORMAT[0]
+    module = props.getProperty("module")
+
+    res = ["echo", "Configure " + module + " failed"]
+
+    if format == ".zip":
         dirpath = props.getProperty("builddir")
 
         all_subdirs = base.allSubdirsOf(dirpath + "/" + module)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
         subprocess.getoutput(["ln -sf " + latest_subdir + " " +
                               dirpath + "/current"])
+
+        res = ["echo", "Configure " + module]
 
     return res
 
@@ -66,6 +80,14 @@ def getFactory():
             command=ExtractCMD,
             name='extract new item',
             description='extract new item',
+        )
+    )
+
+    factory.addStep(
+        steps.ShellCommand(
+            command=ConfigureCMD,
+            name='configure new item',
+            description='configure new item',
         )
     )
 
