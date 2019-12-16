@@ -16,7 +16,7 @@ def NDKDownloadCMD(props):
     dirpath = props.getProperty("builddir")
 
     if os.path.exists(dirpath + "/" + module):
-        shutil.rmtree(dirpath + "/" + module)
+        shutil.rmtree(dirpath + "/" + module, ignore_errors=True)
 
     res = []
     format = link[link.rfind('.'):].lower()
