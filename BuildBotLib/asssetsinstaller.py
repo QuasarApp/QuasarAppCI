@@ -10,21 +10,28 @@ LAST_FORMAT = [""]
 
 
 @util.renderer
-def NDKDownloadCMD(props):
-    link = props.getProperty("link")
+def RemoveOldData(props):
     module = props.getProperty("module")
     dirpath = props.getProperty("builddir")
 
+    res = [dirpath + "/" + module + " not exits"]
+
     if os.path.exists(dirpath + "/" + module):
-        shutil.rmtree(dirpath + "/" + module, ignore_errors=True)
+        res = ["rm", "-rdf", dirpath + "/" + module]
+
+    return res
+
+
+@util.renderer
+def NDKDownloadCMD(props):
+    link = props.getProperty("link")
+    module = props.getProperty("module")
 
     res = []
     format = link[link.rfind('.'):].lower()
     LAST_FORMAT[0] = format
 
     if module == "AndroidNDK":
-        if os.path.exists(dirpath + "/temp" + format):
-            os.remove(dirpath + "/temp" + format)
         res = ["curl", link, "--output", "temp" + format]
 
     return res
@@ -67,6 +74,14 @@ def ConfigureCMD(props):
 
 def getFactory():
     factory = base.getFactory()
+
+    factory.addStep(
+        steps.ShellCommand(
+            command=RemoveOldData,
+            name='rm old  item',
+            description='rm old',
+        )
+    )
 
     factory.addStep(
         steps.ShellCommand(
