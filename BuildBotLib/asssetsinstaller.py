@@ -3,7 +3,6 @@
 import BuildBotLib.basemodule as base
 from buildbot.plugins import util, steps
 import os
-import shutil
 import subprocess
 
 LAST_FORMAT = [""]
@@ -12,7 +11,7 @@ LAST_FORMAT = [""]
 @util.renderer
 def RemoveOldData(props):
     module = props.getProperty("module")
-    dirpath = props.getProperty("builddir")
+    dirpath = props.getProperty("builddir") + "/build"
 
     res = [dirpath + "/" + module + " not exits"]
 
@@ -60,7 +59,7 @@ def ConfigureCMD(props):
     res = ["echo", "Configure " + module + " failed"]
 
     if format == ".zip":
-        dirpath = props.getProperty("builddir")
+        dirpath = props.getProperty("builddir") + "/build"
 
         all_subdirs = base.allSubdirsOf(dirpath + "/" + module)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
@@ -80,6 +79,7 @@ def getFactory():
             command=RemoveOldData,
             name='rm old  item',
             description='rm old',
+            haltOnFailure=True,
         )
     )
 
@@ -88,6 +88,7 @@ def getFactory():
             command=NDKDownloadCMD,
             name='download new item',
             description='download new item',
+            haltOnFailure=True,
         )
     )
 
@@ -96,6 +97,7 @@ def getFactory():
             command=ExtractCMD,
             name='extract new item',
             description='extract new item',
+            haltOnFailure=True,
         )
     )
 
@@ -104,6 +106,7 @@ def getFactory():
             command=ConfigureCMD,
             name='configure new item',
             description='configure new item',
+            haltOnFailure=True,
         )
     )
 
