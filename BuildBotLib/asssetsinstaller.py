@@ -13,7 +13,7 @@ def RemoveOldData(props):
     module = props.getProperty("module")
     dirpath = props.getProperty("builddir") + "/build"
 
-    res = [dirpath + "/" + module + " not exits"]
+    res = ["echo",  dirpath + "/" + module + " not exits"]
 
     if os.path.exists(dirpath + "/" + module):
         res = ["rm", "-rdf", dirpath + "/" + module]
