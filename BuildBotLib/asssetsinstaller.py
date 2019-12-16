@@ -13,17 +13,18 @@ LAST_FORMAT = [""]
 def NDKDownloadCMD(props):
     link = props.getProperty("link")
     module = props.getProperty("module")
+    dirpath = props.getProperty("builddir")
 
-    if os.path.isfile(module):
-        shutil.rmtree(module)
+    if os.path.isfile(dirpath + "/" + module):
+        shutil.rmtree(dirpath + "/" + module)
 
     res = []
     format = link[link.rfind('.'):].lower()
     LAST_FORMAT[0] = format
 
     if module == "AndroidNDK":
-        if os.path.isfile(module):
-            os.remove("temp" + format)
+        if os.path.isfile(dirpath + "/temp" + format):
+            os.remove(dirpath + "/temp" + format)
         res = ["curl", link, "--output", "temp" + format]
 
     return res
