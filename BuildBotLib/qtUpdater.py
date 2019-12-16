@@ -173,7 +173,7 @@ def getAndroidConfigOptions(props):
     "-xplatform", "android-clang",
     "--disable-rpath",
     "-android-ndk", "/home/andrei/worker/Assets/assets-builder/build/AndroidNDK/current",
-    "-android-sdk", "/home/andrei/Android/SDK",
+    "-android-sdk", "/worker/Assets/assets-builder/build/AndroidSDK",
     "-skip", "qttranslations",
     "-skip", "qtserialport",
     "-no-warnings-are-errors"
