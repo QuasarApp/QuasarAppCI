@@ -59,14 +59,11 @@ def ConfigureCMD(props):
     res = ["echo", "Configure " + module + " failed"]
 
     if format == ".zip":
-        dirpath = props.getProperty("builddir") + "/build"
+        dirpath = props.getProperty("builddir") + "/build/" + module
 
-        all_subdirs = base.allSubdirsOf(dirpath + "/" + module)
+        all_subdirs = base.allSubdirsOf(dirpath)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
-        subprocess.getoutput(["ln -sf " + latest_subdir + " " +
-                              dirpath + "/current"])
-
-        res = ["echo", "Configure " + module]
+        res = ["mv", latest_subdir, dirpath + "/current"]
 
     return res
 
