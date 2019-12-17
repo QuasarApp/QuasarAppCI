@@ -6,7 +6,7 @@ import os
 
 LAST_FORMAT = [""]
 
-AndroidBaseDir = "~/Android"
+AndroidBaseDir = os.path.expanduserpath + "/Android"
 
 
 def isInit(step):
@@ -81,7 +81,7 @@ def InstallCMD(props):
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
         res = ["mv", latest_subdir, AndroidBaseDir + "/tools", ";",
                "ln", "-sf", AndroidBaseDir + "/tools/bin/sdkmanager",
-               "~/.local/bin/sdkmanager"]
+               os.path.expanduserpath + "/.local/bin/sdkmanager"]
 
     return res
 
