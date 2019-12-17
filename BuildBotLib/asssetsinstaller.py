@@ -3,10 +3,11 @@
 import BuildBotLib.basemodule as base
 from buildbot.plugins import util, steps
 import os
+from pathlib import Path
 
 LAST_FORMAT = [""]
 
-AndroidBaseDir = os.path.expanduserpath("~/Android")
+AndroidBaseDir = str(Path.home()) + "/Android"
 
 
 def isInit(step):
@@ -81,7 +82,7 @@ def InstallCMD(props):
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
         res = ["mv", latest_subdir, AndroidBaseDir + "/tools", ";",
                "ln", "-sf", AndroidBaseDir + "/tools/bin/sdkmanager",
-               os.path.expanduserpath("/.local/bin/sdkmanager")]
+               str(Path.home()) + "/.local/bin/sdkmanager"]
 
     return res
 
