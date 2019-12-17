@@ -16,10 +16,11 @@ def isInit(step):
 @util.renderer
 def RemoveOldData(props):
 
-    res = ['echo', 'is first init run']
+    res = ["mkdir", "-p", AndroidBaseDir]
 
     if os.path.exists(AndroidBaseDir):
-        res = ["rm", "-rdf", AndroidBaseDir]
+        res = ["rm", "-rdf", AndroidBaseDir, ";",
+               "mkdir", "-p", AndroidBaseDir]
 
     return res
 
