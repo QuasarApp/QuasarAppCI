@@ -20,8 +20,8 @@ def RemoveOldData(props):
     res = ["mkdir", "-p", AndroidBaseDir]
 
     if os.path.exists(AndroidBaseDir):
-        res = ["rm", "-rdf", AndroidBaseDir,
-               ";mkdir", "-p", AndroidBaseDir]
+        res = ["rm", "-rdf", AndroidBaseDir, "&",
+               "mkdir", "-p", AndroidBaseDir]
 
     return res
 
@@ -81,8 +81,8 @@ def InstallCMD(props):
 
         all_subdirs = base.allSubdirsOf(AndroidBaseDir)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
-        res = ["mv", latest_subdir, AndroidBaseDir + "/tools",
-               ";ln", "-sf", AndroidBaseDir + "/tools/bin/sdkmanager",
+        res = ["mv", latest_subdir, AndroidBaseDir + "/tools", "&",
+               "ln", "-sf", AndroidBaseDir + "/tools/bin/sdkmanager",
                str(Path.home()) + "/.local/bin/sdkmanager"]
 
     return res
