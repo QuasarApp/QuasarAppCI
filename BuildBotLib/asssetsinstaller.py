@@ -47,7 +47,7 @@ def ExtractCMD(props):
     res = ["echo", "format '" + format + "' not supported"]
 
     if format == ".zip":
-        res = ["unzip", "temp" + format, "-d", AndroidBaseDir]
+        res = ["unzip", AndroidBaseDir "/temp" + format, "-d", AndroidBaseDir]
 
     return res
 
