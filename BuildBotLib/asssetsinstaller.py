@@ -92,7 +92,7 @@ def getFactory():
     factory = base.getFactory()
 
     factory.addStep(
-        steps.SubunitShellCommand(
+        steps.ShellCommand(
             command=RemoveOldData,
             name='rm old  item',
             doStepIf=isInit,
@@ -102,7 +102,7 @@ def getFactory():
     )
 
     factory.addStep(
-        steps.SubunitShellCommand(
+        steps.ShellCommand(
             command=NDKDownloadCMD,
             name='download new item',
             doStepIf=isInit,
@@ -112,7 +112,7 @@ def getFactory():
     )
 
     factory.addStep(
-        steps.SubunitShellCommand(
+        steps.ShellCommand(
             command=ExtractCMD,
             name='extract new item',
             doStepIf=isInit,
@@ -122,7 +122,7 @@ def getFactory():
     )
 
     factory.addStep(
-        steps.SubunitShellCommand(
+        steps.ShellCommand(
             command=ConfigureCMD,
             name='configure new item',
             doStepIf=isInit,
@@ -132,7 +132,7 @@ def getFactory():
     )
 
     factory.addStep(
-        steps.SubunitShellCommand(
+        steps.ShellCommand(
             command=InstallCMD,
             name='install module',
             doStepIf=lambda step: not isInit(step),
