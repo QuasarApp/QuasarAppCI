@@ -172,7 +172,7 @@ def getAndroidConfigOptions(props):
     list = [
     "-xplatform", "android-clang",
     "--disable-rpath",
-    "-android-ndk", str(Path.home()) + "/Android/NDK",
+    "-android-ndk", str(Path.home()) + "/Android/ndk-bundle",
     "-android-sdk", str(Path.home()) + "/Android",
     "-android-ndk-host", "linux-x86_64",
     "-skip", "qttranslations",
