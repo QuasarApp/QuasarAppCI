@@ -62,7 +62,7 @@ def InstallCMD(props):
         'buildTools': '"platform-tools;tools;build-tools'+version+'"'
     }
 
-    return ["sdkmanager", + unit_to_multiplier[module]]
+    return ["sdkmanager", unit_to_multiplier[module]]
 
 
 @util.renderer
