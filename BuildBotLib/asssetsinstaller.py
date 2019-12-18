@@ -17,11 +17,11 @@ def isInit(step):
 @util.renderer
 def RemoveOldData(props):
 
-    res = ["mkdir", "-p", AndroidBaseDir]
+    res = "mkdir -p " + AndroidBaseDir
 
     if os.path.exists(AndroidBaseDir):
-        res = "rm -rdf" + AndroidBaseDir + " & "
-        res += "mkdir -p", AndroidBaseDir
+        res = "rm -rdf" + AndroidBaseDir
+        res += " & mkdir -p", AndroidBaseDir
 
     return res
 
@@ -30,13 +30,10 @@ def RemoveOldData(props):
 def NDKDownloadCMD(props):
     link = props.getProperty("link")
 
-    res = []
     format = link[link.rfind('.'):].lower()
     LAST_FORMAT[0] = format
 
-    res = ["curl", link, "--output", AndroidBaseDir + "/temp" + format]
-
-    return res
+    return "curl " + link + " --output " + AndroidBaseDir + "/temp" + format
 
 
 @util.renderer
@@ -44,11 +41,11 @@ def ExtractCMD(props):
 
     format = LAST_FORMAT[0]
 
-    res = ["echo", "format '" + format + "' not supported"]
+    res = "echo format '" + format + "' not supported"
 
     if format == ".zip":
-        res = ["unzip", AndroidBaseDir + "/temp" + format,
-               "-d", AndroidBaseDir]
+        res = "unzip " + AndroidBaseDir + "/temp" + format
+        + " -d " + AndroidBaseDir
 
     return res
 
@@ -59,12 +56,12 @@ def ConfigureCMD(props):
     module = props.getProperty("module")
     version = props.getProperty("version")
 
-    res = ["sdkmanager"]
+    res = "sdkmanager "
 
     unit_to_multiplier = {
-        'SDK': ["platforms;android-"+version],
-        'NDK': ["ndk-bundle"],
-        'buildTools': ["platform-tools;tools;build-tools"+version]
+        'SDK': '"platforms;android-'+version+'"',
+        'NDK': '"ndk-bundle"',
+        'buildTools': '"platform-tools;tools;build-tools'+version+'"'
     }
 
     return res + unit_to_multiplier[module]
@@ -75,15 +72,15 @@ def InstallCMD(props):
 
     format = LAST_FORMAT[0]
 
-    res = ["echo", "Configure failed"]
+    res = "echo Configure failed"
 
     if format == ".zip":
 
         all_subdirs = base.allSubdirsOf(AndroidBaseDir)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
-        res = "mv " + latest_subdir + " " + AndroidBaseDir + "/tools & "
-        res += "ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
-        res += str(Path.home()) + "/.local/bin/sdkmanager"
+        res = "mv " + latest_subdir + " " + AndroidBaseDir + "/tools"
+        + " & ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
+        + str(Path.home()) + "/.local/bin/sdkmanager"
 
     return res
 
