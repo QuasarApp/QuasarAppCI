@@ -17,11 +17,11 @@ def isInit(step):
 @util.renderer
 def RemoveOldData(props):
 
-    res = "mkdir -p " + AndroidBaseDir
+    res = ["/bin/sh", "mkdir -p " + AndroidBaseDir]
 
     if os.path.exists(AndroidBaseDir):
-        res = "rm -rdf" + AndroidBaseDir
-        res += " & mkdir -p", AndroidBaseDir
+        res = ["/bin/sh", "rm -rdf" + AndroidBaseDir
+               + " & mkdir -p " + AndroidBaseDir]
 
     return res
 
@@ -33,7 +33,7 @@ def NDKDownloadCMD(props):
     format = link[link.rfind('.'):].lower()
     LAST_FORMAT[0] = format
 
-    return "curl " + link + " --output " + AndroidBaseDir + "/temp" + format
+    return ["curl", link, "--output", AndroidBaseDir + "/temp" + format]
 
 
 @util.renderer
@@ -41,11 +41,11 @@ def ExtractCMD(props):
 
     format = LAST_FORMAT[0]
 
-    res = "echo format '" + format + "' not supported"
+    res = ["echo", "format '" + format + "' not supported"]
 
     if format == ".zip":
-        res = "unzip " + AndroidBaseDir + "/temp" + format
-        + " -d " + AndroidBaseDir
+        res = ["unzip", AndroidBaseDir + "/temp" + format,
+               "-d", AndroidBaseDir]
 
     return res
 
@@ -64,7 +64,7 @@ def ConfigureCMD(props):
         'buildTools': '"platform-tools;tools;build-tools'+version+'"'
     }
 
-    return res + unit_to_multiplier[module]
+    return ["/bin/sh", res + unit_to_multiplier[module]]
 
 
 @util.renderer
@@ -72,7 +72,7 @@ def InstallCMD(props):
 
     format = LAST_FORMAT[0]
 
-    res = "echo Configure failed"
+    res = ["echo", "Configure failed"]
 
     if format == ".zip":
 
@@ -82,7 +82,7 @@ def InstallCMD(props):
         + " & ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
         + str(Path.home()) + "/.local/bin/sdkmanager"
 
-    return res
+    return ["/bin/sh", res]
 
 
 def getFactory():
