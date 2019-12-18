@@ -8,6 +8,7 @@ from pathlib import Path
 LAST_FORMAT = [""]
 
 AndroidBaseDir = str(Path.home()) + "/Android"
+MULTIPLE_SH_COMMAND = ["/bin/sh", "-c"]
 
 
 def isInit(step):
@@ -17,13 +18,13 @@ def isInit(step):
 @util.renderer
 def RemoveOldData(props):
 
-    res = ["/bin/sh", "mkdir -p " + AndroidBaseDir]
+    cmd = "mkdir" + " -p " + AndroidBaseDir
 
     if os.path.exists(AndroidBaseDir):
-        res = ["/bin/sh", "rm -rdf" + AndroidBaseDir
-               + " & mkdir -p " + AndroidBaseDir]
+        cmd = "rm -rdf " + AndroidBaseDir
+        + " & " + cmd
 
-    return res
+    return MULTIPLE_SH_COMMAND + [cmd]
 
 
 @util.renderer
@@ -64,7 +65,7 @@ def ConfigureCMD(props):
         'buildTools': '"platform-tools;tools;build-tools'+version+'"'
     }
 
-    return ["/bin/sh", res + unit_to_multiplier[module]]
+    return MULTIPLE_SH_COMMAND + [res + unit_to_multiplier[module]]
 
 
 @util.renderer
