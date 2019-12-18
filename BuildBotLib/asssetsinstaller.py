@@ -18,11 +18,10 @@ def isInit(step):
 @util.renderer
 def RemoveOldData(props):
 
-    cmd = "mkdir" + " -p " + AndroidBaseDir
+    cmd = "mkdir -p " + AndroidBaseDir
 
     if os.path.exists(AndroidBaseDir):
-        cmd = "rm -rdf " + AndroidBaseDir
-        + " & " + cmd
+        cmd = "rm -rdf " + AndroidBaseDir + " & " + cmd
 
     return MULTIPLE_SH_COMMAND + [cmd]
 
