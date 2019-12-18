@@ -79,6 +79,7 @@ def ConfigureCMD(props):
         res = "mv " + latest_subdir + " " + AndroidBaseDir + "/tools"
         res += " ; ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
         res += str(Path.home()) + "/.local/bin/sdkmanager"
+        res += " ; yes | sdkmanager --licenses"
 
     return MULTIPLE_SH_COMMAND + [res]
 
