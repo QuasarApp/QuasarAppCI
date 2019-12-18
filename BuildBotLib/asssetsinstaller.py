@@ -8,7 +8,7 @@ from pathlib import Path
 LAST_FORMAT = [""]
 
 AndroidBaseDir = str(Path.home()) + "/Android"
-MULTIPLE_SH_COMMAND = ["/bin/sh", "-c"]
+MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
 
 
 def isInit(step):
@@ -21,7 +21,7 @@ def RemoveOldData(props):
     cmd = "mkdir -p " + AndroidBaseDir
 
     if os.path.exists(AndroidBaseDir):
-        cmd = "rm -rdf " + AndroidBaseDir + " & " + cmd
+        cmd = "rm -rdf " + AndroidBaseDir + " ; " + cmd
 
     return MULTIPLE_SH_COMMAND + [cmd]
 
@@ -77,7 +77,7 @@ def ConfigureCMD(props):
         all_subdirs = base.allSubdirsOf(AndroidBaseDir)
         latest_subdir = max(all_subdirs, key=os.path.getmtime)
         res = "mv " + latest_subdir + " " + AndroidBaseDir + "/tools"
-        + " & ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
+        + " ; ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
         + str(Path.home()) + "/.local/bin/sdkmanager"
 
     return MULTIPLE_SH_COMMAND + [res]
