@@ -51,12 +51,10 @@ def ExtractCMD(props):
 
 
 @util.renderer
-def ConfigureCMD(props):
+def InstallCMD(props):
 
     module = props.getProperty("module")
     version = props.getProperty("version")
-
-    res = "sdkmanager "
 
     unit_to_multiplier = {
         'SDK': '"platforms;android-'+version+'"',
@@ -64,11 +62,11 @@ def ConfigureCMD(props):
         'buildTools': '"platform-tools;tools;build-tools'+version+'"'
     }
 
-    return MULTIPLE_SH_COMMAND + [res + unit_to_multiplier[module]]
+    return ["sdkmanager", + unit_to_multiplier[module]]
 
 
 @util.renderer
-def InstallCMD(props):
+def ConfigureCMD(props):
 
     format = LAST_FORMAT[0]
 
@@ -82,7 +80,7 @@ def InstallCMD(props):
         + " & ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
         + str(Path.home()) + "/.local/bin/sdkmanager"
 
-    return ["/bin/sh", res]
+    return MULTIPLE_SH_COMMAND + [res]
 
 
 def getFactory():
