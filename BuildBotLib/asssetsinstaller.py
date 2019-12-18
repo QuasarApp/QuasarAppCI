@@ -57,9 +57,9 @@ def InstallCMD(props):
     version = props.getProperty("version")
 
     unit_to_multiplier = {
-        'SDK': '"platforms;android-'+version+'"',
-        'NDK': '"ndk-bundle"',
-        'buildTools': '"platform-tools;tools;build-tools'+version+'"'
+        'SDK': 'platforms;android-'+version,
+        'NDK': 'ndk-bundle',
+        'buildTools': 'platform-tools;tools;build-tools'+version
     }
 
     return ["sdkmanager", unit_to_multiplier.get(module, "--list")]
