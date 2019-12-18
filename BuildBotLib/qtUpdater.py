@@ -76,15 +76,15 @@ def getHelp(props):
 
 @util.renderer
 def lsLinux(props):
-    return ["ln", "-sf", LAST_TARGET_DIR[0] + "/bin/qmake", "/home/andrei/.local/bin/qmake-linux"];
+    return ["ln", "-sf", LAST_TARGET_DIR[0] + "/bin/qmake", str(Path.home()) + "/.local/bin/qmake-linux"];
 
 @util.renderer
 def lsWindows(props):
-    return ["ln", "-sf", LAST_TARGET_DIR[0] + "/bin/qmake", "/home/andrei/.local/bin/qmake-windows"];
+    return ["ln", "-sf", LAST_TARGET_DIR[0] + "/bin/qmake", str(Path.home()) + "/.local/bin/qmake-windows"];
 
 @util.renderer
 def lsAndroid(props):
-    return ["ln", "-sf", LAST_TARGET_DIR[0] + "/bin/qmake", "/home/andrei/.local/bin/qmake-android"];
+    return ["ln", "-sf", LAST_TARGET_DIR[0] + "/bin/qmake", str(Path.home()) + "/.local/bin/qmake-android"];
 
 @util.renderer
 def cpGCCWindows(props):
@@ -134,7 +134,7 @@ def getTargetDir(configureOptions, branch, platform):
     if (not len(platform)) :
         branch = "Unknown";
 
-    LAST_TARGET_DIR[0] = "/home/andrei/Qt/Qt-" + branch + "/" + platform;
+    LAST_TARGET_DIR[0] = str(Path.home()) + "/Qt/Qt-" + branch + "/" + platform;
     return ["-prefix", LAST_TARGET_DIR[0]];
 
 @util.renderer
@@ -172,8 +172,8 @@ def getAndroidConfigOptions(props):
     list = [
     "-xplatform", "android-clang",
     "--disable-rpath",
-    "-android-ndk", "~/Android/NDK",
-    "-android-sdk", "~/Android",
+    "-android-ndk", str(Path.home()) + "/Android/NDK",
+    "-android-sdk", str(Path.home()) + "/Android",
     "-skip", "qttranslations",
     "-skip", "qtserialport",
     "-no-warnings-are-errors"
