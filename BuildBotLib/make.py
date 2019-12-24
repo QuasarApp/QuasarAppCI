@@ -98,6 +98,51 @@ class Make(BaseModule):
 
         return command;
 
+    @util.renderer
+    def androidXmakeEnv:
+        return {}
+
+    @util.renderer
+    def windowsXmakeEnv:
+        return {}
+
+    @util.renderer
+    def linuxXmakeEnv:
+        return {}
+
+
+    def makePrefix():
+        return ""
+
+    def generateStep(cmd, platform, desc, checkFunc) :
+
+        platformCgek = {
+            'linux': isLinux,
+            'windows': isWin,
+            'android': isAndroid,
+        }
+
+        platformEnv = {
+            'linux': linuxXmakeEnv,
+            'windows': windowsXmakeEnv,
+            'android': androidXmakeEnv,
+        }
+
+        res = steps.ShellCommand(
+            command = cmd,
+            haltOnFailure = True,
+            doStepIf = lambda step : checkFunc(step) and platformCgek[platform](step),
+            hideStepIf = lambda step : not (checkFunc(step) and platformCgek[platform](step)),
+            name = makePrefix + 'Make ' + platform,
+            env=platformEnv[platform],
+            description = desc,
+        )
+
+        return res;
+
+
+
+
     def LinuxSteps(self) :
         list = [
             steps.ShellCommand(
@@ -105,6 +150,7 @@ class Make(BaseModule):
                 haltOnFailure = True,
                 doStepIf = lambda step : isLinux(step),
                 name = 'QMake Linux',
+                env=linuxXmakeEnv,
                 description = 'create a make files for projects',
             ),
             steps.ShellCommand(
@@ -160,7 +206,7 @@ class Make(BaseModule):
                 command = androidQmake,
                 haltOnFailure = True,
                 doStepIf = lambda step : self.isAndroid(step),
-
+                env=androidXmakeEnv,
                 name = 'QMake Android',
                 description = 'create a make files for projects',
             ),
@@ -210,6 +256,7 @@ class Make(BaseModule):
                 command = self.windowsXmakeCmd,
                 name = 'QMake Windows',
                 haltOnFailure = True,
+                env=windowsXmakeEnv,
                 doStepIf = lambda step : isWin(step),
                 description = 'create a make files for projects',
             ),
