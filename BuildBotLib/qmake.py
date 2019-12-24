@@ -126,6 +126,9 @@ def androidQmake(props):
         '-spec', 'android-clang',
         "-r",
         "CONFIG+=qtquickcompiler",
+        'ANDROID_NDK_ROOT=/home/andrei/Android/ndk-bundle',
+        'JAVA_HOME=/usr',
+        'ANDROID_HOME=/home/andrei/Android',
         'SIGN_PATH="' + secret.getValue('SIGPATH') + '"',
         'SIGN_ALIES="quasarapp"',
         'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
