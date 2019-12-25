@@ -5,6 +5,12 @@ import glob
 import shutil
 
 class BaseModule:
+
+    MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
+
+    def generateCmd(bashString) :
+        return MULTIPLE_SH_COMMAND + [bashString]
+
     def __init__(self):
         self;
 

@@ -110,9 +110,9 @@ class Make(BaseModule):
     def linuxXmakeEnv:
         return {}
 
-
     def makePrefix():
         return ""
+
 
     def generateStep(cmd, platform, desc, checkFunc) :
 
@@ -141,7 +141,31 @@ class Make(BaseModule):
         return res;
 
 
+    def generatePlatformSteps(platform) :
 
+        platformXcmd = {
+            'linux': linuxXmakeCmd,
+            'windows': windowsXmakeCmd,
+            'android': androidXmakeCmd,
+        }
+
+        res = []
+
+        res += [generateStep(platformXcmd[platform],
+                             platform,
+                             'generate make files for build the project',
+                             lambda step: return True)]
+
+        res += [generateStep('make clean',
+                          platform,
+                          'clean old data',
+                          self.isClean)]
+
+        res += [generateStep()]
+        res += [generateStep()]
+        res += [generateStep()]
+        res += [generateStep()]
+        res += [generateStep()]
 
     def LinuxSteps(self) :
         list = [
