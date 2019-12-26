@@ -35,7 +35,7 @@ class QMake(Make):
 
     @util.renderer
     def androidXmakeCmd(self, props):
-        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
         command = [
             'qmake-android',
@@ -52,6 +52,6 @@ class QMake(Make):
 
     @util.renderer
     def androidXmakeEnv(self, props):
-        return {'ANDROID_NDK_ROOT': '/home/andrei/Android/ndk-bundle',
+        return {'ANDROID_NDK_ROOT': self.home + 'andrei/Android/ndk-bundle',
                 'JAVA_HOME': '/usr',
-                'ANDROID_HOME': '/home/andrei/Android'}
+                'ANDROID_HOME': self.home + '/Android'}

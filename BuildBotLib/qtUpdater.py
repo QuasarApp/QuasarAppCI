@@ -1,42 +1,71 @@
 # This Python file uses the following encoding: utf-8
 
-from BuildBotLib.basemodule import BaseModule
+from BuildBotLib.make import Make
 from buildbot.plugins import util, steps
-from pathlib import Path
+
 import subprocess
-import hashlib
-import os
-import datetime
 
 
-class QtUpdater(BaseModule):
+class QtUpdater(Make):
 
     def __init__(self):
-        BaseModule.__init__(self);
-        self.qtDefaultHelp = [];
-        self.lastTargetDir = "";
+        Make.__init__(self)
+        self.qtDefaultHelp = []
+        self.lastTargetDir = ""
 
-    def isWin(self, step):
-        return step.getProperty('Windows');
+    @util.renderer
+    def linuxXmakeCmd(self, props):
+        command = [
+            'aqt',
+            "install",
+            "--outputdir", self.home + "/Qt",
+            'linux', 'desktop'
+        ]
 
-    def isLinux(self, step):
-        return step.getProperty('Linux');
+        return command
 
-    def isAndroid(self, step):
-        return step.getProperty('Android');
+    @util.renderer
+    def windowsXmakeCmd(self, props):
+        command = [
+            'qmake-windows',
+            '-spec', 'win32-g++',
+            "-r",
+            "CONFIG+=qtquickcompiler",
+            'ONLINE="~/repo"'
+        ]
+
+        return command
+
+    @util.renderer
+    def androidXmakeCmd(self, props):
+
+        command = [
+            'aqt',
+            "install",
+            "--outputdir", self.home + "/Qt",
+            'linux', 'android'
+        ]
+
+        return command
+
+    @util.renderer
+    def androidXmakeEnv(self, props):
+        return {'ANDROID_NDK_ROOT': self.home + 'andrei/Android/ndk-bundle',
+                'JAVA_HOME': '/usr',
+                'ANDROID_HOME': self.home + '/Android'}
 
     def isConfigureonly(self, step):
-        return step.getProperty('configureonly');
+        return step.getProperty('configureonly')
 
     def getArrayQtParams(self, text):
         array = text.split('\n')
         res = []
 
-        excludePlugins = ['freetype', 'xcb', 'webengine'];
+        excludePlugins = ['freetype', 'xcb', 'webengine']
 
         for item in array:
             index = item.find('/qt')
-            if index <= -1 :
+            if index <= -1:
                 continue
 
             item = item.replace(" ", "")
@@ -45,391 +74,215 @@ class QtUpdater(BaseModule):
             if (lenngth <= -1):
                 continue
 
-
             value = "-qt" + item[0: lenngth]
 
-            toContinue = False;
-            for plugin in excludePlugins :
-                toContinue = toContinue or (value.find(plugin) >= 0);
+            toContinue = False
+            for plugin in excludePlugins:
+                toContinue = toContinue or (value.find(plugin) >= 0)
 
-            if toContinue :
-                continue;
+            if toContinue:
+                continue
 
             res.append(value)
 
-
         return res
-
 
     @util.renderer
     def getHelp(self, props):
 
-        result = "";
-        dirpath = props.getProperty("builddir");
-        stdout  = subprocess.getoutput([dirpath + '/build/configure -h'])
-        result = "QT HELP: + \n" + stdout;
+        result = ""
+        dirpath = props.getProperty("builddir")
+        stdout = subprocess.getoutput([dirpath + '/build/configure -h'])
+        result = "QT HELP: + \n" + stdout
 
-        self.qtDefaultHelp = getArrayQtParams(stdout);
+        self.qtDefaultHelp = self.getArrayQtParams(stdout)
 
         if (len(self.qtDefaultHelp) <= 0):
-            result = "qt help is Empty. stdout= " + stdout;
+            result = "qt help is Empty. stdout= " + stdout
         else:
-            result += " ".join(self.qtDefaultHelp);
+            result += " ".join(self.qtDefaultHelp)
 
-        return ["echo", result];
+        return ["echo", result]
 
-    @util.renderer
-    def lsLinux(self, props):
-        return ["ln", "-sf", self.lastTargetDir + "/bin/qmake", "/home/andrei/.local/bin/qmake-linux"];
+    def lsLinux(self):
+        res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
+        res += self.home + "/.local/bin/qmake-linux"
+        return res
 
-    @util.renderer
-    def lsWindows(self, props):
-        return ["ln", "-sf", self.lastTargetDir + "/bin/qmake", "/home/andrei/.local/bin/qmake-windows"];
+    def lsWindows(self):
 
-    @util.renderer
-    def lsAndroid(self, props):
-        return ["ln", "-sf", self.lastTargetDir + "/bin/qmake", "/home/andrei/.local/bin/qmake-android"];
+        res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
+        res += self.home + "/.local/bin/qmake-windows"
+        return res
 
-    @util.renderer
-    def cpGCCWindows(self, props):
-        if not isWin(props) or isConfigureonly(props):
-            return ['echo', " "]
+    def lsAndroid(self):
 
-        resFiles = base.copyRegExp("/usr/lib/gcc/x86_64-w64-mingw32/7.3-win32/*.dll", self.lastTargetDir + "/bin/")
-        return ['echo', " ".join(resFiles)];
+        res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
+        res += self.home + "/.local/bin/qmake-android"
+        return res
 
-    @util.renderer
-    def cpThreadWindows(self, props):
-        if not isWin(props) or isConfigureonly(props):
-            return ['echo', " "]
+    def cpExtraWindows(self):
 
-        resFiles = base.copyRegExp("/usr/x86_64-w64-mingw32/lib/*.dll", self.lastTargetDir + "/bin/")
-        return ['echo', " ".join(resFiles)];
+        cmd = ""
+        path = "/usr/lib/gcc/x86_64-w64-mingw32/7.3-win32/*.dll"
+        path2 = "/usr/x86_64-w64-mingw32/lib/*.dll"
 
-    @util.renderer
-    def cpIcuLinux(self, props):
-        if not isLinux(props) or isConfigureonly(props):
-            return ['echo', " "]
+        cmd += "cp " + path + " " + self.lastTargetDir + "/bin/"
+        cmd += "; cp " + path2 + " " + self.lastTargetDir + "/bin/"
 
-        resFiles = base.copyRegExp("/usr/lib/x86_64-linux-gnu/libicu*", lastTargetDir[0] + "/lib/")
-        return ['echo', " ".join(resFiles)];
+        return cmd
 
     def getGeneralConfigureOptions(self, props):
         list = [
-        "-opensource",
-        "-confirm-license",
-        "-release",
-        "-nomake", "examples",
-        "-nomake", "tests",
-        "-skip", "qtdocgallery",
-        "-skip", "qtpim",
-        "-skip", "qtwebengine",
-        "-ccache"
-        ];
+            "-opensource",
+            "-confirm-license",
+            "-release",
+            "-nomake", "examples",
+            "-nomake", "tests",
+            "-skip", "qtdocgallery",
+            "-skip", "qtpim",
+            "-skip", "qtwebengine",
+            "-ccache"
+        ]
 
-        list += self.qtDefaultHelp;
-        return list;
+        list += self.qtDefaultHelp
+        return list
 
     def getTargetDir(self, configureOptions, branch, platform):
 
-        if (not len(branch)) :
-            branch = "Custom";
+        if (not len(branch)):
+            branch = "Custom"
 
-        if (not len(platform)) :
-            branch = "Unknown";
+        if (not len(platform)):
+            branch = "Unknown"
 
-        self.lastTargetDir = "/home/andrei/Qt/Qt-" + branch + "/" + platform;
-        return ["-prefix", self.lastTargetDir];
+        self.lastTargetDir = self.home + "/Qt/" + branch + "/" + platform
+        return ["-prefix", self.lastTargetDir]
 
     @util.renderer
     def getLinuxConfigOptions(self, props):
-        list = ['-fontconfig', '-qt-xcb', '-dbus-linked' ];
-        list += getGeneralConfigureOptions(props);
-        list += getTargetDir(list, props.getProperty('branch'), "Linux");
+        list = ['-fontconfig', '-qt-xcb', '-dbus-linked']
+        list += self.getGeneralConfigureOptions(props)
+        list += self.getTargetDir(list, props.getProperty('branch'), "Linux")
 
-        return ["./configure"] + list;
-
+        return ["./configure"] + list
 
     @util.renderer
     def getWindowsConfigOptions(self, props):
         list = [
-        "-skip", "qtactiveqt",
-        "-skip", "qtwebglplugin",
-        "-skip", "qtlocation",
-        "-skip", "qtvirtualkeyboard",
-        "-skip", "qtwinextras",
-        "-skip", "qtactiveqt",
-        "-opengl", "desktop",
-        "-xplatform","win32-g++",
-        "-device-option", "CROSS_COMPILE=x86_64-w64-mingw32-",
-        "-no-pch"
-        ];
+            "-skip", "qtactiveqt",
+            "-skip", "qtwebglplugin",
+            "-skip", "qtlocation",
+            "-skip", "qtvirtualkeyboard",
+            "-skip", "qtwinextras",
+            "-skip", "qtactiveqt",
+            "-opengl", "desktop",
+            "-xplatform", "win32-g++",
+            "-device-option", "CROSS_COMPILE=x86_64-w64-mingw32-",
+            "-no-pch"
+        ]
 
-        list += getGeneralConfigureOptions(props);
-        list += getTargetDir(list, props.getProperty('branch'), "Windows");
+        list += self.getGeneralConfigureOptions(props)
+        list += self.getTargetDir(list, props.getProperty('branch'), "Windows")
 
-        return ["./configure"] + list;
+        return ["./configure"] + list
 
     @util.renderer
     def getAndroidConfigOptions(self, props):
 
         list = [
-        "-xplatform", "android-clang",
-        "--disable-rpath",
-        "-android-ndk", "/home/andrei/Android/NDK/android-ndk-r19c",
-        "-android-sdk", "/home/andrei/Android/SDK",
-        "-skip", "qttranslations",
-        "-skip", "qtserialport",
-        "-no-warnings-are-errors",
-        "-android-arch","arm64-v8a"
-        ];
-
-        list += getGeneralConfigureOptions(props);
-        list += getTargetDir(list, props.getProperty('branch'), "Android");
-
-        return ["./configure"] + list;
-
-
-    def windowsSteps(self):
-
-        list = [
-            steps.ShellCommand(
-                command = ['git', 'clean', '-xdf'],
-                doStepIf = lambda step : isWin(step),
-
-                name = 'clean for Windows',
-                description = 'clean old build data',
-            ),
-            steps.ShellCommand(
-                command = ['git', 'submodule', 'foreach', '--recursive', 'git', 'clean', '-xdf'],
-                doStepIf = lambda step :isWin(step),
-
-                name = 'clean submodule for Windows',
-                description = 'clean submodule old build data',
-            ),
-            steps.ShellCommand(
-                command = getWindowsConfigOptions,
-                haltOnFailure = True,
-                doStepIf = lambda step : isWin(step),
-
-                name = 'configure Windows',
-                description = 'create a make files for projects',
-            ),
-            steps.Compile(
-                command = base.makeCommand,
-                name = 'Build Qt for Windows',
-                haltOnFailure = True,
-                doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
-
-                description = 'run make for project',
-            ),
-
-            steps.Compile(
-                command = ['make', 'install', '-j2'],
-                name = 'Install Qt for Windows',
-                haltOnFailure = True,
-                timeout = 360000,
-                doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
-
-                description = 'run make for project',
-            ),
-
-            steps.ShellCommand(
-                command = cpGCCWindows,
-                haltOnFailure = True,
-                doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
-                name = 'Copy gcc libs for Windows',
-                description = 'Copy extra libs',
-            ),
-
-            steps.ShellCommand(
-                command = cpThreadWindows,
-                haltOnFailure = True,
-                doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
-                name = 'Copy thread libs for Windows',
-                description = 'Copy extra libs',
-            ),
-            steps.ShellCommand(
-                command = lsWindows,
-                haltOnFailure = True,
-                doStepIf = lambda step : isWin(step) and not isConfigureonly(step),
-                name = 'Create ls links for Windows',
-                description = 'deploy qt',
-            ),
-
+            "-xplatform", "android-clang",
+            "--disable-rpath",
+            "-android-ndk", self.home + "/Android/ndk-bundle",
+            "-android-sdk", self.home + "/Android",
+            "-android-ndk-host", "linux-x86_64",
+            "-skip", "qttranslations",
+            "-skip", "qtserialport",
+            "-no-warnings-are-errors"
         ]
 
-        return list;
+        list += self.getGeneralConfigureOptions(props)
+        list += self.getTargetDir(list, props.getProperty('branch'), "Android")
 
+        return ["./configure"] + list
 
-    def linuxSteps(self):
+    def installStep(self, platform):
 
-        list = [
-            steps.ShellCommand(
-                command = ['git', 'clean', '-xdf'],
-                doStepIf = lambda step : isLinux(step),
-                name = 'clean for Linux',
-                description = 'clean old build data',
-            ),
-            steps.ShellCommand(
-                command = ['git', 'submodule', 'foreach', '--recursive', 'git', 'clean', '-xdf'],
-                doStepIf = lambda step :isLinux(step),
-                name = 'clean submodule for Linux',
-                description = 'clean submodule old build data',
-            ),
-            steps.ShellCommand(
-                command = getLinuxConfigOptions,
-                haltOnFailure = True,
-                doStepIf = lambda step : isLinux(step),
-                name = 'configure Linux',
-                description = 'create a make files for projects',
-            ),
-            steps.Compile(
-                command = base.makeCommand,
-                name = 'Build Qt for Linux',
-                haltOnFailure = True,
-                timeout = 360000,
-                doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
+        platformLsCmd = {
+            'linux': self.lsLinux(),
+            'windows': self.lsWindows(),
+            'android': self.lsAndroid(),
+        }
 
-                description = 'run make for project',
-            ),
+        cpCmd = {
+            'windows': self.cpExtraWindows(),
+        }
 
-            steps.Compile(
-                command = ['make', 'install', '-j2'],
-                name = 'Install Qt for Linux',
-                haltOnFailure = True,
-                doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
+        stringCmd = platformLsCmd[platform] + "; " + cpCmd.get(platform, "")
 
-                description = 'run make for project',
-            ),
+        return self.generateCmd(stringCmd)
 
-            steps.ShellCommand(
-                command = cpIcuLinux,
-                haltOnFailure = True,
-                doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
-                name = 'Copy ICU libs for Linux',
-                description = 'Copy extra libs',
-            ),
+    def generateInstallStep(self, platform):
 
-            steps.ShellCommand(
-                command = lsLinux,
-                haltOnFailure = True,
-                doStepIf = lambda step : isLinux(step) and not isConfigureonly(step),
-                name = 'Create ls links for Linux',
-                description = 'deploy qt',
-            ),
+        def dustepIf(step):
+            return not self.isConfigureonly(step)
 
-        ]
+        res = self.generateStep(self.installStep(platform),
+                                platform,
+                                "install qt into worker",
+                                dustepIf)
 
-        return list;
+        res += self.generateStep(['git', 'clean', '-xdf'],
+                                 platform,
+                                 "clean old build data",
+                                 lambda step: True)
 
-
-    def androidSteps(self):
-
-        list = [
-            steps.ShellCommand(
-                command = ['git', 'clean', '-xdf'],
-                doStepIf = lambda step : isAndroid(step),
-                name = 'clean for Android',
-                description = 'clean old build data',
-            ),
-            steps.ShellCommand(
-                command = ['git', 'submodule', 'foreach', '--recursive', 'git', 'clean', '-xdf'],
-                doStepIf = lambda step :isAndroid(step),
-                name = 'clean submodule for Android',
-                description = 'clean submodule old build data',
-            ),
-            steps.ShellCommand(
-                command = getAndroidConfigOptions,
-                haltOnFailure = True,
-                doStepIf = lambda step : isAndroid(step),
-                name = 'configure Android',
-                description = 'create a make files for projects',
-            ),
-            steps.Compile(
-                command = base.makeCommand,
-                name = 'Build Qt for Android',
-                haltOnFailure = True,
-                timeout = 360000,
-                doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
-
-                description = 'run make for project',
-            ),
-
-            steps.Compile(
-                command = ['make', 'install', '-j2'],
-                name = 'Install Qt for Android',
-                haltOnFailure = True,
-                doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
-
-                description = 'run make for project',
-            ),
-            steps.ShellCommand(
-                command = lsAndroid,
-                haltOnFailure = True,
-                doStepIf = lambda step : isAndroid(step) and not isConfigureonly(step),
-                name = 'Create ls links for Android',
-                description = 'deploy qt',
-            ),
-
-        ]
-
-        return list;
+        return res
 
     def getFactory(self):
-        factory = base.getFactory();
+        factory = util.BuildFactory()
 
         factory.addStep(
             steps.Git(
                 repourl="https://github.com/qt/qt5.git",
                 branch=util.Interpolate('%(prop:branch)s'),
                 mode='full',
-                method = 'fresh',
+                method='fresh',
                 submodules=True,
-                name = 'git operations',
-                description = 'operations of git like pull clone fetch',
+                name='git operations',
+                description='operations of git like pull clone fetch',
             )
-        );
+        )
 
         factory.addStep(
             steps.ShellCommand(
-                command= getHelp,
-                name = 'read help',
-                haltOnFailure = True,
-                description = 'read help for generate the configure command',
+                command=self.getHelp,
+                name='read help',
+                haltOnFailure=True,
+                description='read help for generate the configure command',
             )
-        );
+        )
 
-        factory.addSteps(linuxSteps());
-        factory.addSteps(windowsSteps());
-        factory.addSteps(androidSteps());
+        factory.addSteps(self.generatePlatformSteps('linux'))
+        factory.addSteps(self.generateInstallStep('linux'))
+
+        factory.addSteps(self.generatePlatformSteps('windows'))
+        factory.addSteps(self.generateInstallStep('windows'))
+
+        factory.addSteps(self.generatePlatformSteps('android'))
+        factory.addSteps(self.generateInstallStep('android'))
 
         return factory
 
     def getPropertyes(self):
-        return [
-            util.BooleanParameter(
-                name = 'Windows',
-                label = 'Windows version Qt',
-                default = True
-            ),
 
-            util.BooleanParameter(
-                name = 'Linux',
-                label = 'Linux version Qt',
-                default = True
-            ),
+        base = super().getPropertyes()
 
+        return base + [
             util.BooleanParameter(
-                name = 'Android',
-                label = 'Android version Qt',
-                default = True
-            ),
-
-            util.BooleanParameter(
-                name = 'configureonly',
-                label = 'disable build and install qt (confugure only)',
-                default = False
+                name='configureonly',
+                label='disable build and install qt (confugure only)',
+                default=False
             )
 
 

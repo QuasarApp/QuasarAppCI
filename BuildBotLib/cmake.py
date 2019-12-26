@@ -16,7 +16,7 @@ class CMake(Make):
 
     @util.renderer
     def linuxXmakeCmd(self, props):
-        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
         QT_Dir = subprocess.getoutput(['qmake-android -query QT_HOST_PREFIX'])
 
@@ -34,7 +34,7 @@ class CMake(Make):
 
     @util.renderer
     def windowsXmakeCmd(self, props):
-        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
         QT_Dir = subprocess.getoutput(['qmake-android -query QT_HOST_PREFIX'])
 
@@ -52,7 +52,7 @@ class CMake(Make):
 
     @util.renderer
     def androidXmakeCmd(self, props):
-        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
         QT_Dir = subprocess.getoutput(['qmake-android -query QT_HOST_PREFIX'])
 

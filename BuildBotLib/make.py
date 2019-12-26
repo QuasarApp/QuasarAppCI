@@ -3,7 +3,6 @@
 from BuildBotLib.basemodule import BaseModule
 
 from buildbot.plugins import util, steps
-from pathlib import Path
 import datetime
 from BuildBotLib.secretManager import SecretManager
 
@@ -24,15 +23,6 @@ class Make(BaseModule):
     def isTest(self, step):
         return step.getProperty('test')
 
-    def isWin(self, step):
-        return step.getProperty('Windows')
-
-    def isLinux(self, step):
-        return step.getProperty('Linux')
-
-    def isAndroid(self, step):
-        return step.getProperty('Android')
-
     def destDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
         now = datetime.datetime.now().strftime("(%H_%M)_%m-%d-%Y")
@@ -41,19 +31,16 @@ class Make(BaseModule):
 
     @util.renderer
     def destDir(self, props):
-        home = str(Path.home())
 
-        return home + '/shared/' + self.destDirPrivate(props)
+        return self.home + '/shared/' + self.destDirPrivate(props)
 
     @util.renderer
     def destDirUrl(self, props):
-        path = self.destDirPrivate(props)
-        return "http://quasarapp.ddns.net:3031" + path
+        return "http://quasarapp.ddns.net:3031" + self.home
 
     @util.renderer
     def permission(self, props):
-        home = str(Path.home())
-        return ["chmod", "-R", "775", home + '/shared']
+        return ["chmod", "-R", "775", self.home + '/shared']
 
     @util.renderer
     def linuxXmakeCmd(self, props):
@@ -80,7 +67,7 @@ class Make(BaseModule):
 
     @util.renderer
     def androidXmakeCmd(self, props):
-        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
         command = [
             'qmake-android',
@@ -228,26 +215,11 @@ class Make(BaseModule):
 
         return factory
 
-    def getPropertyes():
-        return [
-            util.BooleanParameter(
-                name='Windows',
-                label='Windows version project',
-                default=True
-            ),
+    def getPropertyes(self):
 
-            util.BooleanParameter(
-                name='Linux',
-                label='Linux version project',
-                default=True
-            ),
+        base = super().getPropertyes()
 
-            util.BooleanParameter(
-                name='Android',
-                label='Android version project',
-                default=True
-            ),
-
+        return base + [
             util.BooleanParameter(
                 name='clean',
                 label='clean old build ',
