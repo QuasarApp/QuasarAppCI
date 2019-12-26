@@ -107,6 +107,7 @@ class Make(BaseModule):
 
             return platformEnv[platform](step)
 
+        @util.renderer
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
 
