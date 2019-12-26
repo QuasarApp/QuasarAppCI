@@ -107,7 +107,6 @@ class Make(BaseModule):
 
             return platformEnv[platform](step)
 
-        @util.renderer
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
 
@@ -122,7 +121,7 @@ class Make(BaseModule):
             command=cmdWraper,
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
-            hideStepIf=lambda step: not dustepIf(step),
+            hideStepIf=lambda results, step: not dustepIf(step),
             name=self.makePrefix() + 'Make ' + platform,
             env=envWraper,
             description=desc,
