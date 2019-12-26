@@ -1,26 +1,26 @@
 # This Python file uses the following encoding: utf-8
-from BuildBotLib.buildBotModule import *
-from buildbot.schedulers import *
+from BuildBotLib.buildBotModule import BuildBotModule
 from buildbot.plugins import schedulers, util
 
-class buildBotShedulers(BuildBotModule):
+
+class BuildBotShedulers(BuildBotModule):
     codebases = {}
     shedulers = []
+
     def __init__(self):
         BuildBotModule.__init__(self)
 
+    def addScheduler(self, prop, worker):
 
-    def addScheduler(self , prop, worker):
-        shedulerName = 'force-' + worker;
+        shedulerName = 'force-' + worker
 
         self.shedulers.append(
            schedulers.ForceScheduler(
-                name = shedulerName,
-                properties = prop,
-                builderNames = [worker]
+                name=shedulerName,
+                properties=prop,
+                builderNames=[worker]
             )
         )
-
 
     def initScheduler(self):
 
@@ -29,7 +29,7 @@ class buildBotShedulers(BuildBotModule):
                 name='Tester',
                 change_filter=util.ChangeFilter(project_re="qmake-*"),
                 builderNames=['Tester'],
-                properties= {
+                properties={
                     'clean': True,
                     'test': True,
                     'release': False,
@@ -39,18 +39,17 @@ class buildBotShedulers(BuildBotModule):
                     'Android': True
 
                 },
-                treeStableTimer = None
+                treeStableTimer=None
             ),
             schedulers.SingleBranchScheduler(
                 name='NPM Deployer',
-                change_filter=util.ChangeFilter(branch='master', project='npm-Chat'),
+                change_filter=util.ChangeFilter(branch='master',
+                                                project='npm-Chat'),
                 builderNames=['NPM'],
-                properties = {},
-                treeStableTimer = None
+                properties={},
+                treeStableTimer=None
             )
 
         ]
 
-        return self.getMasterConf();
-
-
+        return self.getMasterConf()

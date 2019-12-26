@@ -1,18 +1,14 @@
 # This Python file uses the following encoding: utf-8
 
 from BuildBotLib.make import Make
-from buildbot.plugins import secrets, util, steps
-from pathlib import Path
-import datetime
-import os
-import subprocess
-from BuildBotLib.secretManager import *
+from buildbot.plugins import util
+from BuildBotLib.secretManager import SecretManager
 
 
 class QMake(Make):
 
     def __init__(self):
-        Make.__init__(self);
+        Make.__init__(self)
 
     @util.renderer
     def linuxXmakeCmd(self, props):
@@ -21,9 +17,9 @@ class QMake(Make):
             "-r",
             "CONFIG+=qtquickcompiler",
             'ONLINE="~/repo"'
-        ];
+        ]
 
-        return command;
+        return command
 
     @util.renderer
     def windowsXmakeCmd(self, props):
@@ -33,9 +29,9 @@ class QMake(Make):
             "-r",
             "CONFIG+=qtquickcompiler",
             'ONLINE="~/repo"'
-        ];
+        ]
 
-        return command;
+        return command
 
     @util.renderer
     def androidXmakeCmd(self, props):
@@ -50,6 +46,12 @@ class QMake(Make):
             'SIGN_ALIES="quasarapp"',
             'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
 
-        ];
+        ]
 
-        return command;
+        return command
+
+    @util.renderer
+    def androidXmakeEnv(self, props):
+        return {'ANDROID_NDK_ROOT': '/home/andrei/Android/ndk-bundle',
+                'JAVA_HOME': '/usr',
+                'ANDROID_HOME': '/home/andrei/Android'}
