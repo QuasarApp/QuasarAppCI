@@ -41,14 +41,6 @@ class BuildBotShedulers(BuildBotModule):
                 },
                 treeStableTimer=None
             ),
-            schedulers.SingleBranchScheduler(
-                name='NPM Deployer',
-                change_filter=util.ChangeFilter(branch='master',
-                                                project='npm-Chat'),
-                builderNames=['NPM'],
-                properties={},
-                treeStableTimer=None
-            )
 
         ]
 
