@@ -14,7 +14,6 @@ class CMake(Make):
     def __init__(self):
         Make.__init__(self);
 
-    @util.renderer
     def linuxXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
@@ -32,7 +31,6 @@ class CMake(Make):
 
         return command
 
-    @util.renderer
     def windowsXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
@@ -50,7 +48,6 @@ class CMake(Make):
 
         return command
 
-    @util.renderer
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 

@@ -29,20 +29,16 @@ class Make(BaseModule):
 
         return repo[repo.rfind('/'): len(repo) - 4] + "/" + now
 
-    @util.renderer
     def destDir(self, props):
 
         return self.home + '/shared/' + self.destDirPrivate(props)
 
-    @util.renderer
     def destDirUrl(self, props):
         return "http://quasarapp.ddns.net:3031" + self.home
 
-    @util.renderer
     def permission(self, props):
         return ["chmod", "-R", "775", self.home + '/shared']
 
-    @util.renderer
     def linuxXmakeCmd(self, props):
         command = [
             'qmake-linux',
@@ -53,7 +49,6 @@ class Make(BaseModule):
 
         return command
 
-    @util.renderer
     def windowsXmakeCmd(self, props):
         command = [
             'qmake-windows',
@@ -65,7 +60,6 @@ class Make(BaseModule):
 
         return command
 
-    @util.renderer
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
@@ -82,15 +76,12 @@ class Make(BaseModule):
 
         return command
 
-    @util.renderer
     def androidXmakeEnv(self, props):
         return {}
 
-    @util.renderer
     def windowsXmakeEnv(self, props):
         return {}
 
-    @util.renderer
     def linuxXmakeEnv(self, props):
         return {}
 
@@ -105,15 +96,21 @@ class Make(BaseModule):
             'android': self.isAndroid,
         }
 
-        platformEnv = {
-            'linux': self.linuxXmakeEnv,
-            'windows': self.windowsXmakeEnv,
-            'android': self.androidXmakeEnv,
-        }
+        @util.renderer
+        def envWraper(step):
+
+            platformEnv = {
+                'linux': self.linuxXmakeEnv,
+                'windows': self.windowsXmakeEnv,
+                'android': self.androidXmakeEnv,
+            }
+
+            return platformEnv[platform](self, step)
 
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
 
+        @util.renderer
         def cmdWraper(step):
             if isinstance(cmd, list):
                 return cmd
@@ -126,7 +123,7 @@ class Make(BaseModule):
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda step: not dustepIf(step),
             name=self.makePrefix() + 'Make ' + platform,
-            env=platformEnv[platform],
+            env=envWraper,
             description=desc,
         )
 

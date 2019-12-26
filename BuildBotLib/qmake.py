@@ -1,7 +1,6 @@
 # This Python file uses the following encoding: utf-8
 
 from BuildBotLib.make import Make
-from buildbot.plugins import util
 from BuildBotLib.secretManager import SecretManager
 
 
@@ -10,7 +9,6 @@ class QMake(Make):
     def __init__(self):
         Make.__init__(self)
 
-    @util.renderer
     def linuxXmakeCmd(self, props):
         command = [
             'qmake-linux',
@@ -21,7 +19,6 @@ class QMake(Make):
 
         return command
 
-    @util.renderer
     def windowsXmakeCmd(self, props):
         command = [
             'qmake-windows',
@@ -33,7 +30,6 @@ class QMake(Make):
 
         return command
 
-    @util.renderer
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
@@ -50,7 +46,6 @@ class QMake(Make):
 
         return command
 
-    @util.renderer
     def androidXmakeEnv(self, props):
         return {'ANDROID_NDK_ROOT': self.home + 'andrei/Android/ndk-bundle',
                 'JAVA_HOME': '/usr',

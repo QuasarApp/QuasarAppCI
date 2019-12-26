@@ -13,7 +13,6 @@ class QtUpdater(Make):
         self.qtDefaultHelp = []
         self.lastTargetDir = ""
 
-    @util.renderer
     def linuxXmakeCmd(self, props):
         command = [
             'aqt',
@@ -24,7 +23,6 @@ class QtUpdater(Make):
 
         return command
 
-    @util.renderer
     def windowsXmakeCmd(self, props):
         command = [
             'qmake-windows',
@@ -36,7 +34,6 @@ class QtUpdater(Make):
 
         return command
 
-    @util.renderer
     def androidXmakeCmd(self, props):
 
         command = [
@@ -154,14 +151,6 @@ class QtUpdater(Make):
         return ["-prefix", self.lastTargetDir]
 
     @util.renderer
-    def getLinuxConfigOptions(self, props):
-        list = ['-fontconfig', '-qt-xcb', '-dbus-linked']
-        list += self.getGeneralConfigureOptions(props)
-        list += self.getTargetDir(list, props.getProperty('branch'), "Linux")
-
-        return ["./configure"] + list
-
-    @util.renderer
     def getWindowsConfigOptions(self, props):
         list = [
             "-skip", "qtactiveqt",
@@ -178,25 +167,6 @@ class QtUpdater(Make):
 
         list += self.getGeneralConfigureOptions(props)
         list += self.getTargetDir(list, props.getProperty('branch'), "Windows")
-
-        return ["./configure"] + list
-
-    @util.renderer
-    def getAndroidConfigOptions(self, props):
-
-        list = [
-            "-xplatform", "android-clang",
-            "--disable-rpath",
-            "-android-ndk", self.home + "/Android/ndk-bundle",
-            "-android-sdk", self.home + "/Android",
-            "-android-ndk-host", "linux-x86_64",
-            "-skip", "qttranslations",
-            "-skip", "qtserialport",
-            "-no-warnings-are-errors"
-        ]
-
-        list += self.getGeneralConfigureOptions(props)
-        list += self.getTargetDir(list, props.getProperty('branch'), "Android")
 
         return ["./configure"] + list
 
