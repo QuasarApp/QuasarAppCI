@@ -9,3 +9,6 @@ gitpoller-workdir/
 *.user
 *__pycache__*
 *.pyc
+
+*.pyproject.user.*
+*~

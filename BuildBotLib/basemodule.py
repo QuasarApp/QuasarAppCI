@@ -1,3 +1,4 @@
+import os
 from buildbot.plugins import util
 import multiprocessing
 import glob
@@ -61,6 +62,15 @@ class BaseModule:
             shutil.copy(file, dist)
 
         return res
+
+def allSubdirsOf(b='.'):
+    result = []
+    for d in os.listdir(b):
+        bd = os.path.join(b, d)
+        if os.path.isdir(bd):
+            result.append(bd)
+
+return result
 
     @util.renderer
     def makeCommand(self, props):

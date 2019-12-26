@@ -18,7 +18,8 @@ class BuildBotWorkers(BuildBotModule):
             worker.Worker("github-worker", "pass"),
             worker.Worker("Tester", "pass"),
             worker.Worker("qtBuilder", "pass"),
-            worker.Worker("NPM", "pass")
+            worker.Worker("NPM", "pass"),
+            worker.Worker("assets-builder", "pass")
 
             ]
 

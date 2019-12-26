@@ -20,7 +20,7 @@
     "qtUpdater.py",
     "secretManager.py",
     "NPM.py",
-    "git/gitBin.sh"
-
+    "git/gitBin.sh",
+    "asssetsinstaller.py"
     ]
 }

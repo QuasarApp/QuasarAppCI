@@ -285,5 +285,6 @@ class QtUpdater(Make):
                 default=False
             )
 
+    return list;
 
         ]
