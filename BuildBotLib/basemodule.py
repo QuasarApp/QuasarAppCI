@@ -1,24 +1,24 @@
-import sys
 from buildbot.plugins import util
 import multiprocessing
 import glob
 import shutil
 
+
 class BaseModule:
 
     MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
 
-    def generateCmd(bashString) :
-        return MULTIPLE_SH_COMMAND + [bashString]
-
     def __init__(self):
-        self;
+        self
+
+    def generateCmd(self, bashString):
+        return self.MULTIPLE_SH_COMMAND + [bashString]
 
     def getFactory(self):
         return util.BuildFactory()
 
     def getRepo(self):
-        return "";
+        return ""
 
     def getPropertyes(self):
         return []
@@ -31,7 +31,7 @@ class BaseModule:
             res.append(file)
             shutil.copy(file, dist)
 
-        return res;
+        return res
 
     @util.renderer
     def makeCommand(self, props):

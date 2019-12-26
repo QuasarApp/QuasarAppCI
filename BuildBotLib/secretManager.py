@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 
+
 class SecretManager:
 
     def __init__(self, jsFile):
@@ -10,7 +11,6 @@ class SecretManager:
             self.jsfile = json.loads(contents)
         except:
             pass
-
 
     def getValue(self, key):
         try:
