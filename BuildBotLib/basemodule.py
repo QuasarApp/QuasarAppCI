@@ -63,14 +63,14 @@ class BaseModule:
 
         return res
 
-def allSubdirsOf(b='.'):
-    result = []
-    for d in os.listdir(b):
-        bd = os.path.join(b, d)
-        if os.path.isdir(bd):
-            result.append(bd)
+    def allSubdirsOf(self, b='.'):
+        result = []
+        for d in os.listdir(b):
+            bd = os.path.join(b, d)
+            if os.path.isdir(bd):
+                result.append(bd)
 
-return result
+        return result
 
     @util.renderer
     def makeCommand(self, props):

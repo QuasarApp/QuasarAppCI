@@ -1,164 +1,155 @@
 # This Python file uses the following encoding: utf-8
 
-import BuildBotLib.basemodule as base
+from BuildBotLib.basemodule import BaseModule
 from buildbot.plugins import util, steps
 import os
 from pathlib import Path
 
-LAST_FORMAT = [""]
 
-AndroidBaseDir = str(Path.home()) + "/Android"
-MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
+class AsssetsInstaller(BaseModule):
+    def __init__(self):
+        BaseModule.__init__(self)
 
+    format = ""
 
-def isInit(step):
-    return step.getProperty('module') == 'init'
+    AndroidBaseDir = str(Path.home()) + "/Android"
 
+    def isInit(self, step):
+        return step.getProperty('module') == 'init'
 
-@util.renderer
-def RemoveOldData(props):
+    @util.renderer
+    def RemoveOldData(self, props):
 
-    cmd = "mkdir -p " + AndroidBaseDir
+        cmd = "mkdir -p " + self.AndroidBaseDir
 
-    if os.path.exists(AndroidBaseDir):
-        cmd = "rm -rdf " + AndroidBaseDir + " ; " + cmd
+        if os.path.exists(self.AndroidBaseDir):
+            cmd = "rm -rdf " + self.AndroidBaseDir + " ; " + cmd
 
-    return MULTIPLE_SH_COMMAND + [cmd]
+        return self.generateCmd(cmd)
 
+    @util.renderer
+    def NDKDownloadCMD(self, props):
+        link = props.getProperty("link")
 
-@util.renderer
-def NDKDownloadCMD(props):
-    link = props.getProperty("link")
+        self.format = link[link.rfind('.'):].lower()
 
-    format = link[link.rfind('.'):].lower()
-    LAST_FORMAT[0] = format
+        return ["curl",
+                link,
+                "--output",
+                self.AndroidBaseDir + "/temp" + self.format]
 
-    return ["curl", link, "--output", AndroidBaseDir + "/temp" + format]
+    @util.renderer
+    def ExtractCMD(self, props):
 
+        res = ["echo", "format '" + format + "' not supported"]
 
-@util.renderer
-def ExtractCMD(props):
+        if format == ".zip":
+            res = ["unzip", self.AndroidBaseDir + "/temp" + self.format,
+                   "-d", self.AndroidBaseDir]
 
-    format = LAST_FORMAT[0]
+        return res
 
-    res = ["echo", "format '" + format + "' not supported"]
+    @util.renderer
+    def InstallCMD(self, props):
 
-    if format == ".zip":
-        res = ["unzip", AndroidBaseDir + "/temp" + format,
-               "-d", AndroidBaseDir]
+        module = props.getProperty("module")
+        version = props.getProperty("version")
 
-    return res
+        unit_to_multiplier = {
+            'SDK': 'platform-tools;tools;platforms;android-'+version,
+            'NDK': 'ndk-bundle'
+        }
 
+        return ["sdkmanager", unit_to_multiplier.get(module, "--list")]
 
-@util.renderer
-def InstallCMD(props):
+    @util.renderer
+    def ConfigureCMD(self, props):
 
-    module = props.getProperty("module")
-    version = props.getProperty("version")
+        res = ["echo", "Configure failed"]
 
-    unit_to_multiplier = {
-        'SDK': 'platform-tools;tools;platforms;android-'+version,
-        'NDK': 'ndk-bundle'
-    }
+        if format == ".zip":
 
-    return ["sdkmanager", unit_to_multiplier.get(module, "--list")]
+            all_subdirs = self.allSubdirsOf(self.AndroidBaseDir)
+            latest_subdir = max(all_subdirs, key=os.path.getmtime)
+            res = "mv " + latest_subdir + " " + self.AndroidBaseDir + "/tools"
+            res += " ; ln -sf "
+            res += self.AndroidBaseDir + "/tools/bin/sdkmanager "
+            res += self.home + "/.local/bin/sdkmanager"
+            res += " ; yes | sdkmanager --licenses"
 
+        return self.generateCmd(res)
 
-@util.renderer
-def ConfigureCMD(props):
+    def getFactory(self):
+        factory = super().getFactory()
 
-    format = LAST_FORMAT[0]
-
-    res = ["echo", "Configure failed"]
-
-    if format == ".zip":
-
-        all_subdirs = base.allSubdirsOf(AndroidBaseDir)
-        latest_subdir = max(all_subdirs, key=os.path.getmtime)
-        res = "mv " + latest_subdir + " " + AndroidBaseDir + "/tools"
-        res += " ; ln -sf " + AndroidBaseDir + "/tools/bin/sdkmanager "
-        res += str(Path.home()) + "/.local/bin/sdkmanager"
-        res += " ; yes | sdkmanager --licenses"
-
-    return MULTIPLE_SH_COMMAND + [res]
-
-
-def getFactory():
-    factory = base.getFactory()
-
-    factory.addStep(
-        steps.ShellCommand(
-            command=RemoveOldData,
-            name='rm old  item',
-            doStepIf=isInit,
-            description='rm old',
-            haltOnFailure=True,
+        factory.addStep(
+            steps.ShellCommand(
+                command=self.RemoveOldData,
+                name='rm old  item',
+                doStepIf=self.isInit,
+                description='rm old',
+                haltOnFailure=True,
+            )
         )
-    )
 
-    factory.addStep(
-        steps.ShellCommand(
-            command=NDKDownloadCMD,
-            name='download new item',
-            doStepIf=isInit,
-            description='download new item',
-            haltOnFailure=True,
+        factory.addStep(
+            steps.ShellCommand(
+                command=self.NDKDownloadCMD,
+                name='download new item',
+                doStepIf=self.isInit,
+                description='download new item',
+                haltOnFailure=True,
+            )
         )
-    )
 
-    factory.addStep(
-        steps.ShellCommand(
-            command=ExtractCMD,
-            name='extract new item',
-            doStepIf=isInit,
-            description='extract new item',
-            haltOnFailure=True,
+        factory.addStep(
+            steps.ShellCommand(
+                command=self.ExtractCMD,
+                name='extract new item',
+                doStepIf=self.isInit,
+                description='extract new item',
+                haltOnFailure=True,
+            )
         )
-    )
 
-    factory.addStep(
-        steps.ShellCommand(
-            command=ConfigureCMD,
-            name='configure new item',
-            doStepIf=isInit,
-            description='configure new item',
-            haltOnFailure=True,
+        factory.addStep(
+            steps.ShellCommand(
+                command=self.ConfigureCMD,
+                name='configure new item',
+                doStepIf=self.isInit,
+                description='configure new item',
+                haltOnFailure=True,
+            )
         )
-    )
 
-    factory.addStep(
-        steps.ShellCommand(
-            command=InstallCMD,
-            name='install module',
-            doStepIf=lambda step: not isInit(step),
-            description='configure new item',
-            haltOnFailure=True,
+        factory.addStep(
+            steps.ShellCommand(
+                command=self.InstallCMD,
+                name='install module',
+                doStepIf=lambda step: not self.isInit(step),
+                description='configure new item',
+                haltOnFailure=True,
+            )
         )
-    )
 
-    return factory
+        return factory
 
+    def getPropertyes(self):
+        return [
+            util.ChoiceStringParameter(
+                name='module',
+                choices=["init", "SDK", "NDK"],
+                default="init"
+            ),
 
-def getRepo():
-    return ""
-
-
-def getPropertyes():
-    return [
-        util.ChoiceStringParameter(
-            name='module',
-            choices=["init", "SDK", "NDK"],
-            default="init"
-        ),
-
-        util.StringParameter(
-            name='link',
-            label="url to download item",
-            default=""
-        ),
-        util.StringParameter(
-            name='version',
-            label="Version",
-            default=""
-        ),
-    ]
+            util.StringParameter(
+                name='link',
+                label="url to download item",
+                default=""
+            ),
+            util.StringParameter(
+                name='version',
+                label="Version",
+                default=""
+            ),
+        ]

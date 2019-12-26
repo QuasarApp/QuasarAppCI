@@ -284,7 +284,4 @@ class QtUpdater(Make):
                 label='disable build and install qt (confugure only)',
                 default=False
             )
-
-    return list;
-
         ]
