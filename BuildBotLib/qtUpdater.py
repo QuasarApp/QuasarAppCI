@@ -48,12 +48,6 @@ class QtUpdater(Make):
 
         return command
 
-    @util.renderer
-    def androidXmakeEnv(self, props):
-        return {'ANDROID_NDK_ROOT': self.home + 'andrei/Android/ndk-bundle',
-                'JAVA_HOME': '/usr',
-                'ANDROID_HOME': self.home + '/Android'}
-
     def isConfigureonly(self, step):
         return step.getProperty('configureonly')
 

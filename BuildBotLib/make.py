@@ -114,8 +114,14 @@ class Make(BaseModule):
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
 
+        def cmdWraper(step):
+            if isinstance(cmd, list):
+                return cmd
+
+            return cmd(self, step)
+
         res = steps.ShellCommand(
-            command=cmd,
+            command=cmdWraper,
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda step: not dustepIf(step),
