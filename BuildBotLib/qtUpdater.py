@@ -227,15 +227,15 @@ class QtUpdater(Make):
         def dustepIf(step):
             return not self.isConfigureonly(step)
 
-        res = self.generateStep(self.installStep(platform),
-                                platform,
-                                "install qt into worker",
-                                dustepIf)
-
-        res += self.generateStep(['git', 'clean', '-xdf'],
+        res = [self.generateStep(self.installStep(platform),
                                  platform,
-                                 "clean old build data",
-                                 lambda step: True)
+                                 "install qt into worker",
+                                 dustepIf)]
+
+        res += [self.generateStep(['git', 'clean', '-xdf'],
+                                  platform,
+                                  "clean old build data",
+                                  lambda step: True)]
 
         return res
 
