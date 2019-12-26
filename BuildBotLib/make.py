@@ -115,7 +115,7 @@ class Make(BaseModule):
             if isinstance(cmd, list):
                 return cmd
 
-            return cmd(self, step)
+            return cmd(step)
 
         res = steps.ShellCommand(
             command=cmdWraper,
