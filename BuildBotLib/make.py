@@ -122,7 +122,7 @@ class Make(BaseModule):
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda results, step: not dustepIf(step),
-            name=self.makePrefix() + 'Make ' + platform,
+            name=self.makePrefix() + ' ' + desc + ' ' + platform,
             env=envWraper,
             description=desc,
         )
