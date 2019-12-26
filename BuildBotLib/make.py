@@ -112,7 +112,7 @@ class Make(BaseModule):
 
         @util.renderer
         def cmdWraper(step):
-            if isinstance(cmd, list):
+            if not callable(cmd):
                 return cmd
 
             return cmd(step)
