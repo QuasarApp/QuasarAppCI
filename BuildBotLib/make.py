@@ -105,7 +105,7 @@ class Make(BaseModule):
                 'android': self.androidXmakeEnv,
             }
 
-            return platformEnv[platform](self, step)
+            return platformEnv[platform](step)
 
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
