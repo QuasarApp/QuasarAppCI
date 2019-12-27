@@ -34,9 +34,9 @@ class Make(BaseModule):
         return self.home + '/shared/' + self.destDirPrivate(props)
 
     def destDirUrl(self, props):
-        return "http://quasarapp.ddns.net:3031" + self.home
+        return "http://quasarapp.ddns.net:3031/" + self.destDirPrivate(props)
 
-    def permission(self, props):
+    def permission(self):
         return ["chmod", "-R", "775", self.home + '/shared']
 
     def linuxXmakeCmd(self, props):
@@ -208,7 +208,7 @@ class Make(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=lambda step: self.permission(step),
+                command=self.permission(),
                 name='set permission',
                 haltOnFailure=True,
 
