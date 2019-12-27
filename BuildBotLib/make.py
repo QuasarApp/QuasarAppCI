@@ -198,9 +198,9 @@ class Make(BaseModule):
         factory.addStep(
             steps.DirectoryUpload(
                 workersrc=util.Interpolate('%(prop:copyFolder)s'),
-                masterdest=lambda step: self.destDir(step),
-                url=lambda step: self.destDirUrl(step),
-                doStepIf=lambda step: self.isDeploy(step),
+                masterdest=self.getRendererWraper(self.destDir),
+                url=self.getRendererWraper(self.destDirUrl),
+                doStepIf=self.getRendererWraper(self.isDeploy),
                 name='copy buildet files',
                 description='copy buildet files to shared folder',
             )

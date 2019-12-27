@@ -32,6 +32,14 @@ class BaseModule:
     def getRepo(self):
         return ""
 
+    def getRendererWraper(self, func):
+
+        @util.renderer
+        def cmdWraper(step):
+            return func(step)
+
+        return cmdWraper
+
     def getPropertyes(self):
         return [
             util.BooleanParameter(
