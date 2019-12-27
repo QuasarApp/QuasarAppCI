@@ -198,8 +198,8 @@ class Make(BaseModule):
         factory.addStep(
             steps.DirectoryUpload(
                 workersrc=util.Interpolate('%(prop:copyFolder)s'),
-                masterdest=self.destDir,
-                url=self.destDirUrl,
+                masterdest=lambda step: self.destDir(step),
+                url=lambda step: self.destDirUrl(step),
                 doStepIf=lambda step: self.isDeploy(step),
                 name='copy buildet files',
                 description='copy buildet files to shared folder',
@@ -208,7 +208,7 @@ class Make(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.permission,
+                command=lambda step: self.permission(step),
                 name='set permission',
                 haltOnFailure=True,
 
