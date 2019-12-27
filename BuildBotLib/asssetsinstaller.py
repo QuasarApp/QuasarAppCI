@@ -56,7 +56,7 @@ class AsssetsInstaller(BaseModule):
             'NDK': 'ndk-bundle'
         }
 
-        return ["sdkmanager", unit_to_multiplier.get(module, "--list")]
+        return "sdkmanager " + unit_to_multiplier.get(module, "--list")
 
     def ConfigureCMD(self, props):
 

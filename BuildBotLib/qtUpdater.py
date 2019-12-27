@@ -220,7 +220,7 @@ class QtUpdater(Make):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.getHelp,
+                command=self.getWraper(self.getHelp),
                 name='read help',
                 haltOnFailure=True,
                 description='read help for generate the configure command',
