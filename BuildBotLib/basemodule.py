@@ -72,7 +72,6 @@ class BaseModule:
 
         return result
 
-    @util.renderer
     def makeCommand(self, props):
         command = ['make']
         cpus = multiprocessing.cpu_count()

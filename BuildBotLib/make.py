@@ -86,7 +86,7 @@ class Make(BaseModule):
         return {}
 
     def makePrefix(self):
-        return ""
+        return "X"
 
     def generateStep(self, cmd, platform, desc, checkFunc):
 
@@ -122,7 +122,7 @@ class Make(BaseModule):
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda results, step: not dustepIf(step),
-            name=self.makePrefix() + ' ' + desc + ' ' + platform,
+            name=desc + ' ' + platform,
             env=envWraper,
             description=desc,
         )
@@ -141,7 +141,7 @@ class Make(BaseModule):
 
         res += [self.generateStep(platformXcmd[platform],
                                   platform,
-                                  'generate make files for build the project',
+                                  self.makePrefix() + 'Make',
                                   lambda step: True)]
 
         res += [self.generateStep('make clean',
@@ -151,7 +151,7 @@ class Make(BaseModule):
 
         res += [self.generateStep(self.makeCommand,
                                   platform,
-                                  'build project',
+                                  'Make',
                                   lambda step: True)]
 
         res += [self.generateStep('make deploy',
@@ -171,7 +171,7 @@ class Make(BaseModule):
 
         res += [self.generateStep('make distclean',
                                   platform,
-                                  'release project',
+                                  'clear all data',
                                   lambda step: True)]
 
         return res
