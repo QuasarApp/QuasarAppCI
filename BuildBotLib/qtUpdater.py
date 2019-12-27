@@ -16,11 +16,15 @@ class QtUpdater(Make):
         self.lastTargetDir = ""
 
     def linuxXmakeCmd(self, props):
+        version = props.getProperty("branch")
+
         command = [
             'aqt',
             "install",
             "--outputdir", self.home + "/Qt",
-            'linux', 'desktop'
+            version,
+            'linux',
+            'desktop'
         ]
 
         return command
@@ -38,11 +42,15 @@ class QtUpdater(Make):
 
     def androidXmakeCmd(self, props):
 
+        version = props.getProperty("branch")
+
         command = [
             'aqt',
             "install",
             "--outputdir", self.home + "/Qt",
-            'linux', 'android'
+            version,
+            'linux',
+            'android'
         ]
 
         return command
