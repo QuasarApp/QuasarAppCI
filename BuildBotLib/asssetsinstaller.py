@@ -52,11 +52,11 @@ class AsssetsInstaller(BaseModule):
         version = props.getProperty("version")
 
         unit_to_multiplier = {
-            'SDK': 'platform-tools;tools;platforms;android-'+version,
-            'NDK': 'ndk-bundle'
+            'SDK': ["platform-tools", "tools", "platforms;android-"+version],
+            'NDK': ['ndk-bundle']
         }
 
-        return "sdkmanager " + unit_to_multiplier.get(module, "--list")
+        return ["sdkmanager"] + unit_to_multiplier.get(module, "--list")
 
     def ConfigureCMD(self, props):
 
