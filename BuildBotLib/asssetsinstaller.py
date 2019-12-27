@@ -38,9 +38,9 @@ class AsssetsInstaller(BaseModule):
 
     def ExtractCMD(self, props):
 
-        res = ["echo", "format '" + format + "' not supported"]
+        res = ["echo", "format '" + self.format + "' not supported"]
 
-        if format == ".zip":
+        if self.format == ".zip":
             res = ["unzip", self.AndroidBaseDir + "/temp" + self.format,
                    "-d", self.AndroidBaseDir]
 
@@ -62,7 +62,7 @@ class AsssetsInstaller(BaseModule):
 
         res = ["echo", "Configure failed"]
 
-        if format == ".zip":
+        if self.format == ".zip":
 
             all_subdirs = self.allSubdirsOf(self.AndroidBaseDir)
             latest_subdir = max(all_subdirs, key=os.path.getmtime)
