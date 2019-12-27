@@ -110,15 +110,8 @@ class Make(BaseModule):
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
 
-        @util.renderer
-        def cmdWraper(step):
-            if not callable(cmd):
-                return cmd
-
-            return cmd(step)
-
         res = steps.ShellCommand(
-            command=cmdWraper,
+            command=self.getWraper(cmd),
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda results, step: not dustepIf(step),
@@ -198,9 +191,9 @@ class Make(BaseModule):
         factory.addStep(
             steps.DirectoryUpload(
                 workersrc=util.Interpolate('%(prop:copyFolder)s'),
-                masterdest=self.getRendererWraper(self.destDir),
-                url=self.getRendererWraper(self.destDirUrl),
-                doStepIf=self.getRendererWraper(self.isDeploy),
+                masterdest=self.getWraper(self.destDir),
+                url=self.getWraper(self.destDirUrl),
+                doStepIf=self.getWraper(self.isDeploy),
                 name='copy buildet files',
                 description='copy buildet files to shared folder',
             )

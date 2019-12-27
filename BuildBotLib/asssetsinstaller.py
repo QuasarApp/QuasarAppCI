@@ -17,7 +17,6 @@ class AsssetsInstaller(BaseModule):
     def isInit(self, step):
         return step.getProperty('module') == 'init'
 
-    @util.renderer
     def RemoveOldData(self, props):
 
         cmd = "mkdir -p " + self.AndroidBaseDir
@@ -27,7 +26,6 @@ class AsssetsInstaller(BaseModule):
 
         return self.generateCmd(cmd)
 
-    @util.renderer
     def NDKDownloadCMD(self, props):
         link = props.getProperty("link")
 
@@ -38,7 +36,6 @@ class AsssetsInstaller(BaseModule):
                 "--output",
                 self.AndroidBaseDir + "/temp" + self.format]
 
-    @util.renderer
     def ExtractCMD(self, props):
 
         res = ["echo", "format '" + format + "' not supported"]
@@ -49,7 +46,6 @@ class AsssetsInstaller(BaseModule):
 
         return res
 
-    @util.renderer
     def InstallCMD(self, props):
 
         module = props.getProperty("module")
@@ -62,7 +58,6 @@ class AsssetsInstaller(BaseModule):
 
         return ["sdkmanager", unit_to_multiplier.get(module, "--list")]
 
-    @util.renderer
     def ConfigureCMD(self, props):
 
         res = ["echo", "Configure failed"]

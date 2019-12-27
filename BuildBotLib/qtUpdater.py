@@ -1,6 +1,8 @@
 # This Python file uses the following encoding: utf-8
 
 from BuildBotLib.make import Make
+from BuildBotLib.basemodule import BaseModule
+
 from buildbot.plugins import util, steps
 
 import subprocess
@@ -240,7 +242,7 @@ class QtUpdater(Make):
 
     def getPropertyes(self):
 
-        base = super().getPropertyes()
+        base = BaseModule.getPropertyes(self)
 
         return base + [
             util.BooleanParameter(

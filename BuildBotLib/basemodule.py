@@ -24,6 +24,10 @@ class BaseModule:
         return step.getProperty('Android')
 
     def generateCmd(self, bashString):
+
+        if isinstance(bashString, list):
+            return bashString
+
         return self.MULTIPLE_SH_COMMAND + [bashString]
 
     def getFactory(self):
@@ -32,11 +36,14 @@ class BaseModule:
     def getRepo(self):
         return ""
 
-    def getRendererWraper(self, func):
+    def getWraper(self, object):
 
         @util.renderer
         def cmdWraper(step):
-            return func(step)
+            if not callable(object):
+                return self.generateCmd(object)
+
+            return object(step)
 
         return cmdWraper
 
