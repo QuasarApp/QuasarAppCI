@@ -80,7 +80,6 @@ class QtUpdater(Make):
 
         return res
 
-    @util.renderer
     def getHelp(self, props):
 
         result = ""
@@ -152,7 +151,6 @@ class QtUpdater(Make):
         self.lastTargetDir = self.home + "/Qt/" + branch + "/" + platform
         return ["-prefix", self.lastTargetDir]
 
-    @util.renderer
     def getWindowsConfigOptions(self, props):
         list = [
             "-skip", "qtactiveqt",

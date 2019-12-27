@@ -79,9 +79,9 @@ class AsssetsInstaller(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.RemoveOldData,
+                command=self.getWraper(self.RemoveOldData),
                 name='rm old  item',
-                doStepIf=self.isInit,
+                doStepIf=self.getWraper(self.isInit),
                 description='rm old',
                 haltOnFailure=True,
             )
@@ -89,9 +89,9 @@ class AsssetsInstaller(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.NDKDownloadCMD,
+                command=self.getWraper(self.NDKDownloadCMD),
                 name='download new item',
-                doStepIf=self.isInit,
+                doStepIf=self.getWraper(self.isInit),
                 description='download new item',
                 haltOnFailure=True,
             )
@@ -99,9 +99,9 @@ class AsssetsInstaller(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.ExtractCMD,
+                command=self.getWraper(self.ExtractCMD),
                 name='extract new item',
-                doStepIf=self.isInit,
+                doStepIf=self.getWraper(self.isInit),
                 description='extract new item',
                 haltOnFailure=True,
             )
@@ -109,9 +109,9 @@ class AsssetsInstaller(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.ConfigureCMD,
+                command=self.getWraper(self.ConfigureCMD),
                 name='configure new item',
-                doStepIf=self.isInit,
+                doStepIf=self.getWraper(self.isInit),
                 description='configure new item',
                 haltOnFailure=True,
             )
@@ -119,7 +119,7 @@ class AsssetsInstaller(BaseModule):
 
         factory.addStep(
             steps.ShellCommand(
-                command=self.InstallCMD,
+                command=self.getWraper(self.InstallCMD),
                 name='install module',
                 doStepIf=lambda step: not self.isInit(step),
                 description='configure new item',
