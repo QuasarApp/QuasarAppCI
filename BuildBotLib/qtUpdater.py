@@ -211,6 +211,23 @@ class QtUpdater(Make):
 
         return res
 
+    def generatePlatformSteps(self, platform):
+
+        platformXcmd = {
+            'linux': self.linuxXmakeCmd,
+            'windows': self.windowsXmakeCmd,
+            'android': self.androidXmakeCmd,
+        }
+
+        res = []
+
+        res += [self.generateStep(platformXcmd[platform],
+                                  platform,
+                                  self.makePrefix() + 'Make',
+                                  lambda step: True)]
+
+        return res
+
     def getFactory(self):
         factory = util.BuildFactory()
 
