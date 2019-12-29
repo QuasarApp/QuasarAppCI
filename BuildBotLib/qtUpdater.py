@@ -40,8 +40,6 @@ class QtUpdater(Make):
             'ONLINE="~/repo"'
         ]
 
-        self.lastTargetDir = self.home + "/Qt/" + version + "/android"
-
         return command
 
     def androidXmakeCmd(self, props):
@@ -56,6 +54,9 @@ class QtUpdater(Make):
             'linux',
             'android'
         ]
+
+        self.lastTargetDir = self.home + "/Qt/" + version + "/android"
+
 
         return command
 
