@@ -57,7 +57,6 @@ class QtUpdater(Make):
 
         self.lastTargetDir = self.home + "/Qt/" + version + "/android"
 
-
         return command
 
     def isConfigureonly(self, step):
