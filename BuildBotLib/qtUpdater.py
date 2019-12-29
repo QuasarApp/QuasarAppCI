@@ -27,6 +27,8 @@ class QtUpdater(Make):
             'desktop'
         ]
 
+        self.lastTargetDir = self.home + "/Qt/" + version + "/gcc_64"
+
         return command
 
     def windowsXmakeCmd(self, props):
@@ -37,6 +39,8 @@ class QtUpdater(Make):
             "CONFIG+=qtquickcompiler",
             'ONLINE="~/repo"'
         ]
+
+        self.lastTargetDir = self.home + "/Qt/" + version + "/android"
 
         return command
 
