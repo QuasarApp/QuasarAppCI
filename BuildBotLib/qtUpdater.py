@@ -189,13 +189,14 @@ class QtUpdater(Make):
             'android': self.lsAndroid,
         }
 
+        return self.generateCmd(platformLsCmd[platform])
+
+    def installExtraStep(self, platform):
         cpCmd = {
             'windows': self.cpExtraWindows(),
         }
 
-        stringCmd = platformLsCmd[platform] + "; " + cpCmd.get(platform, "")
-
-        return self.generateCmd(stringCmd)
+        return self.generateCmd(cpCmd.get(platform, ""))
 
     def generateInstallStep(self, platform):
 
@@ -205,6 +206,11 @@ class QtUpdater(Make):
         res = [self.generateStep(self.installStep(platform),
                                  platform,
                                  "install qt into worker",
+                                 dustepIf)]
+
+        res = [self.generateStep(self.installExtraStep(platform),
+                                 platform,
+                                 "copy qt assets into worker",
                                  dustepIf)]
 
         res += [self.generateStep(['git', 'clean', '-xdf'],
