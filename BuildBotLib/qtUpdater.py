@@ -189,7 +189,7 @@ class QtUpdater(Make):
             'android': self.lsAndroid,
         }
 
-        return self.generateCmd(platformLsCmd[platform])
+        return self.getWraper(platformLsCmd[platform])
 
     def installExtraStep(self, platform):
         cpCmd = {
