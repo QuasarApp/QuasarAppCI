@@ -106,19 +106,19 @@ class QtUpdater(Make):
 
         return ["echo", result]
 
-    def lsLinux(self):
+    def lsLinux(self, steps):
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-linux"
         return str(res)
 
-    def lsWindows(self):
+    def lsWindows(self, steps):
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-windows"
         return str(res)
 
-    def lsAndroid(self):
+    def lsAndroid(self, steps):
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-android"
