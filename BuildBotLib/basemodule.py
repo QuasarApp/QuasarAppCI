@@ -8,11 +8,9 @@ from pathlib import Path
 
 class BaseModule:
 
-    MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
-    home = str(Path.home())
-
     def __init__(self):
-        self
+        self.MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
+        self.home = str(Path.home())
 
     def isWin(self, step):
         return step.getProperty('Windows')

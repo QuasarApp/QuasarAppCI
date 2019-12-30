@@ -8,11 +8,10 @@ import subprocess
 
 class QtUpdater(Make):
 
-    qtDefaultHelp = []
-    lastTargetDir = ""
-
     def __init__(self):
         Make.__init__(self)
+        self.qtDefaultHelp = []
+        self.lastTargetDir = ""
 
     def linuxXmakeCmd(self, props):
         version = props.getProperty("branch")
