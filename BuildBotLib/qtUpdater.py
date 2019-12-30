@@ -25,7 +25,7 @@ class QtUpdater(Make):
             'desktop'
         ]
 
-        self.lastTargetDir = self.home + "/Qt/" + version + "/gcc_64"
+        self.lastTargetDir = str(self.home + "/Qt/" + version + "/gcc_64")
 
         return command
 
@@ -53,7 +53,7 @@ class QtUpdater(Make):
             'android'
         ]
 
-        self.lastTargetDir = self.home + "/Qt/" + version + "/android"
+        self.lastTargetDir = str(self.home + "/Qt/" + version + "/android")
 
         return command
 
@@ -110,19 +110,19 @@ class QtUpdater(Make):
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-linux"
-        return res
+        return str(res)
 
     def lsWindows(self):
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-windows"
-        return res
+        return str(res)
 
     def lsAndroid(self):
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-android"
-        return res
+        return str(res)
 
     def cpExtraWindows(self):
 
@@ -159,7 +159,7 @@ class QtUpdater(Make):
         if (not len(platform)):
             branch = "Unknown"
 
-        self.lastTargetDir = self.home + "/Qt/" + branch + "/" + platform
+        self.lastTargetDir = str(self.home + "/Qt/" + branch + "/" + platform)
         return ["-prefix", self.lastTargetDir]
 
     def getWindowsConfigOptions(self, props):
