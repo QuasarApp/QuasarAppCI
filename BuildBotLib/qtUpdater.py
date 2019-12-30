@@ -26,8 +26,6 @@ class QtUpdater(Make):
         ]
 
         self.lastTargetDir = self.home + "/Qt/" + version + "/gcc_64"
-        print("set TARGET int ")
-        print(self)
 
         return command
 
@@ -109,8 +107,6 @@ class QtUpdater(Make):
         return ["echo", result]
 
     def lsLinux(self):
-        print("get TARGET int ")
-        print(self)
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-linux"
@@ -188,9 +184,9 @@ class QtUpdater(Make):
     def installStep(self, platform):
 
         platformLsCmd = {
-            'linux': self.lsLinux(),
-            'windows': self.lsWindows(),
-            'android': self.lsAndroid(),
+            'linux': self.lsLinux,
+            'windows': self.lsWindows,
+            'android': self.lsAndroid,
         }
 
         cpCmd = {
