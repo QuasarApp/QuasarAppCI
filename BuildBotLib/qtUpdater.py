@@ -26,7 +26,7 @@ class QtUpdater(Make):
         ]
 
         self.lastTargetDir = self.home + "/Qt/" + version + "/gcc_64"
-        print(self)
+        print("set TARGET int " self)
 
         return command
 
@@ -108,8 +108,7 @@ class QtUpdater(Make):
         return ["echo", result]
 
     def lsLinux(self):
-        print(self)
-        print(self.lastTargetDir)
+        print("get TARGET int " self)
 
         res = "ln -sf " + self.lastTargetDir + "/bin/qmake "
         res += self.home + "/.local/bin/qmake-linux"
