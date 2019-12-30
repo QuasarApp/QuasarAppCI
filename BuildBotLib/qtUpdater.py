@@ -26,6 +26,7 @@ class QtUpdater(Make):
         ]
 
         self.lastTargetDir = self.home + "/Qt/" + version + "/gcc_64"
+        print self.lastTargetDir
 
         return command
 
