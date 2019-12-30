@@ -208,10 +208,10 @@ class QtUpdater(Make):
                                  "install qt into worker",
                                  dustepIf)]
 
-        res = [self.generateStep(self.installExtraStep(platform),
-                                 platform,
-                                 "copy qt assets into worker",
-                                 dustepIf)]
+        res += [self.generateStep(self.installExtraStep(platform),
+                                  platform,
+                                  "copy qt assets into worker",
+                                  dustepIf)]
 
         res += [self.generateStep(['git', 'clean', '-xdf'],
                                   platform,
