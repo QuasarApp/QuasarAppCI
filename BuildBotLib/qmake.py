@@ -47,6 +47,6 @@ class QMake(Make):
         return command
 
     def androidXmakeEnv(self, props):
-        return {'ANDROID_NDK_ROOT': self.home + 'andrei/Android/ndk-bundle',
+        return {'ANDROID_NDK_ROOT': self.home + '/Android/ndk-bundle',
                 'JAVA_HOME': '/usr',
                 'ANDROID_HOME': self.home + '/Android'}
