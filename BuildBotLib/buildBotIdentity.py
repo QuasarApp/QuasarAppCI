@@ -37,7 +37,7 @@ class BuildBotIdentity(BuildBotModule):
                     util.AnyEndpointMatcher(role="QuasarCore"),
                 ],
                 roleMatchers=[
-                  util.RolesFromGroups(groupPrefix='QuasarCore/')
+                  util.RolesFromGroups(groupPrefix='QuasarCore/'),
                   util.RolesFromEmails(admins=["endriimail@gmail.com"])
                 ]
         )
@@ -46,5 +46,5 @@ class BuildBotIdentity(BuildBotModule):
 
         self.masterConf['www']['auth'] = util.GitHubAuth(secret.getValue("QuasarAppCIID"),
                                                          secret.getValue("QuasarAppCIToken"),
-                                                         apiVersion=4, getTeamsMembership=True),
+                                                         apiVersion=4, getTeamsMembership=True)
 
