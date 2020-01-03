@@ -40,7 +40,7 @@ class BuildBotIdentity(BuildBotModule):
                 ],
                 roleMatchers=[
                   util.RolesFromGroups(groupPrefix='QuasarApp/'),
-                  util.RolesFromEmails(admins=["endriimail@gmail.com"])
+                  util.RolesFromEmails(admins=["EndrIIMail@gmail.com"])
                 ]
         )
 
