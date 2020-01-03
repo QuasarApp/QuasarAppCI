@@ -50,8 +50,9 @@ class BuildBotIdentity(BuildBotModule):
 
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
-        self.masterConf['www']['auth'] = util.UserPasswordAuth([
-            ('EndrII', secret.getValue("ENDRII")),
-            ('ZIG', secret.getValue("ZIG")),
-            ('Roma', secret.getValue("Roma"))
-            ])
+#        self.masterConf['www']['auth'] = util.UserPasswordAuth([
+#            ('EndrII', secret.getValue("ENDRII")),
+#            ('ZIG', secret.getValue("ZIG")),
+#            ('Roma', secret.getValue("Roma"))
+#            ])
+        self.masterConf['www']['auth'] = util.GitHubAuth("clientid", "clientsecret"),
