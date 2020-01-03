@@ -30,8 +30,7 @@ class BuildBotIdentity(BuildBotModule):
                                       plugins=dict(
                                         waterfall_view={},
                                         console_view={},
-                                        grid_view={},
-                                        badges={}))
+                                        grid_view={}))
 
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules=[
@@ -55,4 +54,4 @@ class BuildBotIdentity(BuildBotModule):
 #            ('ZIG', secret.getValue("ZIG")),
 #            ('Roma', secret.getValue("Roma"))
 #            ])
-        self.masterConf['www']['auth'] = util.GitHubAuth("clientid", "clientsecret"),
+        self.masterConf['www']['auth'] = util.GitHubAuth("clientid", "clientsecret")
