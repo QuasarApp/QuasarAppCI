@@ -110,7 +110,7 @@ class Make(BaseModule):
         def dustepIf(step):
             return checkFunc(step) and platformCgek[platform](step)
 
-        res = steps.ShellCommand(
+        res = steps.Compile(
             command=self.getWraper(cmd),
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
