@@ -117,6 +117,7 @@ class Make(BaseModule):
             hideStepIf=lambda results, step: not dustepIf(step),
             name=desc + ' ' + platform,
             env=envWraper,
+            warningPattern="^*[Ww]arning:*",
             description=desc,
         )
 
