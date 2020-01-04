@@ -36,13 +36,13 @@ class BuildBotIdentity(BuildBotModule):
                 allowRules=[
                     util.AnyEndpointMatcher(role="admins"),
                     util.StopBuildEndpointMatcher(role="owner"),
-                    util.AnyEndpointMatcher(role="quasarcore"),
+                    util.ForceBuildEndpointMatcher(role="quasarcore"),
                     util.RebuildBuildEndpointMatcher(role="quasarcore")
                 ],
                 roleMatchers=[
                   util.RolesFromGroups(groupPrefix='QuasarApp/'),
                   #util.RolesFromEmails(admins=["EndrIIMail@gmail.com"]),
-                  util.RolesFromOwner(role="owner")
+                  #util.RolesFromOwner(role="owner")
 
                 ]
         )
