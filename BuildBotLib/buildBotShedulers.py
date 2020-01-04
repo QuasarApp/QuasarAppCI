@@ -26,9 +26,9 @@ class BuildBotShedulers(BuildBotModule):
 
         self.masterConf['schedulers'] = self.shedulers + [
             schedulers.AnyBranchScheduler(
-                name='Tester',
+                name='github-tester',
                 change_filter=util.ChangeFilter(project_re="qmake-*"),
-                builderNames=['Tester'],
+                builderNames=['github-tester'],
                 properties={
                     'clean': True,
                     'test': True,

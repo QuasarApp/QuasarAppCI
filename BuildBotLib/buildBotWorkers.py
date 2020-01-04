@@ -16,7 +16,7 @@ class BuildBotWorkers(BuildBotModule):
         # worker name and password must be configured on the worker.
         self.masterConf['workers'] = [
             worker.Worker("github-worker", "pass"),
-            worker.Worker("Tester", "pass"),
+            worker.Worker("github-tester", "pass"),
             worker.Worker("qtBuilder", "pass"),
             worker.Worker("NPM", "pass"),
             worker.Worker("assets-builder", "pass")
