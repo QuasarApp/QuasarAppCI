@@ -35,17 +35,15 @@ class BuildBotIdentity(BuildBotModule):
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules=[
                     util.AnyEndpointMatcher(role="admins"),
-                    util.AnyEndpointMatcher(role="quasarcore"),
-
-#                    util.StopBuildEndpointMatcher(builder="*", role="owner"),
-#                    util.ForceBuildEndpointMatcher(builder="github-worker",
-#                                                   role="quasarcore"),
-#                    util.RebuildBuildEndpointMatcher(builder="github",
-#                                                     role="quasarcore")
+                    util.StopBuildEndpointMatcher(builder="*", role="owner"),
+                    util.ForceBuildEndpointMatcher(builder="github*",
+                                                   role="quasarcore"),
+                    util.RebuildBuildEndpointMatcher(builder="github*",
+                                                     role="quasarcore")
                 ],
                 roleMatchers=[
                   util.RolesFromGroups(groupPrefix='QuasarApp/'),
-                  #util.RolesFromEmails(admins=["EndrIIMail@gmail.com"]),
+                  util.RolesFromEmails(admins=["EndrIIMail@gmail.com"]),
                   util.RolesFromOwner(role="owner")
 
                 ]
