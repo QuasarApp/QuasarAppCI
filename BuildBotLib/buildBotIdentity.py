@@ -36,7 +36,7 @@ class BuildBotIdentity(BuildBotModule):
                 allowRules=[
                     util.AnyEndpointMatcher(role="admins"),
                     util.StopBuildEndpointMatcher(builder="*", role="owner"),
-                    util.ForceBuildEndpointMatcher(builder="github-tester",
+                    util.ForceBuildEndpointMatcher(builder="github-worker",
                                                    role="quasarcore"),
                     util.RebuildBuildEndpointMatcher(builder="github",
                                                      role="quasarcore")
