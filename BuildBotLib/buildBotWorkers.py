@@ -2,6 +2,7 @@
 
 from BuildBotLib.buildBotModule import BuildBotModule
 from buildbot.plugins import worker
+from BuildBotLib.secretManager import SecretManager
 
 
 class BuildBotWorkers(BuildBotModule):
@@ -14,13 +15,14 @@ class BuildBotWorkers(BuildBotModule):
         # a Worker object, specifying a unique worker
         # name and password.  The same
         # worker name and password must be configured on the worker.
-        self.masterConf['workers'] = [
-            worker.Worker("github-worker", "pass"),
-            worker.Worker("github-tester", "pass"),
-            worker.Worker("qtBuilder", "pass"),
-            worker.Worker("NPM", "pass"),
-            worker.Worker("assets-builder", "pass")
+        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
+        password = secret.getValue('WorkerPass')
+
+        self.masterConf['workers'] = [
+            worker.Worker("AndroidBuilder", password),
+            worker.Worker("LinuxBuilder", password),
+            worker.Worker("WindowBuilder", password),
             ]
 
         # 'protocols' contains information
