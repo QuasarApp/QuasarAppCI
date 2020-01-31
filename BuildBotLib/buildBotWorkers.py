@@ -3,6 +3,7 @@
 from BuildBotLib.buildBotModule import BuildBotModule
 from buildbot.plugins import worker
 from BuildBotLib.secretManager import SecretManager
+from pathlib import Path
 
 
 class BuildBotWorkers(BuildBotModule):
@@ -15,9 +16,9 @@ class BuildBotWorkers(BuildBotModule):
         # a Worker object, specifying a unique worker
         # name and password.  The same
         # worker name and password must be configured on the worker.
-        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
+        scr = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
 
-        password = secret.getValue('WorkerPass')
+        password = scr.getValue('WorkerPass')
 
         self.masterConf['workers'] = [
             worker.Worker("AndroidBuilder", password),
