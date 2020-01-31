@@ -192,16 +192,6 @@ class Make(BaseModule):
             )
         )
 
-        factory.addStep(
-            steps.ShellCommand(
-                command=self.permission(),
-                name='set permission',
-                haltOnFailure=True,
-
-                description='set permission for shared folder',
-            )
-        )
-
         return factory
 
     def getPropertyes(self):
