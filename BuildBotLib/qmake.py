@@ -7,7 +7,7 @@ from BuildBotLib.secretManager import SecretManager
 class QMake(Make):
 
     def __init__(self, platform):
-        Make.__init__(self)
+        Make.__init__(self, platform)
 
     def makePrefix(self):
         return "Q"
