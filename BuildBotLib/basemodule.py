@@ -8,18 +8,23 @@ from pathlib import Path
 
 class BaseModule:
 
-    def __init__(self):
+    P_Windows = 'Windows'
+    P_Linux = 'Linux'
+    P_Android = 'Android'
+
+    def __init__(self, platform):
         self.MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
         self.home = str(Path.home())
+        self.platform = platform
 
     def isWin(self, step):
-        return step.getProperty('Windows')
+        return self.platform == BaseModule.P_Windows
 
     def isLinux(self, step):
-        return step.getProperty('Linux')
+        return self.platform == BaseModule.P_Linux
 
     def isAndroid(self, step):
-        return step.getProperty('Android')
+        return self.platform == BaseModule.P_Android
 
     def generateCmd(self, bashString):
 
@@ -47,23 +52,6 @@ class BaseModule:
 
     def getPropertyes(self):
         return [
-            util.BooleanParameter(
-                name='Windows',
-                label='Windows version project',
-                default=True
-            ),
-
-            util.BooleanParameter(
-                name='Linux',
-                label='Linux version project',
-                default=True
-            ),
-
-            util.BooleanParameter(
-                name='Android',
-                label='Android version project',
-                default=True
-            ),
         ]
 
     def copyRegExp(self, source, dist):

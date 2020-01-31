@@ -8,8 +8,8 @@ from BuildBotLib.secretManager import SecretManager
 
 
 class Make(BaseModule):
-    def __init__(self):
-        BaseModule.__init__(self)
+    def __init__(self, platform):
+        BaseModule.__init__(self, platform)
 
     def isClean(self, step):
         return step.getProperty('clean')
@@ -90,25 +90,19 @@ class Make(BaseModule):
 
     def generateStep(self, cmd, platform, desc, checkFunc):
 
-        platformCgek = {
-            'linux': self.isLinux,
-            'windows': self.isWin,
-            'android': self.isAndroid,
-        }
-
         @util.renderer
         def envWraper(step):
 
             platformEnv = {
-                'linux': self.linuxXmakeEnv,
-                'windows': self.windowsXmakeEnv,
-                'android': self.androidXmakeEnv,
+                BaseModule.P_Linux: self.linuxXmakeEnv,
+                BaseModule.P_Windows: self.windowsXmakeEnv,
+                BaseModule.P_Android: self.androidXmakeEnv,
             }
 
             return platformEnv[platform](step)
 
         def dustepIf(step):
-            return checkFunc(step) and platformCgek[platform](step)
+            return checkFunc(step)
 
         res = steps.Compile(
             command=self.getWraper(cmd),
@@ -126,9 +120,9 @@ class Make(BaseModule):
     def generatePlatformSteps(self, platform):
 
         platformXcmd = {
-            'linux': self.linuxXmakeCmd,
-            'windows': self.windowsXmakeCmd,
-            'android': self.androidXmakeCmd,
+            BaseModule.P_Linux: self.linuxXmakeCmd,
+            BaseModule.P_Windows: self.windowsXmakeCmd,
+            BaseModule.P_Android: self.androidXmakeCmd,
         }
 
         res = []
@@ -185,9 +179,7 @@ class Make(BaseModule):
             )
         )
 
-        factory.addSteps(self.generatePlatformSteps('linux'))
-        factory.addSteps(self.generatePlatformSteps('windows'))
-        factory.addSteps(self.generatePlatformSteps('android'))
+        factory.addSteps(self.generatePlatformSteps(self.platform))
 
         factory.addStep(
             steps.DirectoryUpload(

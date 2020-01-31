@@ -6,6 +6,7 @@
     "README.md",
     "testmodule.py",
     "qmake.py",
+    "crossplatformQmake.py",
     "cmake.py",
     "make.py",
     "stepsLib.py",

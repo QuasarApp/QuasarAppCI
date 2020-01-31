@@ -1,20 +1,16 @@
 # This Python file uses the following encoding: utf-8
-
-from BuildBotLib.make import Make
+from BuildBotLib.qmake import QMake
 from BuildBotLib.secretManager import SecretManager
 
 
-class QMake(Make):
+class CrossplatformQmake (QMake):
 
     def __init__(self, platform):
-        Make.__init__(self, platform)
+        QMake.__init__(self, platform)
 
-    def makePrefix(self):
-        return "Q"
-
-    def mainCmd(self):
+    def linuxXmakeCmd(self, props):
         command = [
-            'qmake',
+            'qmake-linux',
             "-r",
             "CONFIG+=qtquickcompiler",
             'ONLINE="~/repo"'
@@ -22,17 +18,22 @@ class QMake(Make):
 
         return command
 
-    def linuxXmakeCmd(self, props):
-        return self.mainCmd()
-
     def windowsXmakeCmd(self, props):
-        return self.mainCmd()
+        command = [
+            'qmake-windows',
+            '-spec', 'win32-g++',
+            "-r",
+            "CONFIG+=qtquickcompiler",
+            'ONLINE="~/repo"'
+        ]
+
+        return command
 
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
         command = [
-            'qmake',
+            'qmake-android',
             '-spec', 'android-clang',
             "-r",
             "CONFIG+=qtquickcompiler",

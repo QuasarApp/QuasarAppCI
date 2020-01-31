@@ -11,8 +11,8 @@ from BuildBotLib.secretManager import *
 
 class CMake(Make):
 
-    def __init__(self):
-        Make.__init__(self);
+    def __init__(self, platform):
+        Make.__init__(self, platform);
 
     def linuxXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
