@@ -23,7 +23,7 @@ class BuildBotWorkers(BuildBotModule):
         self.masterConf['workers'] = [
             worker.Worker("AndroidBuilder", password),
             worker.Worker("LinuxBuilder", password),
-            worker.Worker("WindowBuilder", password),
+            worker.Worker("WindowsBuilder", password),
             ]
 
         # 'protocols' contains information
