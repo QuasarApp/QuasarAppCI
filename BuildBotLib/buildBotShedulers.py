@@ -30,7 +30,7 @@ class BuildBotShedulers(BuildBotModule):
                 change_filter=util.ChangeFilter(project_re="qmake-*"),
                 builderNames=['LinuxBuilder',
                               'AndroidBuilder',
-                              'WindowBuilder',
+                              'WindowsBuilder',
                               ],
                 properties={
                     'clean': True,
