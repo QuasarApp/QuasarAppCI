@@ -22,6 +22,7 @@
     "secretManager.py",
     "NPM.py",
     "git/gitBin.sh",
-    "asssetsinstaller.py"
+    "asssetsinstaller.py",
+    "qifRepogen.py"
     ]
 }

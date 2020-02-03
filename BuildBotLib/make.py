@@ -5,11 +5,13 @@ from BuildBotLib.basemodule import BaseModule
 from buildbot.plugins import util, steps
 import datetime
 from BuildBotLib.secretManager import SecretManager
+import hashlib
 
 
 class Make(BaseModule):
     def __init__(self, platform):
         BaseModule.__init__(self, platform)
+        self.tempRepoDir = ""
 
     def isClean(self, step):
         return step.getProperty('clean')
@@ -29,9 +31,22 @@ class Make(BaseModule):
 
         return repo[repo.rfind('/'): len(repo) - 4] + "/" + now
 
+    def tempDirPrivate(self, props):
+        repo = str(props.getProperty('repository'))
+        now = datetime.datetime.now().strftime("(%H_%M_%S)_%m-%d-%Y")
+
+        m = hashlib.md5()
+        m.update(repo[repo.rfind('/'): len(repo) - 4] + "/" + now)
+
+        return m.hexdigest()
+
     def destDir(self, props):
 
         return self.home + '/shared/' + self.destDirPrivate(props)
+
+    def tempDir(self, props):
+        self.tempRepoDir = self.home + '/rTemp/' + self.tempDirPrivate(props)
+        return self.tempRepoDir
 
     def destDirUrl(self, props):
         return "http://quasarapp.ddns.net:3031" + self.destDirPrivate(props)
@@ -157,6 +172,26 @@ class Make(BaseModule):
                                   'release project',
                                   self.isRelease)]
 
+        if platform != BaseModule.P_Android:
+
+            res += steps.DirectoryUpload(
+                workersrc=util.Interpolate('%(prop:repoFolder)s'),
+                masterdest=self.getWraper(self.tempDir),
+                doStepIf=self.getWraper(self.isRelease),
+                name='copy repository files',
+                description='copy repository files to temp folder',
+            )
+
+            @util.renderer
+            def tempDir(props):
+                return self.tempRepoDir
+
+            res += [steps.Trigger(schedulerNames=['repogen'],
+                                  doStepIf=lambda step: self.isRelease(step),
+                                  set_properties={"tempPackage": self.tempDir,
+                                                  "platform": platform}
+                                  )]
+
         res += [self.generateStep(self.makeTarget('distclean'),
                                   platform,
                                   'clear all data',
@@ -224,5 +259,9 @@ class Make(BaseModule):
                 label='Folder with buildet data',
                 default="Distro"
             ),
-
+            util.StringParameter(
+                name='repoFolder',
+                label='Folder with repository data',
+                default="Repo"
+            ),
         ]
