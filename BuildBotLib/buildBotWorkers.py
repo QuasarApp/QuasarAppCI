@@ -24,6 +24,7 @@ class BuildBotWorkers(BuildBotModule):
             worker.Worker("AndroidBuilder", password),
             worker.Worker("LinuxBuilder", password),
             worker.Worker("WindowsBuilder", password),
+            worker.Worker("RepoGen", password),
             ]
 
         # 'protocols' contains information
