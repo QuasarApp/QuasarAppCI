@@ -75,6 +75,10 @@ class BaseModule:
 
     def makeCommand(self, props):
         command = ['make']
+
+        if self.platform == BaseModule.P_Windows:
+            command = ['mingw32-make']
+
         cpus = multiprocessing.cpu_count()
 
         if cpus:
