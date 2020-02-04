@@ -132,7 +132,7 @@ class Make(BaseModule):
                                   self.makePrefix() + 'Make',
                                   lambda step: True)]
 
-        res += [self.generateStep('make clean',
+        res += [self.generateStep(self.makeTarget('clean'),
                                   platform,
                                   'clean old data',
                                   self.isClean)]
@@ -142,22 +142,22 @@ class Make(BaseModule):
                                   'Make',
                                   lambda step: True)]
 
-        res += [self.generateStep('make deploy',
+        res += [self.generateStep(self.makeTarget('deploy'),
                                   platform,
                                   'deploy project',
                                   self.isDeploy)]
 
-        res += [self.generateStep('make test',
+        res += [self.generateStep(self.makeTarget('test'),
                                   platform,
                                   'test project',
                                   self.isTest)]
 
-        res += [self.generateStep('make release',
+        res += [self.generateStep(self.makeTarget('release'),
                                   platform,
                                   'release project',
                                   self.isRelease)]
 
-        res += [self.generateStep('make distclean',
+        res += [self.generateStep(self.makeTarget('distclean'),
                                   platform,
                                   'clear all data',
                                   lambda step: True)]
