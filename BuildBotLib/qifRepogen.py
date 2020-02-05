@@ -5,7 +5,7 @@ from buildbot.plugins import util, steps
 
 class QIFRepogen (BaseModule):
     def __init__(self):
-        BaseModule.init(self, BaseModule.P_Linux)
+        BaseModule.__init__(self, BaseModule.P_Linux)
         self.repogen = "repogen"
 
     def getFactory(self):
