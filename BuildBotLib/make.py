@@ -27,7 +27,7 @@ class Make(BaseModule):
         return step.getProperty('test')
 
     def getNameProjectFromGitUrl(self, url):
-        return url[url.rfind('/'): len(url) - 4]
+        return url[url.rfind('/') + 1: len(url) - 4]
 
     def destDirPrivate(self, props):
         repo = str(props.getProperty('repository'))

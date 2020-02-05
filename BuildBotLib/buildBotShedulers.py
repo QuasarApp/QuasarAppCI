@@ -29,9 +29,7 @@ class BuildBotShedulers(BuildBotModule):
                         'WindowsBuilder',
                         ]
 
-        buildersRepo = ['LinuxBuilder',
-                        'WindowsBuilder',
-                        ]
+        buildersRepo = ['RepoGen']
 
         self.masterConf['schedulers'] = self.shedulers + [
             schedulers.AnyBranchScheduler(
