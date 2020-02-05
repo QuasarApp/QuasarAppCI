@@ -198,7 +198,7 @@ class Make(BaseModule):
 
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step: self.isRelease(step),
-                                  set_properties={"tempPackage": self.tempDir,
+                                  set_properties={"tempPackage": Property(self.tempDir),
                                                   "platform": platform,
                                                   "projectName": projectName}
                                   )]
