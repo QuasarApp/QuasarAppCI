@@ -3,6 +3,7 @@
 from BuildBotLib.basemodule import BaseModule
 
 from buildbot.plugins import util, steps
+from buildbot.process.properties import Property
 import datetime
 from BuildBotLib.secretManager import SecretManager
 import hashlib
@@ -196,9 +197,11 @@ class Make(BaseModule):
                 repo = str(props.getProperty('repository'))
                 return self.getNameProjectFromGitUrl(repo)
 
+            tempDirProp = Property(self.tempDir)
+
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step: self.isRelease(step),
-                                  set_properties={"tempPackage": Property(self.tempDir),
+                                  set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
                                                   "projectName": projectName}
                                   )]
