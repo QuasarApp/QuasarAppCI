@@ -13,6 +13,12 @@ class QIFRepogen (BaseModule):
 
         def generateRepogenCmd(props):
             repoLocation = props.getProperty('repoLocation') + "/"
+            projectName = props.getProperty('projectName')
+
+            if (len(projectName) <= 0):
+                raise Exception('Project undefined')
+
+            repoLocation += projectName + "/"
             repoLocation += props.getProperty('platform')
             tempPackage = props.getProperty('tempPackage')
 
@@ -65,8 +71,14 @@ class QIFRepogen (BaseModule):
 
             util.StringParameter(
                 name='platform',
-                label='target platform (linux of windows)',
+                label='target platform (linux, windows)',
                 default=BaseModule.P_Linux
+            ),
+
+            util.StringParameter(
+                name='projectName',
+                label='name of buildet project',
+                default=''
             ),
 
             util.StringParameter(

@@ -25,11 +25,14 @@ class Make(BaseModule):
     def isTest(self, step):
         return step.getProperty('test')
 
+    def getNameProjectFromGitUrl(self, url):
+        return url[url.rfind('/'): len(url) - 4]
+
     def destDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
         now = datetime.datetime.now().strftime("(%H_%M)_%m-%d-%Y")
 
-        return repo[repo.rfind('/'): len(repo) - 4] + "/" + now
+        return self.getNameProjectFromGitUrl(repo) + "/" + now
 
     def tempDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
@@ -186,10 +189,16 @@ class Make(BaseModule):
             def tempDir(props):
                 return self.tempRepoDir
 
+            @util.renderer
+            def projectName(props):
+                repo = str(props.getProperty('repository'))
+                return self.getNameProjectFromGitUrl(repo)
+
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step: self.isRelease(step),
                                   set_properties={"tempPackage": self.tempDir,
-                                                  "platform": platform}
+                                                  "platform": platform,
+                                                  "projectName": projectName}
                                   )]
 
         res += [self.generateStep(self.makeTarget('distclean'),
