@@ -174,13 +174,13 @@ class Make(BaseModule):
 
         if platform != BaseModule.P_Android:
 
-            res += steps.DirectoryUpload(
+            res += [steps.DirectoryUpload(
                 workersrc=util.Interpolate('%(prop:repoFolder)s'),
                 masterdest=self.getWraper(self.tempDir),
                 doStepIf=self.getWraper(self.isRelease),
                 name='copy repository files',
                 description='copy repository files to temp folder',
-            )
+            )]
 
             @util.renderer
             def tempDir(props):
