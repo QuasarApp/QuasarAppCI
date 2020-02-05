@@ -39,7 +39,9 @@ class Make(BaseModule):
         now = datetime.datetime.now().strftime("(%H_%M_%S)_%m-%d-%Y")
 
         m = hashlib.md5()
-        m.update(repo[repo.rfind('/'): len(repo) - 4] + "/" + now)
+        repoPath = self.getNameProjectFromGitUrl(repo) + "/" + now
+
+        m.update(repoPath.encode('utf-8'))
 
         return m.hexdigest()
 
