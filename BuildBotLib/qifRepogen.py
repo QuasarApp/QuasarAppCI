@@ -12,15 +12,15 @@ class QIFRepogen (BaseModule):
         factory = super().getFactory()
 
         def generateRepogenCmd(props):
-            repoLocation = props.getProperty('repoLocation') + "/"
-            projectName = props.getProperty('projectName')
+            repoLocation = str(props.getProperty('repoLocation')) + "/"
+            projectName = str(props.getProperty('projectName'))
 
             if (len(projectName) <= 0):
                 raise Exception('Project undefined')
 
             repoLocation += projectName + "/"
-            repoLocation += props.getProperty('platform')
-            tempPackage = props.getProperty('tempPackage')
+            repoLocation += str(props.getProperty('platform'))
+            tempPackage = str(props.getProperty('tempPackage'))
 
             cmd = [self.repogen,
                    "--update-new-components",
