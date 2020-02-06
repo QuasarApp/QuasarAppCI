@@ -24,26 +24,29 @@ class BuildBotShedulers(BuildBotModule):
 
     def initScheduler(self):
 
+        buildersCode = ['LinuxBuilder',
+                        'AndroidBuilder',
+                        'WindowsBuilder',
+                        ]
+
+        buildersRepo = ['RepoGen']
+
         self.masterConf['schedulers'] = self.shedulers + [
             schedulers.AnyBranchScheduler(
                 name='github',
                 change_filter=util.ChangeFilter(project_re="qmake-*"),
-                builderNames=['LinuxBuilder',
-                              'AndroidBuilder',
-                              'WindowsBuilder',
-                              ],
+                builderNames=buildersCode,
                 properties={
                     'clean': True,
                     'test': True,
                     'release': False,
-                    'deploy': False,
-                    'Linux': True,
-                    'Windows': True,
-                    'Android': True
-
+                    'deploy': False
                 },
                 treeStableTimer=None
             ),
+
+            schedulers.Triggerable(name="repogen",
+                                   builderNames=buildersRepo)
 
         ]
 
