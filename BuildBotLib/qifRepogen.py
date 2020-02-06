@@ -84,6 +84,6 @@ class QIFRepogen (BaseModule):
             util.StringParameter(
                 name='repoLocation',
                 label='repository location',
-                default=self.home + "/Repo/"
+                default=self.home + "/repo/"
             ),
         ]
