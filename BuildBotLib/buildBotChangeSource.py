@@ -14,6 +14,7 @@ class BuildBotChangeSource(BuildBotModule):
         self.masterConf['www']['change_hook_dialects'] = [
             { 'github': {
                 'secret': secret.getValue('WebHook'),
+                'strict': True,
             },
             },
         ]
