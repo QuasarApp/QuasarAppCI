@@ -109,7 +109,7 @@ class Make(BaseModule):
     def makePrefix(self):
         return "X"
 
-    def generateStep(self, cmd, platform, desc, checkFunc):
+    def generateStep(self, cmd, platform, desc, checkFunc, log=False):
 
         @util.renderer
         def envWraper(step):
@@ -134,10 +134,24 @@ class Make(BaseModule):
             env=envWraper,
             want_stdout=True,
             want_stderr=True,
-            logfiles={"LogFile": "_logTemp/build.log"},
             warningPattern=".*[Ww]arning[: ].*",
             description=desc,
         )
+
+        if log:
+            res = steps.Compile(
+                command=self.getWraper(cmd),
+                haltOnFailure=True,
+                doStepIf=lambda step: dustepIf(step),
+                hideStepIf=lambda results, step: not dustepIf(step),
+                name=desc + ' ' + platform,
+                env=envWraper,
+                want_stdout=True,
+                want_stderr=True,
+                logfiles={"LogFile": "buildLog.log"},
+                warningPattern=".*[Ww]arning[: ].*",
+                description=desc,
+            )
 
         return res
 
@@ -174,7 +188,8 @@ class Make(BaseModule):
         res += [self.generateStep(self.makeTarget('test'),
                                   platform,
                                   'test project',
-                                  self.isTest)]
+                                  self.isTest,
+                                  True)]
 
         res += [self.generateStep(self.makeTarget('release'),
                                   platform,
