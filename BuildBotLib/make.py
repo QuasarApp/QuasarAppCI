@@ -134,7 +134,7 @@ class Make(BaseModule):
             env=envWraper,
             want_stdout=True,
             want_stderr=True,
-            logfiles={"buildLog": "_logTemp/buildLog.log"},
+            logfiles={"LogFile": "_logTemp/build.log"},
             warningPattern=".*[Ww]arning[: ].*",
             description=desc,
         )
