@@ -132,6 +132,9 @@ class Make(BaseModule):
             hideStepIf=lambda results, step: not dustepIf(step),
             name=desc + ' ' + platform,
             env=envWraper,
+            want_stdout=True,
+            want_stderr=True,
+            logfiles={"buildLog": "_logTemp/buildLog.log"},
             warningPattern=".*[Ww]arning[: ].*",
             description=desc,
         )
