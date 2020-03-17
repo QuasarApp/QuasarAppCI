@@ -214,11 +214,16 @@ class Make(BaseModule):
                 repo = str(props.getProperty('repository'))
                 return self.getNameProjectFromGitUrl(repo)
 
+            @util.renderer
+            def repolacation(props):
+                return self.home + "/repo/"
+
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step: self.isRelease(step),
                                   set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
-                                                  "projectName": projectName}
+                                                  "projectName": projectName,
+                                                  "repoLocation": repolacation}
                                   )]
 
         res += [self.generateStep(self.makeTarget('distclean'),
