@@ -46,7 +46,6 @@ class Make(BaseModule):
         return m.hexdigest()
 
     def destDir(self, props):
-
         return self.home + '/shared/' + self.destDirPrivate(props)
 
     def tempDir(self, props):
@@ -235,6 +234,12 @@ class Make(BaseModule):
 
     def getFactory(self):
         factory = super().getFactory()
+
+        if isWin():
+            factory.addSteps([self.generateStep(["rm" "." "-rdf"],
+                                          self.platform,
+                                          'clear work dir',
+                                          lambda step: True)]
 
         factory.addStep(
             steps.Git(
