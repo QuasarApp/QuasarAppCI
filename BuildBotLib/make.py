@@ -236,7 +236,7 @@ class Make(BaseModule):
         factory = super().getFactory()
 
         if self.isWin(""):
-            factory.addStep(self.generateStep(["rm", "*", "-rdf"],
+            factory.addStep(self.generateStep(["rm", ".git", "-rdf"],
                                           self.platform,
                                           'clear work dir',
                                           lambda step: True))
