@@ -235,7 +235,7 @@ class Make(BaseModule):
     def getFactory(self):
         factory = super().getFactory()
 
-        if self.isWin():
+        if self.isWin(""):
             factory.addStep(self.generateStep(["rm", "*", "-rdf"],
                                           self.platform,
                                           'clear work dir',
