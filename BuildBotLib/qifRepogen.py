@@ -11,7 +11,7 @@ class QIFRepogen (BaseModule):
     def getFactory(self):
         factory = super().getFactory()
 
-        def generateRepogenCmd(props):
+        def getRepoLocation(props):
             repoLocation = str(props.getProperty('repoLocation')) + "/"
             projectName = str(props.getProperty('projectName'))
 
@@ -19,7 +19,30 @@ class QIFRepogen (BaseModule):
                 raise Exception('Project undefined')
 
             repoLocation += projectName + "/"
-            repoLocation += str(props.getProperty('platform'))
+            return repoLocation + str(props.getProperty('platform'))
+
+        def generateChmodCmd(props):
+            tempPackage = str(props.getProperty('tempPackage'))
+
+            cmd = ["chmod",
+                   "775",
+                   "-R",
+                   tempPackage
+                   ]
+
+            return cmd
+
+        factory.addStep(
+            steps.ShellCommand(
+                command=self.getWraper(generateChmodCmd),
+                haltOnFailure=True,
+                name='chmod files',
+                description='set rights for files',
+            )
+        )
+
+        def generateRepogenCmd(props):
+            repoLocation += getRepoLocation(props)
             tempPackage = str(props.getProperty('tempPackage'))
 
             cmd = [self.repogen,
