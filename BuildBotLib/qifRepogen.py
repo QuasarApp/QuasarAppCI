@@ -42,7 +42,7 @@ class QIFRepogen (BaseModule):
         )
 
         def generateRepogenCmd(props):
-            repoLocation += getRepoLocation(props)
+            repoLocation = getRepoLocation(props)
             tempPackage = str(props.getProperty('tempPackage'))
 
             cmd = [self.repogen,
