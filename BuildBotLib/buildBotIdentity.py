@@ -11,6 +11,8 @@ from buildbot.plugins import util
 
 class BuildBotIdentity(BuildBotModule):
     def __init__(self):
+        BuildBotModule.__init__(self)
+
         self.masterConf['title'] = "QuasarApp CI"
         cqtdeployer_path = 'https://github.com/QuasarApp/CQtDeployer'
         self.masterConf['titleURL'] = cqtdeployer_path
