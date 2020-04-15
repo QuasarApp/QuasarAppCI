@@ -1,62 +1,39 @@
 # This Python file uses the following encoding: utf-8
 
 from BuildBotLib.make import Make
-from buildbot.plugins import secrets, util, steps
-from pathlib import Path
-import datetime
-import os
-import subprocess
-from BuildBotLib.secretManager import *
+from BuildBotLib.secretManager import SecretManager
 
 
 class CMake(Make):
 
     def __init__(self, platform):
-        Make.__init__(self, platform);
+        Make.__init__(self, platform)
+
+    def makePrefix(self):
+        return "C"
+
+    def mainCmd(self):
+        command = [
+            'cmake',
+            "-DCMAKE_PREFIX_PATH=$QTDIR",
+        ]
+
+        return command
 
     def linuxXmakeCmd(self, props):
-        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
-
-        QT_Dir = subprocess.getoutput(['qmake-android -query QT_HOST_PREFIX'])
-
-        command = [
-            'cmake', '-DCMAKE_PREFIX_PATH=' + QT_Dir,
-            '-DSPEC_X=linux-g++',
-
-            '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
-            '-DSIGN_ALIES="quasarapp"',
-            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
-
-        ]
-
-        return command
+        return self.mainCmd()
 
     def windowsXmakeCmd(self, props):
-        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
-
-        QT_Dir = subprocess.getoutput(['qmake-android -query QT_HOST_PREFIX'])
-
-        command = [
-            'cmake', '-DCMAKE_PREFIX_PATH=' + QT_Dir,
-            '-DSPEC_X=win64-g++',
-
-            '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
-            '-DSIGN_ALIES="quasarapp"',
-            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
-
-        ]
-
-        return command
+        return self.mainCmd()
 
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
-        QT_Dir = subprocess.getoutput(['qmake-android -query QT_HOST_PREFIX'])
-
         command = [
-            'cmake', '-DCMAKE_PREFIX_PATH=' + QT_Dir,
-            '-DSPEC_X=android-clang',
-
+            'cmake',
+            '-DANDROID_ABI=arm64-v8a',
+            '-DANDROID_BUILD_ABI_arm64-v8a=ON',
+            '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'

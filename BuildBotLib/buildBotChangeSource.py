@@ -35,7 +35,7 @@ class BuildBotChangeSource(BuildBotModule):
             ),
             changes.GitPoller(
                 repourl='git@github.com:QuasarApp/Hanoi-Towers.git',
-                project='qmake-Hanoi-Towers',
+                project='cmake-Hanoi-Towers',
                 gitbin=os.path.dirname(os.path.realpath(__file__))
                 + "/git/gitBin.sh",
                 branches=True,  # получаем изменения со всех веток
