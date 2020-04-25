@@ -29,10 +29,10 @@ class BuildBotShedulers(BuildBotModule):
                         'WindowsBuilder',
                         ]
 
-        buildersCode = ['LinuxCMakeBuilder',
-                        'AndroidCMakeBuilder',
-                        'WindowsCMakeBuilder',
-                        ]
+        cmakeBuildersCode = ['LinuxCMakeBuilder',
+                             'AndroidCMakeBuilder',
+                             'WindowsCMakeBuilder',
+                             ]
 
         buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
@@ -54,7 +54,7 @@ class BuildBotShedulers(BuildBotModule):
             schedulers.AnyBranchScheduler(
                 name='githubCmake',
                 change_filter=util.ChangeFilter(project_re="cmake-*"),
-                builderNames=buildersCode,
+                builderNames=cmakeBuildersCode,
                 properties={
                     'clean': True,
                     'test': True,
