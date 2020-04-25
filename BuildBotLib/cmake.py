@@ -15,7 +15,7 @@ class CMake(Make):
     def mainCmd(self):
         command = [
             'cmake',
-            "-DCMAKE_PREFIX_PATH=$QTDIR",
+            "."
         ]
 
         return command
