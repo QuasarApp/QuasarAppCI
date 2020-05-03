@@ -225,7 +225,7 @@ class Make(BaseModule):
                                                   "repoLocation": repolacation}
                                   )]
 
-        res += [self.generateStep(self.makeTarget('distclean'),
+        res += [self.generateStep(["git", "clean", "-xdf"],
                                   platform,
                                   'clear all data',
                                   lambda step: True)]
