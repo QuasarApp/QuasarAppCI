@@ -225,11 +225,6 @@ class Make(BaseModule):
                                                   "repoLocation": repolacation}
                                   )]
 
-        res += [self.generateStep(["git", "clean", "-xdf"],
-                                  platform,
-                                  'clear all data',
-                                  lambda step: True)]
-
         return res
 
     def getFactory(self):
@@ -264,6 +259,13 @@ class Make(BaseModule):
                 name='copy buildet files',
                 description='copy buildet files to shared folder',
             )
+        )
+
+        factory.addStep(
+            self.generateStep(["git", "clean", "-xdf"],
+                               self.platform,
+                               'clear all data',
+                               lambda step: True)
         )
 
         return factory
