@@ -15,7 +15,7 @@ class BuildBotChangeSource(BuildBotModule):
             { 'github': {
                 'secret': secret.getValue('WebHook'),
                 'token': secret.getValue('gitHub'),
-                'strict': True,
+                'strict': True
             },
             },
         ]
