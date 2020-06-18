@@ -11,6 +11,8 @@ from buildbot.plugins import util
 
 class BuildBotIdentity(BuildBotModule):
     def __init__(self):
+        BuildBotModule.__init__(self)
+
         self.masterConf['title'] = "QuasarApp CI"
         cqtdeployer_path = 'https://github.com/QuasarApp/CQtDeployer'
         self.masterConf['titleURL'] = cqtdeployer_path
@@ -23,7 +25,7 @@ class BuildBotIdentity(BuildBotModule):
         # but with an externally-visible host name which the
         # buildbot cannot figure out without some help.
 
-        self.masterConf['buildbotURL'] = "http://quasarapp.ddns.net:8010/"
+        self.masterConf['buildbotURL'] = "https://quasarapp.ddns.net:8043/"
 
         # minimalistic config to activate new web UI
         self.masterConf['www'] = dict(port=8010,

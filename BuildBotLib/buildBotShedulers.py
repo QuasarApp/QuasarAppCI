@@ -29,11 +29,17 @@ class BuildBotShedulers(BuildBotModule):
                         'WindowsBuilder',
                         ]
 
-        buildersRepo = ['RepoGen']
+        cmakeBuildersCode = ['LinuxCMakeBuilder',
+                             'AndroidCMakeBuilder',
+                             'WindowsCMakeBuilder',
+                             ]
 
-        self.masterConf['schedulers'] = self.shedulers + [
+        buildersRepo = ['RepoGen']
+        self.masterConf['schedulers'] = self.shedulers
+
+        self.masterConf['schedulers'] += [
             schedulers.AnyBranchScheduler(
-                name='github',
+                name='githubQmake',
                 change_filter=util.ChangeFilter(project_re="qmake-*"),
                 builderNames=buildersCode,
                 properties={
@@ -45,9 +51,21 @@ class BuildBotShedulers(BuildBotModule):
                 treeStableTimer=None
             ),
 
+            schedulers.AnyBranchScheduler(
+                name='githubCmake',
+                change_filter=util.ChangeFilter(project_re="cmake-*"),
+                builderNames=cmakeBuildersCode,
+                properties={
+                    'clean': True,
+                    'test': True,
+                    'release': False,
+                    'deploy': False
+                },
+                treeStableTimer=None
+            ),
+
             schedulers.Triggerable(name="repogen",
                                    builderNames=buildersRepo)
-
         ]
 
         return self.getMasterConf()

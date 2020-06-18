@@ -17,6 +17,7 @@ class QMake(Make):
             'qmake',
             "-r",
             "CONFIG+=qtquickcompiler",
+            "CONFIG+=ccache",
             'ONLINE="~/repo"'
         ]
 

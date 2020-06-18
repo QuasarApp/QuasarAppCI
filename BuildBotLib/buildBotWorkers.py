@@ -24,6 +24,9 @@ class BuildBotWorkers(BuildBotModule):
             worker.Worker("AndroidBuilder", password),
             worker.Worker("LinuxBuilder", password),
             worker.Worker("WindowsBuilder", password),
+            worker.Worker("AndroidCMakeBuilder", password),
+            worker.Worker("LinuxCMakeBuilder", password),
+            worker.Worker("WindowsCMakeBuilder", password),
             worker.Worker("RepoGen", password),
             ]
 
