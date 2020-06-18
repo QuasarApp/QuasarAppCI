@@ -31,6 +31,7 @@ class BuildBotChangeSource(BuildBotModule):
         self.masterConf['www'] = dict(
             change_hook_dialects={'github': {
                 'secret': secret.getValue('WebHook'),
+                'token': secret.getValue('gitHub'),
                 'strict': True,
             }
             },
