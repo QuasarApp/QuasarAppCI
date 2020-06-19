@@ -15,7 +15,7 @@ class QMake(Make):
         return "Q"
 
     def isSupport(self, step):
-        return len(glob.glob1(os.getcwd(), '*.pro')) > 0
+        return True
 
     def mainCmd(self):
         command = [
