@@ -7,8 +7,8 @@ class BuildBotShedulers(BuildBotModule):
     codebases = {}
     shedulers = []
 
-    def __init__(self):
-        BuildBotModule.__init__(self)
+    def __init__(self, masterConf):
+        BuildBotModule.__init__(self, masterConf)
 
     def addScheduler(self, prop, worker):
 
