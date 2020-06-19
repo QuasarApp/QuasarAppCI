@@ -8,7 +8,7 @@ class QMake(Make):
 
     def __init__(self, platform):
         Make.__init__(self, platform)
-        self.buildSystems = self.B_QMake
+#        self.buildSystems = self.B_QMake
 
     def makePrefix(self):
         return "Q"
