@@ -2,20 +2,16 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
-import os
 
 
 class CMake(Make):
 
     def __init__(self, platform):
         Make.__init__(self, platform)
+        self.buildSystems = self.CMake
 
     def makePrefix(self):
         return "C"
-
-    def isSupport(self, step):
-        PWD = step.getProperty('builddir') + '/build'
-        return os.path.isfile(PWD + '/CMakeLists.txt')
 
     def mainCmd(self):
         command = [

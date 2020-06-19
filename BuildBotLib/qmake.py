@@ -9,13 +9,10 @@ class QMake(Make):
 
     def __init__(self, platform):
         Make.__init__(self, platform)
+        self.buildSystems = self.QMake
 
     def makePrefix(self):
         return "Q"
-
-    def isSupport(self, step):
-        PWD = step.getProperty('builddir') + '/build'
-        return len(glob.glob1(PWD, '*.pro')) > 0
 
     def mainCmd(self):
         command = [
