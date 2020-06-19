@@ -7,8 +7,8 @@ from pathlib import Path
 
 
 class BuildBotWorkers(BuildBotModule):
-    def __init__(self):
-        BuildBotModule.__init__(self)
+    def __init__(self, masterConf):
+        BuildBotModule.__init__(self, masterConf)
         # WORKERS
 
         # The 'workers' list defines the set

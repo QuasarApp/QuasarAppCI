@@ -1,14 +1,14 @@
 # This Python file uses the following encoding: utf-8
 from BuildBotLib.buildBotModule import BuildBotModule
-from buildbot.plugins import schedulers, util
+from buildbot.plugins import schedulers
 
 
 class BuildBotShedulers(BuildBotModule):
     codebases = {}
     shedulers = []
 
-    def __init__(self):
-        BuildBotModule.__init__(self)
+    def __init__(self, masterConf):
+        BuildBotModule.__init__(self, masterConf)
 
     def addScheduler(self, prop, worker):
 
@@ -27,34 +27,18 @@ class BuildBotShedulers(BuildBotModule):
         buildersCode = ['LinuxBuilder',
                         'AndroidBuilder',
                         'WindowsBuilder',
+                        'LinuxCMakeBuilder',
+                        'AndroidCMakeBuilder',
+                        'WindowsCMakeBuilder',
                         ]
-
-        cmakeBuildersCode = ['LinuxCMakeBuilder',
-                             'AndroidCMakeBuilder',
-                             'WindowsCMakeBuilder',
-                             ]
 
         buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
 
         self.masterConf['schedulers'] += [
             schedulers.AnyBranchScheduler(
-                name='githubQmake',
-                change_filter=util.ChangeFilter(project_re="qmake-*"),
+                name='github',
                 builderNames=buildersCode,
-                properties={
-                    'clean': True,
-                    'test': True,
-                    'release': False,
-                    'deploy': False
-                },
-                treeStableTimer=None
-            ),
-
-            schedulers.AnyBranchScheduler(
-                name='githubCmake',
-                change_filter=util.ChangeFilter(project_re="cmake-*"),
-                builderNames=cmakeBuildersCode,
                 properties={
                     'clean': True,
                     'test': True,

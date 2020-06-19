@@ -13,6 +13,11 @@ class Make(BaseModule):
         BaseModule.__init__(self, platform)
         self.tempRepoDir = ""
 
+    def isSupport(self, step):
+        # check = self.buildSystems & self.detectedBuildSystems
+        # return check != 0
+        return True
+
     def isClean(self, step):
         return step.getProperty('clean')
 
@@ -107,6 +112,26 @@ class Make(BaseModule):
     def makePrefix(self):
         return "X"
 
+#    def checkSupportedBuildSystems(self):
+
+#        def cmd(step):
+#            PWD = step.getProperty('builddir') + '/build'
+
+#            if (len(glob.glob1(PWD, '*.pro')) > 0):
+#                self.detectedBuildSystems = self.detectedBuildSystems | self.B_QMake
+
+#            if (os.path.isfile(PWD + '/CMakeLists.txt')):
+#                self.detectedBuildSystems = self.detectedBuildSystems | self.B_CMake
+
+#            return ['echo', 'PWD: ' + PWD + str(self.detectedBuildSystems)]
+
+#        return steps.ShellCommand(
+#                    command=self.getWraper(cmd),
+#                    haltOnFailure=True,
+#                    name='Chek build system',
+#                    description='Chek build system',
+#                )
+
     def generateStep(self, cmd, platform, desc, checkFunc, log=False):
 
         @util.renderer
@@ -121,7 +146,7 @@ class Make(BaseModule):
             return platformEnv[platform](step)
 
         def dustepIf(step):
-            return checkFunc(step)
+            return checkFunc(step) and self.isSupport(step)
 
         res = steps.Compile(
             command=self.getWraper(cmd),
@@ -218,7 +243,9 @@ class Make(BaseModule):
                 return self.home + "/repo/"
 
             res += [steps.Trigger(schedulerNames=['repogen'],
-                                  doStepIf=lambda step: self.isRelease(step),
+                                  doStepIf=lambda step:
+                                      self.isRelease(step) and
+                                      self.isSupport(step),
                                   set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
                                                   "projectName": projectName,
@@ -248,6 +275,7 @@ class Make(BaseModule):
             )
         )
 
+#        factory.addStep(self.checkSupportedBuildSystems())
         factory.addSteps(self.generatePlatformSteps(self.platform))
 
         factory.addStep(
@@ -263,9 +291,9 @@ class Make(BaseModule):
 
         factory.addStep(
             self.generateStep(["git", "clean", "-xdf"],
-                               self.platform,
-                               'clear all data',
-                               lambda step: True)
+                              self.platform,
+                              'clear all data',
+                              lambda step: True)
         )
 
         return factory

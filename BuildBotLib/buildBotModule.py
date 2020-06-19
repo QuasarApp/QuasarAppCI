@@ -3,8 +3,8 @@
 
 class BuildBotModule:
 
-    def __init__(self):
-        self.masterConf = {}
+    def __init__(self, masterConf):
+        self.masterConf = masterConf
 
     def getMasterConf(self):
         return self.masterConf

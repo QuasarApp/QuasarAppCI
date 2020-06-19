@@ -15,18 +15,7 @@ sys.path.append(dir_path)
 
 
 class BuildBot:
-    masterConf = {}
-    workers = BuildBotWorkers()
-    services = BuildBotServices()
-    identity = BuildBotIdentity()
-    db = BuildBotDB()
-    shedulers = BuildBotShedulers()
-    sources = BuildBotChangeSource()
-    builders = []
 
-#    def importWithReload(self, name):
-#        module = importlib.import_module(name);
-#        return module;
     def __init__(self):
         self.masterConf = {}
         self.masterConf['builders'] = []
@@ -34,19 +23,27 @@ class BuildBot:
         self.masterConf['change_source'] = []
 
         # WORKERS
+        self.workers = BuildBotWorkers(self.masterConf)
         self.masterConf.update(self.workers.getMasterConf())
 
         # BUILDBOT SERVICES
+        self.services = BuildBotServices(self.masterConf)
         self.masterConf.update(self.services.getMasterConf())
 
         # PROJECT IDENTITY
+        self.identity = BuildBotIdentity(self.masterConf)
         self.masterConf.update(self.identity.getMasterConf())
 
         # DB URL
+        self.db = BuildBotDB(self.masterConf)
         self.masterConf.update(self.db.getMasterConf())
 
         # change_source
+        self.sources = BuildBotChangeSource(self.masterConf)
         self.masterConf.update(self.sources.getMasterConf())
+
+        # Shedulers
+        self.shedulers = BuildBotShedulers(self.masterConf)
 
     def addBuilder(self, worker, factory):
         self.masterConf['builders'].append(
@@ -58,7 +55,6 @@ class BuildBot:
         )
         self.shedulers.addScheduler(factory.getPropertyes(),
                                     worker)
-        self.builders.append(worker)
 
     def addService(self, service):
         logging.error("addService not support!")

@@ -8,6 +8,7 @@ class CMake(Make):
 
     def __init__(self, platform):
         Make.__init__(self, platform)
+#        self.buildSystems = self.B_CMake
 
     def makePrefix(self):
         return "C"
