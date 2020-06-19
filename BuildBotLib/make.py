@@ -13,6 +13,7 @@ class Make(BaseModule):
         BaseModule.__init__(self, platform)
         self.tempRepoDir = ""
 
+    @util.renderer
     def isSupport(self, step):
         return False
 
