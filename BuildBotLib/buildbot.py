@@ -22,27 +22,28 @@ class BuildBot:
         self.masterConf['schedulers'] = []
         self.masterConf['change_source'] = []
 
-        self.workers = BuildBotWorkers(self.masterConf)
-        self.services = BuildBotServices(self.masterConf)
-        self.identity = BuildBotIdentity(self.masterConf)
-        self.db = BuildBotDB(self.masterConf)
-        self.shedulers = BuildBotShedulers(self.masterConf)
-        self.sources = BuildBotChangeSource(self.masterConf)
-
         # WORKERS
+        self.workers = BuildBotWorkers(self.masterConf)
         self.masterConf.update(self.workers.getMasterConf())
 
         # BUILDBOT SERVICES
+        self.services = BuildBotServices(self.masterConf)
         self.masterConf.update(self.services.getMasterConf())
 
         # PROJECT IDENTITY
+        self.identity = BuildBotIdentity(self.masterConf)
         self.masterConf.update(self.identity.getMasterConf())
 
         # DB URL
+        self.db = BuildBotDB(self.masterConf)
         self.masterConf.update(self.db.getMasterConf())
 
         # change_source
+        self.sources = BuildBotChangeSource(self.masterConf)
         self.masterConf.update(self.sources.getMasterConf())
+
+        # Shedulers
+        self.shedulers = BuildBotShedulers(self.masterConf)
 
     def addBuilder(self, worker, factory):
         self.masterConf['builders'].append(
