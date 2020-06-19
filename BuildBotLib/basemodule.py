@@ -12,15 +12,14 @@ class BaseModule:
     P_Linux = 'Linux'
     P_Android = 'Android'
 
-    B_CMake = 1
-    B_QMake = 2
-
     def __init__(self, platform):
         self.MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
         self.home = str(Path.home())
         self.platform = platform
         self.detectedBuildSystems = 0
         self.buildSystems = 0
+        self.B_CMake = 1
+        self.B_QMake = 2
 
     def isWin(self, step):
         return self.platform == BaseModule.P_Windows
