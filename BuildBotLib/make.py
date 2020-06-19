@@ -124,7 +124,7 @@ class Make(BaseModule):
             if (os.path.isfile(PWD + '/CMakeLists.txt')):
                 self.detectedBuildSystems = self.detectedBuildSystems | self.B_CMake
 
-            return ['echo', 'build systems :' + str(self.detectedBuildSystems)]
+            return ['echo', 'PWD: ' + PWD + str(self.detectedBuildSystems)]
 
         return steps.ShellCommand(
                     command=self.getWraper(cmd),
