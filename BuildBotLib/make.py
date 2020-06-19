@@ -169,7 +169,8 @@ class Make(BaseModule):
         res += [self.generateStep(platformXcmd[platform],
                                   platform,
                                   self.makePrefix() + 'Make',
-                                  lambda step: True)]
+                                  lambda step: True,
+                                  True)]
 
         res += [self.generateStep(self.makeTarget('clean'),
                                   platform,
