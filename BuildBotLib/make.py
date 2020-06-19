@@ -114,7 +114,7 @@ class Make(BaseModule):
         return "X"
 
     def checkSupportedBuildSystems(self):
-        @util.renderer
+
         def cmd(step):
             PWD = step.getProperty('builddir') + '/build'
 
