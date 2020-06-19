@@ -14,7 +14,8 @@ class QMake(Make):
         return "Q"
 
     def isSupport(self, step):
-        return len(glob.glob1('.', '*.pro')) > 0
+        PWD = step.getProperty('builddir') + '/build'
+        return len(glob.glob1(PWD, '*.pro')) > 0
 
     def mainCmd(self):
         command = [

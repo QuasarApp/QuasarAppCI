@@ -14,7 +14,8 @@ class CMake(Make):
         return "C"
 
     def isSupport(self, step):
-        return os.path.isfile('./CMakeLists.txt')
+        PWD = step.getProperty('builddir') + '/build'
+        return os.path.isfile(PWD + '/CMakeLists.txt')
 
     def mainCmd(self):
         command = [

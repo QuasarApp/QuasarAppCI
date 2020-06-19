@@ -130,7 +130,7 @@ class Make(BaseModule):
             command=self.getWraper(cmd),
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
-            #hideStepIf=lambda results, step: not dustepIf(step),
+            hideStepIf=lambda results, step: not dustepIf(step),
             name=desc + ' ' + platform,
             env=envWraper,
             want_stdout=True,
