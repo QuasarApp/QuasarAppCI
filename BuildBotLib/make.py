@@ -13,6 +13,9 @@ class Make(BaseModule):
         BaseModule.__init__(self, platform)
         self.tempRepoDir = ""
 
+    def isSupport(self, step):
+        return False
+
     def isClean(self, step):
         return step.getProperty('clean')
 
@@ -121,7 +124,7 @@ class Make(BaseModule):
             return platformEnv[platform](step)
 
         def dustepIf(step):
-            return checkFunc(step)
+            return checkFunc(step) and self.isSupport(step)
 
         res = steps.Compile(
             command=self.getWraper(cmd),
@@ -218,7 +221,9 @@ class Make(BaseModule):
                 return self.home + "/repo/"
 
             res += [steps.Trigger(schedulerNames=['repogen'],
-                                  doStepIf=lambda step: self.isRelease(step),
+                                  doStepIf=lambda step:
+                                      self.isRelease(step) and
+                                      self.isSupport(step),
                                   set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
                                                   "projectName": projectName,
@@ -263,9 +268,9 @@ class Make(BaseModule):
 
         factory.addStep(
             self.generateStep(["git", "clean", "-xdf"],
-                               self.platform,
-                               'clear all data',
-                               lambda step: True)
+                              self.platform,
+                              'clear all data',
+                              lambda step: True)
         )
 
         return factory

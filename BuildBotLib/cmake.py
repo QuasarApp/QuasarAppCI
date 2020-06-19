@@ -2,6 +2,7 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
+import os
 
 
 class CMake(Make):
@@ -11,6 +12,9 @@ class CMake(Make):
 
     def makePrefix(self):
         return "C"
+
+    def isSupport(self, step):
+        return os.path.isfile('./CMakeLists.txt')
 
     def mainCmd(self):
         command = [
