@@ -2,8 +2,6 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
-from buildbot.plugins import util
-
 import os
 
 
@@ -15,7 +13,6 @@ class CMake(Make):
     def makePrefix(self):
         return "C"
 
-    @util.renderer
     def isSupport(self, step):
         return os.path.isfile('./CMakeLists.txt')
 

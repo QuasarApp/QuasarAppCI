@@ -2,7 +2,6 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
-from buildbot.plugins import util
 import glob
 
 
@@ -14,7 +13,6 @@ class QMake(Make):
     def makePrefix(self):
         return "Q"
 
-    @util.renderer
     def isSupport(self, step):
         return len(glob.glob1('.', '*.pro')) > 0
 
