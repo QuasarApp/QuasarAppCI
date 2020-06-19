@@ -130,7 +130,7 @@ class Make(BaseModule):
             command=self.getWraper(cmd),
             haltOnFailure=True,
             doStepIf=lambda step: dustepIf(step),
-            hideStepIf=lambda results, step: not dustepIf(step),
+            #hideStepIf=lambda results, step: not dustepIf(step),
             name=desc + ' ' + platform,
             env=envWraper,
             want_stdout=True,
@@ -169,8 +169,7 @@ class Make(BaseModule):
         res += [self.generateStep(platformXcmd[platform],
                                   platform,
                                   self.makePrefix() + 'Make',
-                                  lambda step: True,
-                                  True)]
+                                  lambda step: True)]
 
         res += [self.generateStep(self.makeTarget('clean'),
                                   platform,
