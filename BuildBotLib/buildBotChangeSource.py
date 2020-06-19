@@ -1,7 +1,5 @@
 # This Python file uses the following encoding: utf-8
 from BuildBotLib.buildBotModule import BuildBotModule
-from buildbot.plugins import changes
-import os
 from BuildBotLib.secretManager import SecretManager
 
 
@@ -12,11 +10,13 @@ class BuildBotChangeSource(BuildBotModule):
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
         self.masterConf['www']['change_hook_dialects'] = [
-            { 'github': {
-                'secret': secret.getValue('WebHook'),
-                'token': secret.getValue('gitHub'),
-                'strict': True
-            },
+            {
+                'github':
+                {
+                    'secret': secret.getValue('WebHook'),
+                    'token': secret.getValue('gitHub'),
+                    'strict': True,
+                },
             },
         ]
 
