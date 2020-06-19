@@ -9,31 +9,9 @@ class BuildBotChangeSource(BuildBotModule):
 
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 
-        self.masterConf['www']['change_hook_dialects'] = [
-            {
+        self.masterConf['www']['change_hook_dialects'] = {
                 'github':
                 {
                     'secret': secret.getValue('WebHook'),
-                    'token': secret.getValue('gitHub'),
-                    'strict': True,
                 },
-            },
-        ]
-
-#        self.masterConf['www']['change_hook_dialects'] = [
-#            { 'github': {
-#                'secret': secret.getValue('WebHook'),
-#                'strict': True,
-#            },
-#            },
-#        ]
-#        change_hook_dialects={'github': {}},
-
-#        self.masterConf['www'] = dict(
-#            change_hook_dialects={'github': {
-#                'secret': secret.getValue('WebHook'),
-#                'token': secret.getValue('gitHub'),
-#                'strict': True,
-#            }
-#            },
-#        )
+            }
