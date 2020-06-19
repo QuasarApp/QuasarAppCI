@@ -2,14 +2,13 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
-import glob
 
 
 class QMake(Make):
 
     def __init__(self, platform):
         Make.__init__(self, platform)
-        self.buildSystems = self.QMake
+        self.buildSystems = self.B_QMake
 
     def makePrefix(self):
         return "Q"

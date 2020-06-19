@@ -22,7 +22,6 @@ class BaseModule:
         self.detectedBuildSystems = 0
         self.buildSystems = 0
 
-
     def isWin(self, step):
         return self.platform == BaseModule.P_Windows
 
