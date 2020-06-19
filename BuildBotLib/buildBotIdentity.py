@@ -10,8 +10,8 @@ from buildbot.plugins import util
 # home pages (linked to the 'titleURL').
 
 class BuildBotIdentity(BuildBotModule):
-    def __init__(self):
-        BuildBotModule.__init__(self)
+    def __init__(self, masterConf):
+        BuildBotModule.__init__(self, masterConf)
 
         self.masterConf['title'] = "QuasarApp CI"
         cqtdeployer_path = 'https://github.com/QuasarApp/CQtDeployer'

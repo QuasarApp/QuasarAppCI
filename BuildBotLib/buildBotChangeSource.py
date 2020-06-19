@@ -4,8 +4,8 @@ from BuildBotLib.secretManager import SecretManager
 
 
 class BuildBotChangeSource(BuildBotModule):
-    def __init__(self):
-        BuildBotModule.__init__(self)
+    def __init__(self, masterConf):
+        BuildBotModule.__init__(self, masterConf)
 
         secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
 

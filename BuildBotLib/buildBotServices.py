@@ -5,8 +5,8 @@ from BuildBotLib.secretManager import SecretManager
 
 
 class BuildBotServices(BuildBotModule):
-    def __init__(self):
-        BuildBotModule.__init__(self)
+    def __init__(self, masterConf):
+        BuildBotModule.__init__(self, masterConf)
 
         # BUILDBOT SERVICES
 
