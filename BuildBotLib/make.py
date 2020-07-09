@@ -18,9 +18,6 @@ class Make(BaseModule):
         # return check != 0
         return True
 
-    def isClean(self, step):
-        return step.getProperty('clean')
-
     def isDeploy(self, step):
         return step.getProperty('deploy')
 
@@ -193,11 +190,6 @@ class Make(BaseModule):
                                   self.makePrefix() + 'Make',
                                   lambda step: True)]
 
-        res += [self.generateStep(self.makeTarget('clean'),
-                                  platform,
-                                  'clean old data',
-                                  self.isClean)]
-
         res += [self.generateStep(self.makeCommand,
                                   platform,
                                   'Make',
@@ -303,11 +295,6 @@ class Make(BaseModule):
         base = super().getPropertyes()
 
         return base + [
-            util.BooleanParameter(
-                name='clean',
-                label='clean old build ',
-                default=True
-            ),
             util.BooleanParameter(
                 name='deploy',
                 label='deploy project',
