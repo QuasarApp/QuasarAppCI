@@ -26,7 +26,8 @@ class CMake(Make):
         return self.mainCmd()
 
     def windowsXmakeCmd(self, props):
-        Qt = os.environ['QTDIR']
+        Qt = os.environ.get('QTDIR')
+
         command = [
             'cmake',
             '-DCMAKE_PREFIX_PATH=' + Qt,
