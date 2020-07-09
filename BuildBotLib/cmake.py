@@ -28,7 +28,7 @@ class CMake(Make):
 
         command = [
             'cmake',
-            '-DCMAKE_PREFIX_PATH=QTDIR',
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
             "."
         ]
 
