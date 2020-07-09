@@ -30,15 +30,4 @@ class CMake(Make):
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
 
-        command = [
-            'cmake',
-            '-DANDROID_ABI=arm64-v8a',
-            '-DANDROID_BUILD_ABI_arm64-v8a=ON',
-            '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
-            '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
-            '-DSIGN_ALIES="quasarapp"',
-            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
-
-        ]
-
-        return command
+        return 'cmake -DCMAKE_PREFIX_PATH=%QTDIR% -DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake -DANDROID_ABI=arm64-v8a -DANDROID_BUILD_ABI_arm64-v8a=ON -DANDROID_BUILD_ABI_armeabi-v7a=ON' + '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '" -DSIGN_ALIES="quasarapp" ' + '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"' + "-GCodeBlocks - MinGW Makefiles" .'
