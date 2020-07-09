@@ -25,14 +25,7 @@ class CMake(Make):
         return self.mainCmd()
 
     def windowsXmakeCmd(self, props):
-
-        command = [
-            'cmake',
-            '-DCMAKE_PREFIX_PATH=$QTDIR',
-            "."
-        ]
-
-        return command
+        return 'cmake -DCMAKE_PREFIX_PATH=%QTDIR% .'
 
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
