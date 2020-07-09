@@ -2,6 +2,7 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
+import os
 
 
 class CMake(Make):
@@ -25,9 +26,10 @@ class CMake(Make):
         return self.mainCmd()
 
     def windowsXmakeCmd(self, props):
+        Qt = os.environ['QTDIR']
         command = [
             'cmake',
-            '-DCMAKE_PREFIX_PATH=%QT_DIR%',
+            '-DCMAKE_PREFIX_PATH=' + Qt,
             "."
         ]
 
