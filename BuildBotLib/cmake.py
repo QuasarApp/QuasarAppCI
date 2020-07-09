@@ -25,7 +25,7 @@ class CMake(Make):
         return self.mainCmd()
 
     def windowsXmakeCmd(self, props):
-        return 'cmake -DCMAKE_PREFIX_PATH=%QTDIR% .'
+        return 'cmake -DCMAKE_PREFIX_PATH=%QTDIR% -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake.exe "-GCodeBlocks - MinGW Makefiles" .'
 
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
