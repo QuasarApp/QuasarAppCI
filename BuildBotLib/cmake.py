@@ -26,7 +26,7 @@ class CMake(Make):
         return self.mainCmd()
 
     def windowsXmakeCmd(self, props):
-        Qt = os.environ.get('QTDIR')
+        Qt = str(os.getenv('QTDIR', ''))
 
         command = [
             'cmake',
