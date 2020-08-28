@@ -40,7 +40,8 @@ class QMake(Make):
             "CONFIG+=qtquickcompiler",
             'SIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             'SIGN_ALIES="quasarapp"',
-            'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"'
+            'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
+            'ANDROID_ABIS=armeabi-v7a arm64-v8a'
 
         ]
 
