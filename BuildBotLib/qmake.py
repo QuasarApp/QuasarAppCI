@@ -41,7 +41,7 @@ class QMake(Make):
             'SIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             'SIGN_ALIES="quasarapp"',
             'SIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
-            'ANDROID_ABIS=armeabi-v7a arm64-v8a'
+            'ANDROID_ABIS=arm64-v8a'
 
         ]
 
