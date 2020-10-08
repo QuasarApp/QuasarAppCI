@@ -28,6 +28,7 @@ class BuildBotWorkers(BuildBotModule):
             worker.Worker("LinuxCMakeBuilder", password),
             worker.Worker("WindowsCMakeBuilder", password),
             worker.Worker("RepoGen", password),
+            worker.Worker("Wasm32Builder", password),
             ]
 
         # 'protocols' contains information
