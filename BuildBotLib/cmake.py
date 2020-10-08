@@ -46,7 +46,8 @@ class CMake(Make):
             '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
             '-DSIGN_PATH="' + secret.getValue('SIGPATH'),
             '"-DSIGN_ALIES="quasarapp"',
-            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS')
+            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS'),
+            '.'
         ]
 
         return ' '.join(options)
@@ -54,7 +55,8 @@ class CMake(Make):
     def wasmXmakeCmd(self, props):
         options = [
             'cmake -DCMAKE_PREFIX_PATH=$QTDIR',
-            '-DTARGET_PLATFORM_TOOLCHAIN=wasm32'
+            '-DTARGET_PLATFORM_TOOLCHAIN=wasm32',
+            '.'
         ]
 
         return ' '.join(options)
