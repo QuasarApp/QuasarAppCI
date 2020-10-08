@@ -30,6 +30,7 @@ class BuildBotShedulers(BuildBotModule):
                         'LinuxCMakeBuilder',
                         'AndroidCMakeBuilder',
                         'WindowsCMakeBuilder',
+                        'Wasm32Builder',
                         ]
 
         buildersRepo = ['RepoGen']
@@ -45,7 +46,7 @@ class BuildBotShedulers(BuildBotModule):
                     'release': False,
                     'deploy': False
                 },
-                treeStableTimer=None
+                treeStableTimer=60
             ),
 
             schedulers.Triggerable(name="repogen",
