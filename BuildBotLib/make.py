@@ -70,6 +70,9 @@ class Make(BaseModule):
 
         return command
 
+    def wasmXmakeCmd(self, props):
+        return []
+
     def windowsXmakeCmd(self, props):
         command = [
             'qmake-windows',
@@ -98,6 +101,9 @@ class Make(BaseModule):
         return command
 
     def androidXmakeEnv(self, props):
+        return {}
+
+    def wasmXmakeEnv(self, props):
         return {}
 
     def windowsXmakeEnv(self, props):
@@ -138,6 +144,8 @@ class Make(BaseModule):
                 BaseModule.P_Linux: self.linuxXmakeEnv,
                 BaseModule.P_Windows: self.windowsXmakeEnv,
                 BaseModule.P_Android: self.androidXmakeEnv,
+                BaseModule.P_Wasm: self.wasmXmakeEnv,
+
             }
 
             return platformEnv[platform](step)
@@ -181,6 +189,8 @@ class Make(BaseModule):
             BaseModule.P_Linux: self.linuxXmakeCmd,
             BaseModule.P_Windows: self.windowsXmakeCmd,
             BaseModule.P_Android: self.androidXmakeCmd,
+            BaseModule.P_Wasm: self.wasmXmakeCmd,
+
         }
 
         res = []

@@ -11,6 +11,7 @@ class BaseModule:
     P_Windows = 'Windows'
     P_Linux = 'Linux'
     P_Android = 'Android'
+    P_Wasm = 'Wasm'
 
     def __init__(self, platform):
         self.MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
@@ -29,6 +30,9 @@ class BaseModule:
 
     def isAndroid(self, step):
         return self.platform == BaseModule.P_Android
+
+    def isWasm(self, step):
+        return self.platform == BaseModule.P_Wasm
 
     def generateCmd(self, bashString):
 
