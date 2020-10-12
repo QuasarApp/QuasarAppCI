@@ -44,7 +44,7 @@ class CMake(Make):
             '-DANDROID_ABI=arm64-v8a',
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
             '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
-            '-DSIGN_PATH="' + secret.getValue('SIGPATH'),
+            '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
             '.'
