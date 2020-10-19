@@ -58,7 +58,8 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
-                    'deploy': True
+                    'deploy': True,
+                    'copyFolder': 'Distro'
                 },
                 treeStableTimer=60
             ),

@@ -30,14 +30,6 @@ class Docs(CMake):
                                   'Generate docs for the project',
                                   self.isDeploy)]
 
-        def mkDirProp(props):
-            return ['mkdir', '-p', str(props.getProperty('copyFolder'))]
-
-        res += [self.generateStep(mkDirProp,
-                                  platform,
-                                  'create dir ',
-                                  self.isDeploy)]
-
         res += [steps.CopyDirectory(
                     src="docs/html",
                     dest=util.Interpolate('%(prop:copyFolder)s'))]
