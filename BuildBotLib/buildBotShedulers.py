@@ -40,7 +40,7 @@ class BuildBotShedulers(BuildBotModule):
 
         self.masterConf['schedulers'] += [
             schedulers.AnyBranchScheduler(
-                name='github',
+                name='githubTest',
                 builderNames=buildersCode,
                 properties={
                     'clean': True,
@@ -52,7 +52,7 @@ class BuildBotShedulers(BuildBotModule):
             ),
 
             schedulers.AnyBranchScheduler(
-                name='github',
+                name='githubDeploy',
                 builderNames=buildersDeployCode,
                 properties={
                     'clean': True,
