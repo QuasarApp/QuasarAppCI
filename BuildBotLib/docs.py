@@ -46,9 +46,7 @@ class Docs(CMake):
 
     def getPropertyes(self):
 
-        base = super().getPropertyes()
-
-        return base + [
+        return [
             util.BooleanParameter(
                 name='deploy',
                 label='deploy project',
