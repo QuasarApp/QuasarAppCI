@@ -30,8 +30,34 @@ class Docs(CMake):
                                   'Generate docs for the project',
                                   self.isDeploy)]
 
+        @util.renderer
+        def mkDirProp(props):
+          return str(props.getProperty('copyFolder'))
+
+        res += [self.generateStep(mkDirProp,
+                                  platform,
+                                  'create dir ',
+                                  self.isDeploy)]
+
         res += [steps.CopyDirectory(
                     src="docs/html",
                     dest=util.Interpolate('%(prop:copyFolder)s'))]
 
         return res
+
+    def getPropertyes(self):
+
+        base = super().getPropertyes()
+
+        return base + [
+            util.BooleanParameter(
+                name='deploy',
+                label='deploy project',
+                default=True
+            ),
+            util.StringParameter(
+                name='copyFolder',
+                label='Folder with buildet data',
+                default="Distro"
+            ),
+        ]
