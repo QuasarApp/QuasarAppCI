@@ -30,9 +30,8 @@ class Docs(CMake):
                                   'Generate docs for the project',
                                   self.isDeploy)]
 
-        @util.renderer
         def mkDirProp(props):
-          return str(props.getProperty('copyFolder'))
+            return str(props.getProperty('copyFolder'))
 
         res += [self.generateStep(mkDirProp,
                                   platform,
