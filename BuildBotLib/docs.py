@@ -30,9 +30,13 @@ class Docs(CMake):
                                   'Generate docs for the project',
                                   self.isDeploy)]
 
-        res += [steps.CopyDirectory(
-                    src="docs/html",
-                    dest=util.Interpolate('%(prop:copyFolder)s'))]
+        def move(props):
+            return 'mv docs ' + str(props.getProperty('repository'))
+
+        res += [self.generateStep(move,
+                                platform,
+                                'moveDocs',
+                                self.isDeploy)]
 
         return res
 
