@@ -23,6 +23,7 @@
     "NPM.py",
     "git/gitBin.sh",
     "asssetsinstaller.py",
-    "qifRepogen.py"
+    "qifRepogen.py",
+    "docs.py"
     ]
 }
