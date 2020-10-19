@@ -31,7 +31,7 @@ class Docs(CMake):
                                   self.isDeploy)]
 
         def mkDirProp(props):
-            return [str(props.getProperty('copyFolder'))]
+            return ['mkdir', '-p', str(props.getProperty('copyFolder'))]
 
         res += [self.generateStep(mkDirProp,
                                   platform,
