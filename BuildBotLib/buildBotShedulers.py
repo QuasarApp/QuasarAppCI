@@ -33,6 +33,8 @@ class BuildBotShedulers(BuildBotModule):
                         'Wasm32Builder',
                         ]
 
+        buildersDeployCode = ['DocsGenerator']
+
         buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
 
@@ -45,6 +47,18 @@ class BuildBotShedulers(BuildBotModule):
                     'test': True,
                     'release': False,
                     'deploy': False
+                },
+                treeStableTimer=60
+            ),
+
+            schedulers.AnyBranchScheduler(
+                name='github',
+                builderNames=buildersDeployCode,
+                properties={
+                    'clean': True,
+                    'test': True,
+                    'release': False,
+                    'deploy': True
                 },
                 treeStableTimer=60
             ),
