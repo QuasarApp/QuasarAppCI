@@ -1,0 +1,3 @@
+#!/bin/bash
+
+buildbot start .
