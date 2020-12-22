@@ -20,9 +20,7 @@
     "buildBotChangeSource.py",
     "qtUpdater.py",
     "secretManager.py",
-    "NPM.py",
     "git/gitBin.sh",
-    "asssetsinstaller.py",
     "qifRepogen.py",
     "docs.py"
     ]

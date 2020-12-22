@@ -12,3 +12,4 @@ gitpoller-workdir/
 
 *.pyproject.user.*
 *~
+*.autosave
