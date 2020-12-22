@@ -18,7 +18,8 @@ class BuildBotServices(BuildBotModule):
         # has a variety to choose from, like IRC bots.
 
         self.masterConf['services'] = []
-        secret = SecretManager(str(Path.home()) + "buildBotSecret/secret.json")
+        secretPath = str(Path.home()) + "/buildBotSecret/secret.json"
+        secret = SecretManager(secretPath)
 
         contextVal = util.Interpolate("buildbot/%(prop:buildername)s")
         gc = reporters.GitHubStatusPush(token=secret.getValue('gitHub'),
