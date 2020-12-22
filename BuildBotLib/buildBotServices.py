@@ -2,6 +2,7 @@
 from BuildBotLib.buildBotModule import BuildBotModule
 from buildbot.plugins import reporters, util
 from BuildBotLib.secretManager import SecretManager
+from pathlib import Path
 
 
 class BuildBotServices(BuildBotModule):
