@@ -2,6 +2,7 @@
 from BuildBotLib.buildBotModule import BuildBotModule
 from BuildBotLib.secretManager import SecretManager
 from buildbot.plugins import util
+from pathlib import Path
 
 
 # PROJECT IDENTITY
@@ -51,7 +52,7 @@ class BuildBotIdentity(BuildBotModule):
                 ]
         )
 
-        secret = SecretManager("/home/andrei/buildBotSecret/secret.json")
+        secret = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
 
         self.masterConf['www']['auth'] = util.GitHubAuth(
             secret.getValue("QuasarAppCIID"),
