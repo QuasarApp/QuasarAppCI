@@ -48,7 +48,7 @@ class Make(BaseModule):
         return m.hexdigest()
 
     def destDir(self, props):
-        return self.home + '/shared/' + self.destDirPrivate(props)
+        return '/var/www/builds/' + self.destDirPrivate(props)
 
     def tempDir(self, props):
         self.tempRepoDir = self.home + '/rTemp/' + self.tempDirPrivate(props)
@@ -58,7 +58,7 @@ class Make(BaseModule):
         return "http://quasarapp.ddns.net:3031/" + self.destDirPrivate(props)
 
     def permission(self):
-        return ["chmod", "-R", "775", self.home + '/shared']
+        return ["chmod", "-R", "775", '/var/www/builds/']
 
     def linuxXmakeCmd(self, props):
         command = [
@@ -240,18 +240,13 @@ class Make(BaseModule):
                 repo = str(props.getProperty('repository'))
                 return self.getNameProjectFromGitUrl(repo)
 
-            @util.renderer
-            def repolacation(props):
-                return self.home + "/repo/"
-
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step:
                                       self.isRelease(step) and
                                       self.isSupport(step),
                                   set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
-                                                  "projectName": projectName,
-                                                  "repoLocation": repolacation}
+                                                  "projectName": projectName}
                                   )]
 
         return res
