@@ -45,16 +45,16 @@ class BuildBotIdentity(BuildBotModule):
                                                      role="quasarcore")
                 ],
                 roleMatchers=[
+                  util.RolesFromEmails(admins=["endriimail@gmail.com"]),
                   util.RolesFromGroups(groupPrefix='QuasarApp/'),
-                  util.RolesFromEmails(admins=["EndrIIMail@gmail.com"]),
                   util.RolesFromOwner(role="owner")
 
                 ]
         )
 
-        secret = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
+        scr = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
 
         self.masterConf['www']['auth'] = util.GitHubAuth(
-            secret.getValue("QuasarAppCIID"),
-            secret.getValue("QuasarAppCIToken"),
+            scr.getValue("QuasarAppCIID"),
+            scr.getValue("QuasarAppCIToken"),
             apiVersion=4, getTeamsMembership=True)
