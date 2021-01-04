@@ -35,6 +35,13 @@ class BuildBotIdentity(BuildBotModule):
                                         console_view={},
                                         grid_view={}))
 
+        scr = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
+
+        self.masterConf['www']['auth'] = util.GitHubAuth(
+            scr.getValue("QuasarAppCIID"),
+            scr.getValue("QuasarAppCIToken"),
+            apiVersion=4, getTeamsMembership=True)
+
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules=[
                     util.AnyEndpointMatcher(role="admins"),
@@ -51,10 +58,3 @@ class BuildBotIdentity(BuildBotModule):
 
                 ]
         )
-
-        scr = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
-
-        self.masterConf['www']['auth'] = util.GitHubAuth(
-            scr.getValue("QuasarAppCIID"),
-            scr.getValue("QuasarAppCIToken"),
-            apiVersion=4, getTeamsMembership=True)
