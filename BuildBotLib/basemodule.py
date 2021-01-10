@@ -101,3 +101,6 @@ class BaseModule:
         else:
             command.extend(['-j', '1'])
         return command
+
+    def defaultLocationOfQIFRepository(self):
+        return "/var/www/repo/"

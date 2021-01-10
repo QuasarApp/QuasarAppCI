@@ -240,13 +240,18 @@ class Make(BaseModule):
                 repo = str(props.getProperty('repository'))
                 return self.getNameProjectFromGitUrl(repo)
 
+            @util.renderer
+            def repoLocation(props):
+                return self.defaultLocationOfQIFRepository()
+
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step:
                                       self.isRelease(step) and
                                       self.isSupport(step),
                                   set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
-                                                  "projectName": projectName}
+                                                  "projectName": projectName,
+                                                  "repoLocation": repoLocation}
                                   )]
 
         return res
