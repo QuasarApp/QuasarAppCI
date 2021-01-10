@@ -11,6 +11,7 @@ echo "ExecStop=$ROOT/stop.sh" >> $service
 echo "Type=forking" >> $service
 echo "PIDFile=$ROOT/twistd.pid" >> $service
 echo "WorkingDirectory=$ROOT" >> $service
+echo "User=$USER" >> $service
 echo "[Install]" >> $service
 echo "WantedBy=multi-user.target" >> $service 
 
