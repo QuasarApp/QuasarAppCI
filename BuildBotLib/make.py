@@ -55,7 +55,7 @@ class Make(BaseModule):
         return self.tempRepoDir
 
     def destDirUrl(self, props):
-        return "http://quasarapp.ddns.net:3031/" + self.destDirPrivate(props)
+        return "https://quasarapp.ddns.net:3031/" + self.destDirPrivate(props)
 
     def permission(self):
         return ["chmod", "-R", "775", '/var/www/builds/']
