@@ -3,6 +3,7 @@ from BuildBotLib.buildBotModule import BuildBotModule
 from buildbot.plugins import reporters, util
 from BuildBotLib.secretManager import SecretManager
 from pathlib import Path
+from buildbot.reporters.generators.build import BuildStartEndStatusGenerator
 
 
 class BuildBotServices(BuildBotModule):
@@ -21,11 +22,17 @@ class BuildBotServices(BuildBotModule):
         secretPath = str(Path.home()) + "/buildBotSecret/secret.json"
         secret = SecretManager(secretPath)
 
+        status_generator = BuildStartEndStatusGenerator(
+            start_formatter=reporters.MessageFormatterRenderable('Build started.'),
+            end_formatter=reporters.MessageFormatterRenderable('Build finished.'),
+        )
+
         contextVal = util.Interpolate("buildbot/%(prop:buildername)s")
-        gc = reporters.GitHubStatusPush(token=secret.getValue('gitHub'),
+        gc = reporters.GitHubStatusPush(
+                                        token=secret.getValue('gitHub'),
                                         context=contextVal,
                                         verbose=True,
-                                        startDescription='Build started.',
-                                        endDescription='Build done.')
+                                        generators=[status_generator]
+                                        )
 
         self.masterConf['services'].append(gc)
