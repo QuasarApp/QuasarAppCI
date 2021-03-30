@@ -260,7 +260,7 @@ class Make(BaseModule):
         factory = super().getFactory()
 
         def getPreviousStepStatus(steps):
-            steps_status = steps.build.build_status.getSteps()
+            steps_status = steps.build.getStatus().getSteps()
             self_status_index = steps_status.index(steps.step_status)
             if self_status_index == 0:
                 return (None, 0)
