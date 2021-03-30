@@ -269,30 +269,31 @@ class Make(BaseModule):
         def doForce(steps):
             return getPreviousStepStatus(steps)
 
-        factory.addStep(
-            steps.Git(
-                repourl=util.Interpolate('%(prop:repository)s'),
-                branch=util.Interpolate('%(prop:branch)s'),
-                mode='full',
-                method='fresh',
-                submodules=True,
-                warnOnFailure=True,
-                haltOnFailure=False,
-                name='git operations',
-                description='operations of git like pull clone fetch',
-            ),
+        factory.addSteps([
+                steps.Git(
+                    repourl=util.Interpolate('%(prop:repository)s'),
+                    branch=util.Interpolate('%(prop:branch)s'),
+                    mode='full',
+                    method='fresh',
+                    submodules=True,
+                    warnOnFailure=True,
+                    haltOnFailure=False,
+                    name='git operations',
+                    description='operations of git like pull clone fetch',
+                ),
 
-            steps.Git(
-                repourl=util.Interpolate('%(prop:repository)s'),
-                branch=util.Interpolate('%(prop:branch)s'),
-                mode='full',
-                method='clobber',
-                submodules=True,
-                name='git operations force',
-                doStepIf=doForce,
-                description='operations of git like pull clone' +
-                            'fetch (force remove all old data)',
-            )
+                steps.Git(
+                    repourl=util.Interpolate('%(prop:repository)s'),
+                    branch=util.Interpolate('%(prop:branch)s'),
+                    mode='full',
+                    method='clobber',
+                    submodules=True,
+                    name='git operations force',
+                    doStepIf=doForce,
+                    description='operations of git like pull clone' +
+                                'fetch (force remove all old data)',
+                )
+            ]
         )
 
 #        factory.addStep(self.checkSupportedBuildSystems())
