@@ -259,41 +259,19 @@ class Make(BaseModule):
     def getFactory(self):
         factory = super().getFactory()
 
-        def getPreviousStepStatus(steps):
-            steps_status = steps.build.getStatus().getSteps()
-            self_status_index = steps_status.index(steps.step_status)
-            if self_status_index == 0:
-                return (None, 0)
-            return steps_status[self_status_index - 1].results
-
-        def doForce(steps):
-            return getPreviousStepStatus(steps)
-
-        factory.addSteps([
-                steps.Git(
-                    repourl=util.Interpolate('%(prop:repository)s'),
-                    branch=util.Interpolate('%(prop:branch)s'),
-                    mode='full',
-                    method='fresh',
-                    submodules=True,
-                    warnOnFailure=True,
-                    haltOnFailure=False,
-                    name='git operations',
-                    description='operations of git like pull clone fetch',
-                ),
-
-                steps.Git(
-                    repourl=util.Interpolate('%(prop:repository)s'),
-                    branch=util.Interpolate('%(prop:branch)s'),
-                    mode='full',
-                    method='clobber',
-                    submodules=True,
-                    name='git operations force',
-                    doStepIf=doForce,
-                    description='operations of git like pull clone' +
-                                'fetch (force remove all old data)',
-                )
-            ]
+        factory.addStep(
+            steps.Git(
+                repourl=util.Interpolate('%(prop:repository)s'),
+                branch=util.Interpolate('%(prop:branch)s'),
+                mode='full',
+                method='fresh',
+                submodules=True,
+                warnOnFailure=True,
+                haltOnFailure=False,
+                retryFetch=True,
+                name='git operations',
+                description='operations of git like pull clone fetch',
+            )
         )
 
 #        factory.addStep(self.checkSupportedBuildSystems())
