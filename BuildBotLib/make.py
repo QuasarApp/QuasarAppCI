@@ -266,8 +266,6 @@ class Make(BaseModule):
                 mode='full',
                 method='fresh',
                 submodules=True,
-                warnOnFailure=True,
-                haltOnFailure=False,
                 retryFetch=True,
                 name='git operations',
                 description='operations of git like pull clone fetch',
