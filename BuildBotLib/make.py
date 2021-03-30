@@ -259,11 +259,15 @@ class Make(BaseModule):
     def getFactory(self):
         factory = super().getFactory()
 
-        if self.isWin(""):
-            factory.addStep(self.generateStep(["rm", ".git", "-rdf"],
-                                              self.platform,
-                                              'clear work dir',
-                                              lambda step: True))
+        def getPreviousStepStatus(steps):
+            steps_status = steps.build.build_status.getSteps()
+            self_status_index = steps_status.index(steps.step_status)
+            if self_status_index == 0:
+                return (None, 0)
+            return steps_status[self_status_index - 1].results
+
+        def doForce(steps):
+            return getPreviousStepStatus(steps)
 
         factory.addStep(
             steps.Git(
@@ -272,8 +276,22 @@ class Make(BaseModule):
                 mode='full',
                 method='fresh',
                 submodules=True,
+                warnOnFailure=True,
+                haltOnFailure=False,
                 name='git operations',
                 description='operations of git like pull clone fetch',
+            ),
+
+            steps.Git(
+                repourl=util.Interpolate('%(prop:repository)s'),
+                branch=util.Interpolate('%(prop:branch)s'),
+                mode='full',
+                method='clobber',
+                submodules=True,
+                name='git operations force',
+                doStepIf=doForce,
+                description='operations of git like pull clone' +
+                            'fetch (force remove all old data)',
             )
         )
 
