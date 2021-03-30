@@ -41,6 +41,7 @@ class CMake(Make):
 
         options = [
             'cmake -DCMAKE_PREFIX_PATH=$QTDIR',
+            '-DQT_DIR=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake',
             '-DANDROID_ABI=arm64-v8a',
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
