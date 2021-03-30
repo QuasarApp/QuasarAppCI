@@ -46,6 +46,7 @@ class CMake(Make):
             '-DANDROID_ABI=arm64-v8a',
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
             '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
+            '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
