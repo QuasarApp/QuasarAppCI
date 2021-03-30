@@ -37,7 +37,7 @@ class CMake(Make):
 
     def androidXmakeCmd(self, props):
         secret = SecretManager(self.home + "/buildBotSecret/secret.json")
-        toochainFile = 'ndk-bundle/build/cmake/android.toolchain.cmake'
+        toochainFile = 'build/cmake/android.toolchain.cmake'
 
         options = [
             'cmake -DCMAKE_PREFIX_PATH=$QTDIR',
