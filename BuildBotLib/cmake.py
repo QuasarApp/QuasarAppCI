@@ -17,7 +17,7 @@ class CMake(Make):
     def mainCmd(self):
         command = [
             'cmake',
-            "cmake_build"
+            "-B cmake_build"
         ]
 
         return command
