@@ -264,7 +264,7 @@ class Make(BaseModule):
                 repourl=util.Interpolate('%(prop:repository)s'),
                 branch=util.Interpolate('%(prop:branch)s'),
                 mode='full',
-                method='fresh',
+                method='clobber',
                 clobberOnFailure=True,
                 submodules=True,
                 retryFetch=True,
