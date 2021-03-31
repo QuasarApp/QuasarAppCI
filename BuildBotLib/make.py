@@ -265,6 +265,7 @@ class Make(BaseModule):
                 branch=util.Interpolate('%(prop:branch)s'),
                 mode='full',
                 method='fresh',
+                clobberOnFailure=True,
                 submodules=True,
                 retryFetch=True,
                 name='git operations',
