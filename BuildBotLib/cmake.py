@@ -29,12 +29,12 @@ class CMake(Make):
         return 'cmake --build . --target ' + target
 
     def makeCommand(self, props):
-        command = [self.make()]
+        command = self.make()
 
         cpus = multiprocessing.cpu_count()
 
         if cpus:
-            command.extend(['--parallel', str(cpus)])
+            command += '--parallel ' str(cpus)
 
         return command
 
