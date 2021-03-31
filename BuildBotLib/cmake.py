@@ -2,6 +2,7 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
+import multiprocessing
 
 
 class CMake(Make):
@@ -18,6 +19,22 @@ class CMake(Make):
             'cmake',
             "."
         ]
+
+        return command
+
+    def make(self):
+        return 'cmake --build . --target all'
+
+    def makeTarget(self, target):
+        return 'cmake --build . --target ' + target
+
+    def makeCommand(self props):
+        command = [self.make()]
+
+        cpus = multiprocessing.cpu_count()
+
+        if cpus:
+            command.extend(['--parallel', str(cpus)])
 
         return command
 
@@ -40,8 +57,9 @@ class CMake(Make):
         toochainFile = 'build/cmake/android.toolchain.cmake'
 
         options = [
-            'cmake -DCMAKE_PREFIX_PATH=$QTDIR',
+            'cmake -GNinja -DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
+            '-DANDROID_ABI=arm64-v8a',
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
             '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
             '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
