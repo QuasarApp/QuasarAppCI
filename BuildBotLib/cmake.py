@@ -15,12 +15,12 @@ class CMake(Make):
         return "C"
 
     def mainCmd(self):
-        command = [
+        options = [
             'cmake',
             "-B cmake_build"
         ]
 
-        return command
+        return ' '.join(options)
 
     def make(self):
         return 'cmake --build cmake_build --target all'
