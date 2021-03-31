@@ -14,13 +14,16 @@ class BaseModule:
     P_Wasm = 'Wasm'
 
     def __init__(self, platform):
-        self.MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
         self.home = str(Path.home())
         self.platform = platform
 #        self.detectedBuildSystems = 0
 #        self.buildSystems = 0
 #        self.B_CMake = 1
 #        self.B_QMake = 2
+        if self.platform == self.P_Windows:
+            self.MULTIPLE_SH_COMMAND = ["cmd", "/c"]
+        else:
+            self.MULTIPLE_SH_COMMAND = ["/bin/bash", "-c"]
 
     def isWin(self, step):
         return self.platform == BaseModule.P_Windows
