@@ -17,16 +17,16 @@ class CMake(Make):
     def mainCmd(self):
         command = [
             'cmake',
-            "."
+            "cmake_build"
         ]
 
         return command
 
     def make(self):
-        return 'cmake --build . --target all'
+        return 'cmake --build cmake_build --target all'
 
     def makeTarget(self, target):
-        return 'cmake --build . --target ' + target
+        return 'cmake --build cmake_build --target ' + target
 
     def makeCommand(self, props):
         command = self.make()
@@ -47,7 +47,8 @@ class CMake(Make):
             'cmake -DCMAKE_PREFIX_PATH=%QTDIR%',
             '-DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc',
             '-DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake.exe',
-            '"-GCodeBlocks - MinGW Makefiles" .'
+            '"-GCodeBlocks - MinGW Makefiles"',
+            '-B cmake_build'
         ]
 
         return ' '.join(options)
@@ -57,7 +58,8 @@ class CMake(Make):
         toochainFile = 'build/cmake/android.toolchain.cmake'
 
         options = [
-            'cmake -GNinja -DCMAKE_PREFIX_PATH=$QTDIR',
+            'cmake -GNinja',
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
             '-DANDROID_ABI=arm64-v8a',
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
@@ -67,7 +69,7 @@ class CMake(Make):
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
-            '.'
+            '-B cmake_build'
         ]
 
         return ' '.join(options)
@@ -76,7 +78,7 @@ class CMake(Make):
         options = [
             'cmake -DCMAKE_PREFIX_PATH=$QTDIR',
             '-DTARGET_PLATFORM_TOOLCHAIN=wasm32',
-            '.'
+            '-B cmake_build'
         ]
 
         return ' '.join(options)
