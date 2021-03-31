@@ -34,7 +34,7 @@ class CMake(Make):
         cpus = multiprocessing.cpu_count()
 
         if cpus:
-            command += '--parallel ' str(cpus)
+            command += '--parallel ' + str(cpus)
 
         return command
 
