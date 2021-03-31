@@ -28,7 +28,7 @@ class CMake(Make):
     def makeTarget(self, target):
         return 'cmake --build . --target ' + target
 
-    def makeCommand(self props):
+    def makeCommand(self, props):
         command = [self.make()]
 
         cpus = multiprocessing.cpu_count()
