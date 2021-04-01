@@ -287,13 +287,6 @@ class Make(BaseModule):
             )
         )
 
-        factory.addStep(
-            self.generateStep(["git", "clean", "-xdf"],
-                              self.platform,
-                              'clear all data',
-                              lambda step: True)
-        )
-
         return factory
 
     def getPropertyes(self):
