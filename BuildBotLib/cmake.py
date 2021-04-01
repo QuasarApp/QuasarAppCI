@@ -45,6 +45,7 @@ class CMake(Make):
 
         options = [
             'cmake -DCMAKE_PREFIX_PATH=%QTDIR%',
+            '-DBUILD_SHARED_LIBS=1',
             '-DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc',
             '-DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake.exe',
             '"-GCodeBlocks - MinGW Makefiles"',
