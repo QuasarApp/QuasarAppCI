@@ -55,7 +55,8 @@ class CMake(Make):
         return ' '.join(options)
 
     def androidXmakeCmd(self, props):
-        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
+        file = self.home + "/buildBotSecret/secret.json"
+        secret = SecretManager(file, props)
         toochainFile = 'build/cmake/android.toolchain.cmake'
 
         options = [

@@ -31,7 +31,8 @@ class QMake(Make):
         return self.mainCmd()
 
     def androidXmakeCmd(self, props):
-        secret = SecretManager(self.home + "/buildBotSecret/secret.json")
+        file = self.home + "/buildBotSecret/secret.json"
+        secret = SecretManager(file, props)
 
         command = [
             'qmake',
