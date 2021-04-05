@@ -5,15 +5,16 @@ from pathlib import Path
 
 class SecretManager:
 
-    def __init__(self, jsFile):
-        try:
-            contents = Path(jsFile).read_text()
-            self.jsfile = json.loads(contents)
-        except:
-            pass
+    def __init__(self, jsFile, properties=None):
+
+        contents = Path(jsFile).read_text()
+        self.jsfile = json.loads(contents)
+        self.prop = properties
 
     def getValue(self, key):
-        try:
-            return self.jsfile[key]
-        except:
-            pass
+        value = self.jsfile[key]
+
+        if self.prop:
+            self.prop.useSecret(value, key)
+
+        return value
