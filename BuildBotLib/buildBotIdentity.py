@@ -59,6 +59,7 @@ class BuildBotIdentity(BuildBotModule):
 
                   util.RolesFromUsername(roles=[
                                                     "quasarcore",
+                                                    "quasarcore"
                                                ],
                                          usernames=[
                                                     "Oleg-designer",
