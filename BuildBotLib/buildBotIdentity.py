@@ -44,13 +44,13 @@ class BuildBotIdentity(BuildBotModule):
 
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules=[
+                    util.AnyEndpointMatcher(role="QuasarApp"),
                     util.AnyEndpointMatcher(role="admins"),
                     util.StopBuildEndpointMatcher(role="owner"),
 
 #                    util.StopBuildEndpointMatcher(role="QuasarApp"),
 #                    util.ForceBuildEndpointMatcher(role="QuasarApp"),
 #                    util.RebuildBuildEndpointMatcher(role="QuasarApp")
-                    util.AnyEndpointMatcher(role="QuasarApp"),
 
                 ],
                 roleMatchers=[
