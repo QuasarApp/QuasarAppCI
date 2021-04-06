@@ -53,7 +53,8 @@ class BuildBotIdentity(BuildBotModule):
                   util.RolesFromGroups(groupPrefix='QuasarApp/'),
                   util.RolesFromEmails(admins=["EndrIIMail@gmail.com"]),
                   util.RolesFromEmails(friends=[
-                                                "igor.loschinin2014@yandex.ru"
+                                                "igor.loschinin2014@yandex.ru",
+                                                "sweetletal0@gmail.com"
                                                ]),
 
                   util.RolesFromOwner(role="owner")
