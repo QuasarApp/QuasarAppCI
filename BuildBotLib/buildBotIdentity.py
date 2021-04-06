@@ -47,9 +47,9 @@ class BuildBotIdentity(BuildBotModule):
                     util.AnyEndpointMatcher(role="admins"),
                     util.StopBuildEndpointMatcher(role="owner"),
 
-                    util.StopBuildEndpointMatcher(role="QuasraApp"),
-                    util.ForceBuildEndpointMatcher(role="QuasraApp"),
-                    util.RebuildBuildEndpointMatcher(role="QuasraApp")
+                    util.StopBuildEndpointMatcher(role="QuasarApp"),
+                    util.ForceBuildEndpointMatcher(role="QuasarApp"),
+                    util.RebuildBuildEndpointMatcher(role="QuasarApp")
                 ],
                 roleMatchers=[
                   util.RolesFromGroups(groupPrefix=''),
