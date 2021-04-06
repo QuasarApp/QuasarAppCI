@@ -46,9 +46,9 @@ class BuildBotIdentity(BuildBotModule):
                 allowRules=[
 #                    util.StopBuildEndpointMatcher(role="owner"),
 
-                    util.StopBuildEndpointMatcher(role="QuasarApp"),
-                    util.ForceBuildEndpointMatcher(role="QuasarApp"),
-                    util.RebuildBuildEndpointMatcher(role="QuasarApp"),
+                    util.AnyControlEndpointMatcher(role="QuasarApp"),
+#                    util.ForceBuildEndpointMatcher(role="QuasarApp"),
+#                    util.RebuildBuildEndpointMatcher(role="QuasarApp"),
                     util.AnyEndpointMatcher(role="admins"),
 
 #                    util.AnyEndpointMatcher(role="QuasarApp"),
