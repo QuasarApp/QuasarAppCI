@@ -45,25 +45,19 @@ class BuildBotIdentity(BuildBotModule):
         self.masterConf['www']['authz'] = util.Authz(
                 allowRules=[
                     util.AnyEndpointMatcher(role="admins"),
-                    util.AnyControlEndpointMatcher(role="quasarcore"),
-                    util.StopBuildEndpointMatcher(role="owner")
+                    util.StopBuildEndpointMatcher(role="owner"),
+
+                    util.StopBuildEndpointMatcher(role="QuasraApp"),
+                    util.ForceBuildEndpointMatcher(role="QuasraApp"),
+                    util.RebuildBuildEndpointMatcher(role="QuasraApp")
                 ],
                 roleMatchers=[
-                  util.RolesFromGroups(groupPrefix='QuasarApp'),
+                  util.RolesFromGroups(groupPrefix=''),
                   util.RolesFromUsername(roles=[
                                                     "admins",
                                                ],
                                          usernames=[
                                                     "EndrII"
-                                                   ]),
-
-                  util.RolesFromUsername(roles=[
-                                                    "quasarcore",
-                                                    "quasarcore"
-                                               ],
-                                         usernames=[
-                                                    "Oleg-designer",
-                                                    "IgorekLoschinin"
                                                    ]),
 
                   util.RolesFromOwner(role="owner")
