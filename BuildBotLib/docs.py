@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
 from BuildBotLib.cmake import CMake
-from buildbot.plugins import util, steps
+from buildbot.plugins import util
 
 
 class Docs(CMake):
@@ -34,9 +34,9 @@ class Docs(CMake):
             return 'mv docs ' + str(props.getProperty('copyFolder'))
 
         res += [self.generateStep(move,
-                                platform,
-                                'moveDocs',
-                                self.isDeploy)]
+                                  platform,
+                                  'moveDocs',
+                                  self.isDeploy)]
 
         return res
 
