@@ -54,7 +54,7 @@ class CMake(Make):
 
         return ' '.join(options)
 
-    def androidXmakeCmd(self, props):
+    def androidXmakeMultiAbiCmd(self, props):
         file = self.home + "/buildBotSecret/secret.json"
         secret = SecretManager(file, props)
         toochainFile = 'build/cmake/android.toolchain.cmake'
@@ -75,6 +75,29 @@ class CMake(Make):
         ]
 
         return ' '.join(options)
+
+    def androidXmakeSinglAbiCmd(self, props):
+        file = self.home + "/buildBotSecret/secret.json"
+        secret = SecretManager(file, props)
+        toochainFile = 'build/cmake/android.toolchain.cmake'
+
+        options = [
+            'cmake -GNinja',
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
+            '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
+            '-DANDROID_ABI=$ANDROID_ABI',
+            '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
+            '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
+            '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
+            '-DSIGN_ALIES="quasarapp"',
+            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
+            '-B cmake_build'
+        ]
+
+        return ' '.join(options)
+
+    def androidXmakeCmd(self, props):
+        return self.androidXmakeSinglAbiCmd(props)
 
     def wasmXmakeCmd(self, props):
         options = [
