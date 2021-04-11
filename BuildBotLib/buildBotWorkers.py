@@ -21,10 +21,10 @@ class BuildBotWorkers(BuildBotModule):
         password = scr.getValue('WorkerPass')
 
         self.masterConf['workers'] = [
-            worker.Worker("AndroidBuilder", password),
             worker.Worker("LinuxBuilder", password),
             worker.Worker("WindowsBuilder", password),
-            worker.Worker("AndroidCMakeBuilder", password),
+            worker.Worker("AndroidBuilder_v7", password),
+            worker.Worker("AndroidBuilder_v8", password),
             worker.Worker("LinuxCMakeBuilder", password),
             worker.Worker("WindowsCMakeBuilder", password),
             worker.Worker("RepoGen", password),
