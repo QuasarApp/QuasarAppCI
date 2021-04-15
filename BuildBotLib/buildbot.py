@@ -50,7 +50,7 @@ class BuildBot:
             util.BuilderConfig(
                 name=worker,
                 workernames=[worker],
-                factory=factory.getFactory()
+                factory=factory.getFactory().source()
             )
         )
         self.shedulers.addScheduler(factory.getPropertyes(),

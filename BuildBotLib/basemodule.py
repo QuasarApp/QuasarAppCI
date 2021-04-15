@@ -4,6 +4,7 @@ import multiprocessing
 import glob
 import shutil
 from pathlib import Path
+from BuildBotLib.stepfactory import StepFactory
 
 
 class BaseModule:
@@ -16,10 +17,8 @@ class BaseModule:
     def __init__(self, platform):
         self.home = str(Path.home())
         self.platform = platform
-#        self.detectedBuildSystems = 0
-#        self.buildSystems = 0
-#        self.B_CMake = 1
-#        self.B_QMake = 2
+        self.pwd = "."
+
         if self.platform == self.P_Windows:
             self.MULTIPLE_SH_COMMAND = ["cmd", "/c"]
         else:
@@ -45,7 +44,7 @@ class BaseModule:
         return self.MULTIPLE_SH_COMMAND + [bashString]
 
     def getFactory(self):
-        return util.BuildFactory()
+        return StepFactory(self.pwd)
 
     def getRepo(self):
         return ""
