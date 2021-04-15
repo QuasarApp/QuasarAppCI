@@ -5,8 +5,8 @@ from buildbot.plugins import util
 class StepFactory:
     def __init__(self, pwd):
         self.factory = util.BuildFactory()
+        self.factory.workdir = pwd
         self.pwd = pwd
-        pass
 
     def addStep(self, step):
         step.workdir = self.pwd
