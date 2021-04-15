@@ -10,12 +10,12 @@ import hashlib
 
 class Make(BaseModule):
     def __init__(self, platform):
-        BaseModule.__init__(self, platform)
+        BaseModule.__init__(self,
+                            platform,
+                            util.Interpolate('%(prop:project)s'))
         self.tempRepoDir = ""
 
     def isSupport(self, step):
-        # check = self.buildSystems & self.detectedBuildSystems
-        # return check != 0
         return True
 
     def isDeploy(self, step):
@@ -115,26 +115,6 @@ class Make(BaseModule):
 
     def makePrefix(self):
         return "X"
-
-#    def checkSupportedBuildSystems(self):
-
-#        def cmd(step):
-#            PWD = step.getProperty('builddir') + '/build'
-
-#            if (len(glob.glob1(PWD, '*.pro')) > 0):
-#                self.detectedBuildSystems = self.detectedBuildSystems | self.B_QMake
-
-#            if (os.path.isfile(PWD + '/CMakeLists.txt')):
-#                self.detectedBuildSystems = self.detectedBuildSystems | self.B_CMake
-
-#            return ['echo', 'PWD: ' + PWD + str(self.detectedBuildSystems)]
-
-#        return steps.ShellCommand(
-#                    command=self.getWraper(cmd),
-#                    haltOnFailure=True,
-#                    name='Chek build system',
-#                    description='Chek build system',
-#                )
 
     def generateStep(self, cmd, platform, desc, checkFunc, log=False):
 
@@ -265,7 +245,7 @@ class Make(BaseModule):
                 repourl=util.Interpolate('%(prop:repository)s'),
                 branch=util.Interpolate('%(prop:branch)s'),
                 mode='full',
-                method='clobber',
+                method='fresh',
                 clobberOnFailure=True,
                 submodules=True,
                 retryFetch=True,
