@@ -9,8 +9,7 @@ class StepFactory:
         pass
 
     def addStep(self, step):
-        if hasattr(step, 'workdir'):
-            step.workdir = self.pwd
+        step.workdir = self.pwd
 
         self.factory.addStep(step)
 
