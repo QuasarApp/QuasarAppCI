@@ -14,10 +14,10 @@ class BaseModule:
     P_Android = 'Android'
     P_Wasm = 'Wasm'
 
-    def __init__(self, platform):
+    def __init__(self, platform, pwd="."):
         self.home = str(Path.home())
         self.platform = platform
-        self.pwd = "."
+        self.pwd = pwd
 
         if self.platform == self.P_Windows:
             self.MULTIPLE_SH_COMMAND = ["cmd", "/c"]

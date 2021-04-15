@@ -10,7 +10,9 @@ import hashlib
 
 class Make(BaseModule):
     def __init__(self, platform):
-        BaseModule.__init__(self, platform)
+        BaseModule.__init__(self,
+                            platform,
+                            util.Interpolate('%(prop:project)s'))
         self.tempRepoDir = ""
 
     def isSupport(self, step):
