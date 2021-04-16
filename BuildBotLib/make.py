@@ -12,8 +12,30 @@ class Make(BaseModule):
     def __init__(self, platform):
         BaseModule.__init__(self,
                             platform,
-                            util.Interpolate('%(prop:project)s'))
+                            self.getProject())
         self.tempRepoDir = ""
+
+    def getProject(self):
+
+        @util.renderer
+        def cmdWraper(step):
+            repository = step.getProperty('repository')
+
+            if not len(repository):
+                return "build"
+
+            repository = repository.replace('.git', '')
+            begin = repository.rfind('/')
+            begin = max(repository.rfind('/', 0, begin),
+                        repository.rfind(':', 0, begin))
+
+            if begin < 0:
+                return "build"
+
+            project = repository[begin + 1:len(repository)]
+            return project
+
+        return cmdWraper
 
     def isSupport(self, step):
         return True
