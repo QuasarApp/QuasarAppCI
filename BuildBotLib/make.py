@@ -20,20 +20,12 @@ class Make(BaseModule):
         @util.renderer
         def cmdWraper(step):
             repository = step.getProperty('repository')
-
-            if not len(repository):
+            project = self.getNameProjectFromGitUrl(repository)
+            if not len(project):
                 return "build"
 
-            repository = repository.replace('.git', '')
-            begin = repository.rfind('/')
-            begin = max(repository.rfind('/', 0, begin),
-                        repository.rfind(':', 0, begin))
-
-            if begin < 0:
-                return "build"
-
-            project = repository[begin + 1:len(repository)]
             return project
+
 
         return cmdWraper
 
@@ -49,21 +41,39 @@ class Make(BaseModule):
     def isTest(self, step):
         return step.getProperty('test')
 
-    def getNameProjectFromGitUrl(self, url):
-        return url[url.rfind('/') + 1: len(url) - 4]
+    def getNameProjectFromGitUrl(self, repository):
+        if not len(repository):
+            return ""
+
+        repository = repository.replace('.git', '')
+        begin = repository.rfind('/')
+        begin = max(repository.rfind('/', 0, begin),
+                    repository.rfind(':', 0, begin))
+
+        if begin < 0:
+            return ""
+
+        project = repository[begin + 1:len(repository)]
+        return project
 
     def destDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
-        now = datetime.datetime.now().strftime("(%H_%M)_%m-%d-%Y")
+        buildnumber = str(props.getProperty('buildnumber'))
+        got_revision = str(props.getProperty('got_revision'))
 
-        return self.getNameProjectFromGitUrl(repo) + "/" + now
+        name = buildnumber + "_" + got_revision
+
+        return self.getNameProjectFromGitUrl(repo) + "/" + name
 
     def tempDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
-        now = datetime.datetime.now().strftime("(%H_%M_%S)_%m-%d-%Y")
+        buildnumber = str(props.getProperty('buildnumber'))
+        got_revision = str(props.getProperty('got_revision'))
+
+        name = buildnumber + "_" + got_revision
 
         m = hashlib.md5()
-        repoPath = self.getNameProjectFromGitUrl(repo) + "/" + now
+        repoPath = self.getNameProjectFromGitUrl(repo) + "/" + name
 
         m.update(repoPath.encode('utf-8'))
 
