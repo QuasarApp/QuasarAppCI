@@ -54,3 +54,13 @@ class Docs(CMake):
                 default="Distro"
             ),
         ]
+
+    def destDirPrivate(self, props):
+        repo = str(props.getProperty('repository'))
+        branch = str(props.getProperty('branch'))
+
+        name = branch
+        if branch == "main" or branch == "master":
+            name = "latest"
+
+        return "docs/" + self.getNameProjectFromGitUrl(repo) + "/" + name
