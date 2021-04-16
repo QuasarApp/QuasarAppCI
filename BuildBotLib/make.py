@@ -29,6 +29,9 @@ class Make(BaseModule):
             begin = max(repository.rfind('/', 0, begin),
                         repository.rfind(':', 0, begin))
 
+            if begin < 0:
+                return "build"
+
             project = repository[begin + 1:len(repository)]
             return project
 
