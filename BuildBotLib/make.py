@@ -56,6 +56,14 @@ class Make(BaseModule):
         project = repository[begin + 1:len(repository)]
         return project
 
+    def getLastRepoName(url):
+        fullName = self.getNameProjectFromGitUrl(url)
+        array = fullName.split('/')
+        if (len(array) <= 0)
+            return ""
+
+        return array[-1]
+
     def destDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
         buildnumber = str(props.getProperty('buildnumber'))
@@ -73,7 +81,7 @@ class Make(BaseModule):
         name = buildnumber + "_" + got_revision
 
         m = hashlib.md5()
-        repoPath = self.getNameProjectFromGitUrl(repo) + "/" + name
+        repoPath = self.getLastRepoName(repo) + "/" + name
 
         m.update(repoPath.encode('utf-8'))
 
@@ -251,7 +259,7 @@ class Make(BaseModule):
             @util.renderer
             def projectName(props):
                 repo = str(props.getProperty('repository'))
-                return self.getNameProjectFromGitUrl(repo)
+                return self.getLastRepoName(repo)
 
             @util.renderer
             def repoLocation(props):
