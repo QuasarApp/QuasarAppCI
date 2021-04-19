@@ -3,7 +3,6 @@
 from BuildBotLib.basemodule import BaseModule
 
 from buildbot.plugins import util, steps
-import datetime
 from BuildBotLib.secretManager import SecretManager
 import hashlib
 
@@ -25,7 +24,6 @@ class Make(BaseModule):
                 return "build"
 
             return project
-
 
         return cmdWraper
 
@@ -56,10 +54,10 @@ class Make(BaseModule):
         project = repository[begin + 1:len(repository)]
         return project
 
-    def getLastRepoName(url):
+    def getLastRepoName(self, url):
         fullName = self.getNameProjectFromGitUrl(url)
         array = fullName.split('/')
-        if (len(array) <= 0)
+        if len(array) <= 0:
             return ""
 
         return array[-1]
