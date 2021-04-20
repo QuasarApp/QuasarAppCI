@@ -251,7 +251,7 @@ class Make(BaseModule):
             @util.renderer
             def projectName(props):
                 repo = str(props.getProperty('repository'))
-                return self.getNameProjectFromGitUrl(repo)
+                return self.destDirPrivate(repo)
 
             @util.renderer
             def repoLocation(props):
