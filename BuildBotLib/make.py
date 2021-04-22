@@ -306,6 +306,20 @@ class Make(BaseModule):
             )
         )
 
+        factory.addStep(
+            self.generateStep("git clean -xdf",
+                              platform,
+                              'Clean',
+                              lambda step: True)
+        )
+
+        factory.addStep(
+            self.generateStep("git submodules foreach --recursive git clean -xdf",
+                              platform,
+                              'Clean submodules',
+                              lambda step: True)
+        )
+
         return factory
 
     def getPropertyes(self):
