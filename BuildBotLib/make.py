@@ -314,7 +314,7 @@ class Make(BaseModule):
         )
 
         factory.addStep(
-            self.generateStep("git submodules foreach --recursive git clean -xdf",
+            self.generateStep("git submodule foreach --recursive git clean -xdf",
                               self.platform,
                               'Clean submodules',
                               lambda step: True)
