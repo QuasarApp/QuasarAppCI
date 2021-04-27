@@ -64,19 +64,17 @@ class Make(BaseModule):
 
     def destDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
-        buildnumber = str(props.getProperty('buildnumber'))
         got_revision = str(props.getProperty('got_revision'))
 
-        name = buildnumber + "_" + got_revision
+        name = got_revision
 
         return self.getNameProjectFromGitUrl(repo) + "/" + name
 
     def tempDirPrivate(self, props):
         repo = str(props.getProperty('repository'))
-        buildnumber = str(props.getProperty('buildnumber'))
         got_revision = str(props.getProperty('got_revision'))
 
-        name = buildnumber + "_" + got_revision
+        name = got_revision
 
         m = hashlib.md5()
         repoPath = self.getLastRepoName(repo) + "/" + name
