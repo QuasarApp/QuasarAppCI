@@ -73,7 +73,7 @@ class CMake(Make):
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
-            '-DANDROID_PLATFORM_LEVEL=$ANDROID_API_VERSION',
+            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-B cmake_build'
         ]
 
@@ -96,7 +96,7 @@ class CMake(Make):
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
-            '-DANDROID_PLATFORM_LEVEL=$ANDROID_API_VERSION',
+            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-B cmake_build'
         ]
 
