@@ -67,13 +67,13 @@ class CMake(Make):
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
             '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
             '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
-            '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
+            '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-B cmake_build'
         ]
 
@@ -90,13 +90,13 @@ class CMake(Make):
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
             '-DANDROID_ABI=$ANDROID_ABI',
             '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
-            '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
             '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
+            '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-B cmake_build'
         ]
 
