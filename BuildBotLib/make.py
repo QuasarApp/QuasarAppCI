@@ -320,6 +320,9 @@ class Make(BaseModule):
 
         return factory
 
+    def getDefinesList(self, props):
+        return str(props.getProperty('defines')).split(' ')
+
     def getPropertyes(self):
 
         base = super().getPropertyes()
@@ -349,5 +352,10 @@ class Make(BaseModule):
                 name='repoFolder',
                 label='Folder with repository data',
                 default="Repo"
+            ),
+            util.StringParameter(
+                name='defines',
+                label='Custom Defines list: Example: -DHANOI_ADMOD=1',
+                default=""
             ),
         ]
