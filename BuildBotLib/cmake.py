@@ -14,14 +14,6 @@ class CMake(Make):
     def makePrefix(self):
         return "C"
 
-    def mainCmd(self):
-        options = [
-            'cmake',
-            "-B cmake_build"
-        ]
-
-        return ' '.join(options)
-
     def make(self):
         return 'cmake --build cmake_build --target all'
 
@@ -39,18 +31,36 @@ class CMake(Make):
         return command
 
     def linuxXmakeCmd(self, props):
-        return self.mainCmd()
+        defines = self.getDefinesList(props)
 
-    def windowsXmakeCmd(self, props):
+        defines += [
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
+            '-B cmake_build'
+        ]
 
         options = [
-            'cmake -DCMAKE_PREFIX_PATH=%QTDIR%',
+            'cmake',
+        ]
+        options += defines
+
+        return ' '.join(options)
+
+    def windowsXmakeCmd(self, props):
+        defines = self.getDefinesList(props)
+
+        defines += [
+            '-DCMAKE_PREFIX_PATH=%QTDIR%',
             '-DBUILD_SHARED_LIBS=1',
             '-DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc',
             '-DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake.exe',
             '"-GCodeBlocks - MinGW Makefiles"',
             '-B cmake_build'
         ]
+
+        options = [
+            'cmake',
+        ]
+        options += defines
 
         return ' '.join(options)
 
@@ -59,8 +69,9 @@ class CMake(Make):
         secret = SecretManager(file, props)
         toochainFile = 'build/cmake/android.toolchain.cmake'
 
-        options = [
-            'cmake -GNinja',
+        defines = self.getDefinesList(props)
+
+        defines += [
             '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
             '-DANDROID_ABI=arm64-v8a',
@@ -77,6 +88,11 @@ class CMake(Make):
             '-B cmake_build'
         ]
 
+        options = [
+            'cmake -GNinja',
+        ]
+        options += defines
+
         return ' '.join(options)
 
     def androidXmakeSinglAbiCmd(self, props):
@@ -84,8 +100,9 @@ class CMake(Make):
         secret = SecretManager(file, props)
         toochainFile = 'build/cmake/android.toolchain.cmake'
 
-        options = [
-            'cmake -GNinja',
+        defines = self.getDefinesList(props)
+
+        defines += [
             '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
             '-DANDROID_ABI=$ANDROID_ABI',
@@ -100,16 +117,30 @@ class CMake(Make):
             '-B cmake_build'
         ]
 
+        options = [
+            'cmake -GNinja',
+        ]
+        options += defines
+
         return ' '.join(options)
 
     def androidXmakeCmd(self, props):
         return self.androidXmakeSinglAbiCmd(props)
 
     def wasmXmakeCmd(self, props):
-        options = [
-            'cmake -DCMAKE_PREFIX_PATH=$QTDIR',
+
+        defines = self.getDefinesList(props)
+
+        defines += [
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DTARGET_PLATFORM_TOOLCHAIN=wasm32',
             '-B cmake_build'
         ]
+
+        options = [
+            'cmake',
+        ]
+
+        options += defines
 
         return ' '.join(options)
