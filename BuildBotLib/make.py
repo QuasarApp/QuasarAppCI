@@ -321,7 +321,7 @@ class Make(BaseModule):
         return factory
 
     def getDefinesList(self, props):
-        return str(props.getProperty('defines')).split(' ')
+        return str(props.getProperty('defines', '')).split(' ')
 
     def getPropertyes(self):
 
