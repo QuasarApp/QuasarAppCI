@@ -20,9 +20,8 @@ class SecretManager:
 
     def convertToCmakeDefines(self):
         defines = []
-
-        for list in self.jsfile:
-            for key,val in list.items():
-                defines += '-D' + key + '=' + val
+        jsItems = self.jsfile.items()
+        for key,val in jsItems:
+            defines += '-D' + key + '=' + val
 
         return defines
