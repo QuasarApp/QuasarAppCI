@@ -71,6 +71,8 @@ class CMake(Make):
 
         defines = self.getDefinesList(props)
 
+        defines += secret.convertToCmakeDefines()
+
         defines += [
             '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
@@ -101,6 +103,8 @@ class CMake(Make):
         toochainFile = 'build/cmake/android.toolchain.cmake'
 
         defines = self.getDefinesList(props)
+
+        defines += secret.convertToCmakeDefines()
 
         defines += [
             '-DCMAKE_PREFIX_PATH=$QTDIR',

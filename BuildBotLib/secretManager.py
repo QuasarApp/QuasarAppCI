@@ -6,7 +6,6 @@ from pathlib import Path
 class SecretManager:
 
     def __init__(self, jsFile, properties=None):
-
         contents = Path(jsFile).read_text()
         self.jsfile = json.loads(contents)
         self.prop = properties
@@ -18,3 +17,12 @@ class SecretManager:
             self.prop.useSecret(value, key)
 
         return value
+
+    def convertToCmakeDefines(self):
+        defines = []
+
+        for list in self.jsfile:
+            for key,val in list.items():
+                defines += '-D' + key + '=' + val
+
+        return defines
