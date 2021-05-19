@@ -21,9 +21,7 @@ class SecretManager:
     def convertToCmakeDefines(self):
         defines = []
         for key in self.jsfile:
-            if self.prop:
-                self.prop.useSecret(key, self.jsfile[key])
-            defineString = '-D' + str(key) + '=' + str(self.jsfile[key])
-            defines += str(defineString)
+            defineString = str('-D' + key + '=' + self.getValue(key))
+            defines += defineString
 
         return defines
