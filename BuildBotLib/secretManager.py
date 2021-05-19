@@ -21,6 +21,6 @@ class SecretManager:
     def convertToCmakeDefines(self):
         defines = []
         for key in self.jsfile:
-            defines += '-D' + key + '=' + str(self.jsfile[key])
+            defines += '-D' + str(key) + '=' + str(self.jsfile[key])
 
         return defines
