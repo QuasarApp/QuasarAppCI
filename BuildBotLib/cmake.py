@@ -82,7 +82,7 @@ class CMake(Make):
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
-            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
+            '-DSIGN_PASSWORD_PATH="' + secret.getValue('SIGPASSPATH') + '"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-B cmake_build'
@@ -111,7 +111,7 @@ class CMake(Make):
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_PATH="' + secret.getValue('SIGPATH') + '"',
             '-DSIGN_ALIES="quasarapp"',
-            '-DSIGN_STORE_PASSWORD="' + secret.getValue('SIGPASS') + '"',
+            '-DSIGN_PASSWORD_PATH="' + secret.getValue('SIGPASSPATH') + '"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-B cmake_build'
