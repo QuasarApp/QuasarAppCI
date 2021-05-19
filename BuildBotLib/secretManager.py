@@ -24,6 +24,6 @@ class SecretManager:
             if self.prop:
                 self.prop.useSecret(key, self.jsfile[key])
             defineString = '-D' + str(key) + '=' + str(self.jsfile[key])
-            defines += defineString
+            defines += str(defineString)
 
         return defines
