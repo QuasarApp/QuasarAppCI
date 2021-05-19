@@ -22,6 +22,6 @@ class SecretManager:
         defines = []
         for key in self.jsfile:
             defineString = str('-D' + key + '=' + self.getValue(key))
-            defines += defineString
+            defines.append(defineString)
 
         return defines
