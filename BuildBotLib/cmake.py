@@ -49,7 +49,7 @@ class CMake(Make):
         defines = self.getDefinesList(props)
 
         defines += [
-            '-DCMAKE_PREFIX_PATH="%QT5DIR%;%QT6DIR%"',
+            '-DCMAKE_PREFIX_PATH=%QT5DIR%;%QT6DIR%',
             '-DBUILD_SHARED_LIBS=1',
             '-DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc',
             '"-GCodeBlocks - MinGW Makefiles"',
