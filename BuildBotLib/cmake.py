@@ -34,7 +34,7 @@ class CMake(Make):
         defines = self.getDefinesList(props)
 
         defines += [
-            '-DCMAKE_PREFIX_PATH=$QTDIR',
+            '-DCMAKE_PREFIX_PATH="$QT5DIR;$QT6DIR"',
             '-B cmake_build'
         ]
 
@@ -49,10 +49,9 @@ class CMake(Make):
         defines = self.getDefinesList(props)
 
         defines += [
-            '-DCMAKE_PREFIX_PATH=%QTDIR%',
+            '-DCMAKE_PREFIX_PATH="%QT5DIR%;%QT6DIR%"',
             '-DBUILD_SHARED_LIBS=1',
             '-DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc',
-            '-DQT_QMAKE_EXECUTABLE=%QTDIR%/bin/qmake.exe',
             '"-GCodeBlocks - MinGW Makefiles"',
             '-B cmake_build'
         ]
@@ -74,12 +73,11 @@ class CMake(Make):
         defines += secret.convertToCmakeDefines()
 
         defines += [
-            '-DCMAKE_PREFIX_PATH=$QTDIR',
-            '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
+            '-DCMAKE_PREFIX_PATH="$QT5DIR;$QT6DIR"',
             '-DANDROID_ABI=arm64-v8a',
             '-DANDROID_BUILD_ABI_arm64-v8a=ON',
             '-DANDROID_BUILD_ABI_armeabi-v7a=ON',
-            '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
+            '-DCMAKE_FIND_ROOT_PATH="$QT5DIR;$QT6DIR"',
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_ALIES="quasarapp"',
@@ -105,10 +103,9 @@ class CMake(Make):
         defines += secret.convertToCmakeDefines()
 
         defines += [
-            '-DCMAKE_PREFIX_PATH=$QTDIR',
-            '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
+            '-DCMAKE_PREFIX_PATH="$QT5DIR;$QT6DIR"',
             '-DANDROID_ABI=$ANDROID_ABI',
-            '-DCMAKE_FIND_ROOT_PATH=$QTDIR',
+            '-DCMAKE_FIND_ROOT_PATH="$QT5DIR;$QT6DIR"',
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_ALIES="quasarapp"',
@@ -132,7 +129,7 @@ class CMake(Make):
         defines = self.getDefinesList(props)
 
         defines += [
-            '-DCMAKE_PREFIX_PATH=$QTDIR',
+            '-DCMAKE_PREFIX_PATH="$QT5DIR;$QT6DIR"',
             '-DTARGET_PLATFORM_TOOLCHAIN=wasm32',
             '-B cmake_build'
         ]
