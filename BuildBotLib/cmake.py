@@ -105,7 +105,7 @@ class CMake(Make):
         defines += [
             '-DCMAKE_PREFIX_PATH="$QT5DIR;$QT6DIR"',
             '-DANDROID_ABI=$ANDROID_ABI',
-            '-DCMAKE_FIND_ROOT_PATH="$QT5DIR;$QT6DIR"',
+            '-DCMAKE_FIND_ROOT_PATH="$QT6DIR;$QT5DIR"',
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_ALIES="quasarapp"',
