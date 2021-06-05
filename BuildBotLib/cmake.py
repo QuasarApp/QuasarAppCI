@@ -112,6 +112,7 @@ class CMake(Make):
             '-DSIGN_ALIES="quasarapp"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$QT6DIR/' + toochainFile,
+            '-DQT_HOST_PATH=$QT6DIR/../gcc_64',
             '-B cmake_build'
         ]
 
