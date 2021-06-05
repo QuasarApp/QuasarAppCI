@@ -2,8 +2,9 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
+from BuildBotLib.basemodule import BaseModule
+
 import multiprocessing
-import os
 
 class CMake(Make):
 
@@ -151,7 +152,7 @@ class CMake(Make):
 
     def androidXmakeCmd(self, props):
 
-        if self.platform == self.P_AndroidQt6:
+        if self.platform == BaseModule.P_AndroidQt6:
             return self.androidXmakeSinglAbiCmdQt6(props)
 
         return self.androidXmakeSinglAbiCmdQt5(props)
