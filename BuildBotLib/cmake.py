@@ -108,7 +108,7 @@ class CMake(Make):
             '-DCMAKE_FIND_ROOT_PATH=$QT6DIR',
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
-            '-DQT_QMAKE_EXECUTABLE=$QT6DIR',
+            '-DQT_QMAKE_EXECUTABLE=$QT6DIR/bin/qmake',
             '-DSIGN_ALIES="quasarapp"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
