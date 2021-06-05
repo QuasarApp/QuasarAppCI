@@ -150,9 +150,8 @@ class CMake(Make):
         return ' '.join(options)
 
     def androidXmakeCmd(self, props):
-        isQt6 = os.getenv('QT6DIR', '')
 
-        if len(isQt6) > 0:
+        if self.patform == BaseModule.P_AndroidQt6:
             return self.androidXmakeSinglAbiCmdQt6(props)
 
         return self.androidXmakeSinglAbiCmdQt5(props)
