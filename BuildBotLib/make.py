@@ -160,8 +160,8 @@ class Make(BaseModule):
             platformEnv = {
                 BaseModule.P_Linux: self.linuxXmakeEnv,
                 BaseModule.P_Windows: self.windowsXmakeEnv,
-                BaseModule.P_AndroidQt5: self.androidXmakeCmd,
-                BaseModule.P_AndroidQt6: self.androidXmakeCmd,
+                BaseModule.P_AndroidQt5: self.androidXmakeEnv,
+                BaseModule.P_AndroidQt6: self.androidXmakeEnv,
                 BaseModule.P_Wasm: self.wasmXmakeEnv,
 
             }
