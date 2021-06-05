@@ -160,7 +160,8 @@ class Make(BaseModule):
             platformEnv = {
                 BaseModule.P_Linux: self.linuxXmakeEnv,
                 BaseModule.P_Windows: self.windowsXmakeEnv,
-                BaseModule.P_Android: self.androidXmakeEnv,
+                BaseModule.P_AndroidQt5: self.androidXmakeCmd,
+                BaseModule.P_AndroidQt6: self.androidXmakeCmd,
                 BaseModule.P_Wasm: self.wasmXmakeEnv,
 
             }
@@ -205,7 +206,8 @@ class Make(BaseModule):
         platformXcmd = {
             BaseModule.P_Linux: self.linuxXmakeCmd,
             BaseModule.P_Windows: self.windowsXmakeCmd,
-            BaseModule.P_Android: self.androidXmakeCmd,
+            BaseModule.P_AndroidQt5: self.androidXmakeCmd,
+            BaseModule.P_AndroidQt6: self.androidXmakeCmd,
             BaseModule.P_Wasm: self.wasmXmakeCmd,
 
         }
@@ -238,7 +240,7 @@ class Make(BaseModule):
                                   'release project',
                                   self.isRelease)]
 
-        if platform != BaseModule.P_Android:
+        if not self.isAndroid(''):
 
             res += [steps.DirectoryUpload(
                 workersrc=util.Interpolate('%(prop:repoFolder)s'),

@@ -11,7 +11,8 @@ class BaseModule:
 
     P_Windows = 'Windows'
     P_Linux = 'Linux'
-    P_Android = 'Android'
+    P_AndroidQt5 = 'AndroidQt5'
+    P_AndroidQt6 = 'AndroidQt6'
     P_Wasm = 'Wasm'
 
     def __init__(self, platform, pwd="."):
@@ -31,7 +32,7 @@ class BaseModule:
         return self.platform == BaseModule.P_Linux
 
     def isAndroid(self, step):
-        return self.platform == BaseModule.P_Android
+        return self.platform == BaseModule.P_AndroidQt5 or self.platform == BaseModule.P_AndroidQt6
 
     def isWasm(self, step):
         return self.platform == BaseModule.P_Wasm

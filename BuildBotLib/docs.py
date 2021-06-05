@@ -14,7 +14,8 @@ class Docs(CMake):
         platformXcmd = {
             CMake.P_Linux: self.linuxXmakeCmd,
             CMake.P_Windows: self.windowsXmakeCmd,
-            CMake.P_Android: self.androidXmakeCmd,
+            CMake.P_AndroidQt5: self.androidXmakeCmd,
+            CMake.P_AndroidQt6: self.androidXmakeCmd,
             CMake.P_Wasm: self.wasmXmakeCmd,
         }
 
