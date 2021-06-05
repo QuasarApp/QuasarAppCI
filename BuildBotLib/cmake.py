@@ -175,13 +175,3 @@ class CMake(Make):
 
         return ' '.join(options)
 
-    def getPropertyes(self):
-
-        base = super().getPropertyes()
-        return base + [
-            util.BooleanParameter(
-                name='Qt5',
-                label='Use old qt version (maybe requirement for legacy projects)',
-                default=True
-            ),
-        ]
