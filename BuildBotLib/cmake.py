@@ -103,11 +103,12 @@ class CMake(Make):
         defines += secret.convertToCmakeDefines()
 
         defines += [
-            '-DCMAKE_PREFIX_PATH="$QT6DIR"',
+            '-DCMAKE_PREFIX_PATH=$QT6DIR',
             '-DANDROID_ABI=$ANDROID_ABI',
-            '-DCMAKE_FIND_ROOT_PATH="$QT6DIR"',
+            '-DCMAKE_FIND_ROOT_PATH=$QT6DIR',
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
+            '-DQT_QMAKE_EXECUTABLE=$QT6DIR',
             '-DSIGN_ALIES="quasarapp"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
