@@ -151,7 +151,7 @@ class CMake(Make):
 
     def androidXmakeCmd(self, props):
 
-        if self.patform == BaseModule.P_AndroidQt6:
+        if self.platform == BaseModule.P_AndroidQt6:
             return self.androidXmakeSinglAbiCmdQt6(props)
 
         return self.androidXmakeSinglAbiCmdQt5(props)
