@@ -23,8 +23,8 @@ class BuildBotWorkers(BuildBotModule):
         self.masterConf['workers'] = [
             worker.Worker("LinuxBuilder", password),
             worker.Worker("WindowsBuilder", password),
-            worker.Worker("AndroidBuilder_v7", password),
-            worker.Worker("AndroidBuilder_v8", password),
+            worker.Worker("AndroidBuilder_qt5", password),
+            worker.Worker("AndroidBuilder_qt6", password),
             worker.Worker("LinuxCMakeBuilder", password),
             worker.Worker("WindowsCMakeBuilder", password),
             worker.Worker("RepoGen", password),

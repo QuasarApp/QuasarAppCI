@@ -3,7 +3,7 @@
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
 import multiprocessing
-
+import os
 
 class CMake(Make):
 
@@ -93,10 +93,10 @@ class CMake(Make):
 
         return ' '.join(options)
 
-    def androidXmakeSinglAbiCmd(self, props):
+    def androidXmakeSinglAbiCmdQt6(self, props):
         file = self.home + "/buildBotSecret/secret.json"
         secret = SecretManager(file, props)
-        toochainFile = 'build/cmake/android.toolchain.cmake'
+        toochainFile = 'lib/cmake/Qt6/qt.toolchain.cmake'
 
         defines = self.getDefinesList(props)
 
@@ -108,7 +108,34 @@ class CMake(Make):
             '-DCMAKE_FIND_ROOT_PATH=$QT6DIR',
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
-            '-DQT_QMAKE_EXECUTABLE=$QT6DIR/bin/qmake',
+            '-DSIGN_ALIES="quasarapp"',
+            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
+            '-DCMAKE_TOOLCHAIN_FILE=$QT6DIR/' + toochainFile,
+            '-B cmake_build'
+        ]
+
+        options = [
+            'cmake -GNinja',
+        ]
+        options += defines
+
+        return ' '.join(options)
+
+    def androidXmakeSinglAbiCmdQt5(self, props):
+        file = self.home + "/buildBotSecret/secret.json"
+        secret = SecretManager(file, props)
+        toochainFile = 'build/cmake/android.toolchain.cmake'
+
+        defines = self.getDefinesList(props)
+
+        defines += secret.convertToCmakeDefines()
+
+        defines += [
+            '-DCMAKE_PREFIX_PATH=$QT5DIR',
+            '-DANDROID_ABI=$ANDROID_ABI',
+            '-DCMAKE_FIND_ROOT_PATH=$QT5DIR',
+            '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
+            '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_ALIES="quasarapp"',
             '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
@@ -123,7 +150,12 @@ class CMake(Make):
         return ' '.join(options)
 
     def androidXmakeCmd(self, props):
-        return self.androidXmakeSinglAbiCmd(props)
+        isQt6 = os.getenv('QT6DIR', '')
+
+        if len(isQt6) > 0:
+            return self.androidXmakeSinglAbiCmdQt6(props)
+
+        return self.androidXmakeSinglAbiCmdQt5(props)
 
     def wasmXmakeCmd(self, props):
 
@@ -142,3 +174,14 @@ class CMake(Make):
         options += defines
 
         return ' '.join(options)
+
+    def getPropertyes(self):
+
+        base = super().getPropertyes()
+        return base + [
+            util.BooleanParameter(
+                name='Qt5',
+                label='Use old qt version (maybe requirement for legacy projects)',
+                default=True
+            ),
+        ]
