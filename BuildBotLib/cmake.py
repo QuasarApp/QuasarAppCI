@@ -99,7 +99,7 @@ class CMake(Make):
         qtDir = os.environ['QTDIR']
         if "5." in qtDir :
             return "5"
-        else if "6." in qtDir:
+        elif "6." in qtDir:
             return "6"
 
         return "5"
