@@ -164,7 +164,7 @@ class CMake(Make):
 
         factory.insertToBegin(
             steps.SetPropertiesFromEnv(
-                variables=["QTDIR", "QTDIR"]),
+                variables=["QTDIR", "QTDIR"],
                 name='git QTDIR',
                 description='QTDIR',
             )
