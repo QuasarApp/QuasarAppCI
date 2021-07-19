@@ -119,6 +119,7 @@ class CMake(Make):
 
         defines += [
             '-DQT_DIR=' + qtDir,
+            '-DQT_HOST_PATH=$QTDIR/../gcc_64',
             '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
             '-DANDROID_ABI=$ANDROID_ABI',
@@ -165,8 +166,8 @@ class CMake(Make):
         factory.insertToBegin(
             steps.SetPropertiesFromEnv(
                 variables=["QTDIR", "QTDIR"],
-                name='git QTDIR',
-                description='QTDIR',
+                name='getting QTDIR',
+                description='getting QTDIR enviroment variable from worker',
             )
         )
 
