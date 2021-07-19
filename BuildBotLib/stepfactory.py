@@ -22,7 +22,7 @@ class StepFactory:
 
     def source(self):
         factory = util.BuildFactory()
-        for step in array:
+        for step in self.array:
             factory.addStep(step)
 
         factory.workdir = self.pwd
