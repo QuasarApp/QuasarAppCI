@@ -2,6 +2,7 @@
 
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
+from buildbot.plugins import steps, util
 import multiprocessing
 import os
 
@@ -95,8 +96,9 @@ class CMake(Make):
 
         return ' '.join(options)
 
-    def getQtMajorVersion(self):
-        qtDir = os.getenv('QTDIR', "")
+    def getQtMajorVersion(self, props):
+        qtDir = str(props.getProperty('QTDIR', ''))
+
         if "5." in qtDir :
             return "5"
         elif "6." in qtDir:
@@ -156,3 +158,17 @@ class CMake(Make):
         options += defines
 
         return ' '.join(options)
+
+    def getFactory(self):
+        factory = super().getFactory()
+
+        factory.insertToBegin(
+            steps.SetPropertiesFromEnv(
+                variables=["QTDIR", "QTDIR"])
+                name='git QTDIR',
+                description='QTDIR',
+            )
+        )
+
+        return factory
+
