@@ -27,8 +27,10 @@ class BuildBotShedulers(BuildBotModule):
         buildersCode = ['LinuxBuilder',
                         'AndroidBuilder_v7',
                         'AndroidBuilder_v8',
+                        'AndroidBuilder_v8Qt6',
                         'WindowsBuilder',
                         'LinuxCMakeBuilder',
+                        'LinuxCMakeBuilderQt6',
                         'WindowsCMakeBuilder',
                         'Wasm32Builder',
                         ]
