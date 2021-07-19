@@ -3,7 +3,7 @@
 from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
 import multiprocessing
-
+import os
 
 class CMake(Make):
 
@@ -95,6 +95,15 @@ class CMake(Make):
 
         return ' '.join(options)
 
+    def getQtMajorVersion(self):
+        qtDir = os.environ['QTDIR']
+        if "5." in qtDir :
+            return "5"
+        else if "6." in qtDir:
+            return "6"
+
+        return "5"
+
     def androidXmakeSinglAbiCmd(self, props):
         file = self.home + "/buildBotSecret/secret.json"
         secret = SecretManager(file, props)
@@ -104,7 +113,10 @@ class CMake(Make):
 
         defines += secret.convertToCmakeDefines()
 
+        qtDir = "$QTDIR/lib/cmake/Qt" + self.getQtMajorVersion()
+
         defines += [
+            '-DQT_DIR=' + qtDir,
             '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DQT_QMAKE_EXECUTABLE=$QTDIR/bin/qmake',
             '-DANDROID_ABI=$ANDROID_ABI',
