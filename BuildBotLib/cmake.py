@@ -96,7 +96,7 @@ class CMake(Make):
         return ' '.join(options)
 
     def getQtMajorVersion(self):
-        qtDir = os.environ['QTDIR']
+        qtDir = os.getenv('QTDIR', "")
         if "5." in qtDir :
             return "5"
         elif "6." in qtDir:
