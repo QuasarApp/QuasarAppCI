@@ -115,7 +115,7 @@ class CMake(Make):
 
         defines += secret.convertToCmakeDefines()
 
-        qtDir = "$QTDIR/lib/cmake/Qt" + self.getQtMajorVersion()
+        qtDir = "$QTDIR/lib/cmake/Qt" + self.getQtMajorVersion(props)
 
         defines += [
             '-DQT_DIR=' + qtDir,
