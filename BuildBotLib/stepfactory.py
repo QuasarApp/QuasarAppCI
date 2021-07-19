@@ -14,7 +14,7 @@ class StepFactory:
     def addStep(self, step):
         step.workdir = self.pwd
 
-        self.array += step
+        self.array += [step]
 
     def addSteps(self, steps):
         for step in steps:
