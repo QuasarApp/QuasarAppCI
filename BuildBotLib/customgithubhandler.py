@@ -14,7 +14,6 @@ class CustomGitHubHandler(GitHubEventHandler):
         return super().handle_push(payload, event)
 
 
-    @defer.inlineCallbacks
     def handle_pull_request(self, payload, event):
 
         payload['repository']['html_url'] = payload['repository']['ssh_url']
