@@ -2,6 +2,7 @@
 from BuildBotLib.buildBotModule import BuildBotModule
 from BuildBotLib.secretManager import SecretManager
 from pathlib import Path
+from BuildBotLib.customgithubhandler import CustomGitHubHandler
 
 
 class BuildBotChangeSource(BuildBotModule):
@@ -14,5 +15,6 @@ class BuildBotChangeSource(BuildBotModule):
                 'github':
                 {
                     'secret': secret.getValue('WebHook'),
+                    'class': CustomGitHubHandler
                 },
             }

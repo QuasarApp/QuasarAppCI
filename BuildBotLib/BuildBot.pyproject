@@ -23,6 +23,7 @@
     "git/gitBin.sh",
     "qifRepogen.py",
     "docs.py",
-    "stepfactory.py"
+    "stepfactory.py",
+    "customgithubhandler.py"
     ]
 }
