@@ -3,6 +3,7 @@ from BuildBotLib.buildBotModule import BuildBotModule
 from BuildBotLib.secretManager import SecretManager
 from pathlib import Path
 from BuildBotLib.customgithubhandler import CustomGitHubHandler
+from BuildBotLib.customgiteahandler import CustomGiteaHandler
 
 
 class BuildBotChangeSource(BuildBotModule):
@@ -17,4 +18,9 @@ class BuildBotChangeSource(BuildBotModule):
                     'secret': secret.getValue('WebHook'),
                     'class': CustomGitHubHandler
                 },
+                'gitea': {
+                    'secret': secret.getValue('WebHookGitiea'),
+                    'onlyIncludePushCommit': True,
+                    'class': CustomGiteaHandler
+                }
             }

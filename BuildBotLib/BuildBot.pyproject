@@ -24,6 +24,8 @@
     "qifRepogen.py",
     "docs.py",
     "stepfactory.py",
-    "customgithubhandler.py"
+    "customgithubhandler.py",
+    "customgiteahandler.py"
+
     ]
 }

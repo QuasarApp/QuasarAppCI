@@ -34,5 +34,12 @@ class BuildBotServices(BuildBotModule):
                                         verbose=True,
                                         generators=[status_generator]
                                         )
+        gt = reporters.GiteaStatusPush(
+                                       'https://quasarapp.ddns.net:3000/',
+                                       secret.getValue('gitea'),
+                                       verbose=True,
+                                       generators=[status_generator]
+                                       )
 
         self.masterConf['services'].append(gc)
+        self.masterConf['services'].append(gt)
