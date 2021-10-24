@@ -71,7 +71,7 @@ class BuildBotShedulers(BuildBotModule):
 
             schedulers.SingleBranchScheduler(
                 name='release',
-                change_filter=util.ChangeFilter(branch="prod")
+                change_filter=util.ChangeFilter(branch="prod"),
                 builderNames=buildersReleaseCode,
                 properties={
                     'clean': True,
