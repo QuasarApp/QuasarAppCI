@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from BuildBotLib.buildBotModule import BuildBotModule
 from buildbot.plugins import schedulers
+from buildbot.plugins import util
 
 
 class BuildBotShedulers(BuildBotModule):
@@ -36,6 +37,8 @@ class BuildBotShedulers(BuildBotModule):
                         ]
 
         buildersDeployCode = ['DocsGenerator']
+        buildersReleaseCode = ['prodDeployer']
+
 
         buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
@@ -60,6 +63,20 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
+                    'deploy': True,
+                    'copyFolder': 'Distro'
+                },
+                treeStableTimer=60
+            ),
+
+            schedulers.SingleBranchScheduler(
+                name='release',
+                change_filter=util.ChangeFilter(branch="prod")
+                builderNames=buildersReleaseCode,
+                properties={
+                    'clean': True,
+                    'test': True,
+                    'release': True,
                     'deploy': True,
                     'copyFolder': 'Distro'
                 },

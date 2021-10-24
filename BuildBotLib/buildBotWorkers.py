@@ -32,6 +32,7 @@ class BuildBotWorkers(BuildBotModule):
             worker.Worker("RepoGen", password),
             worker.Worker("Wasm32Builder", password),
             worker.Worker("DocsGenerator", password),
+            worker.Worker("prodDeployer", password),
             ]
 
         # 'protocols' contains information
