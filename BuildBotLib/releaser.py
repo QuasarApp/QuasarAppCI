@@ -17,8 +17,8 @@ class Releaser(Make):
             return str(props.getProperty('prodName'))
 
         @util.renderer
-        def getUrl(params):
-            baseUrl = self.destDirUrl(params)
+        def getUrl(props):
+            baseUrl = self.destDirUrl(props)
             prodName = str(props.getProperty('prodName'))
             return baseUrl + prodName
 
