@@ -23,6 +23,20 @@ class Releaser(Make):
             return baseUrl + prodName
 
         factory.addStep(
+            steps.Git(
+                repourl=util.Interpolate('%(prop:repository)s'),
+                branch=util.Interpolate('%(prop:branch)s'),
+                mode='full',
+                method='fresh',
+                clobberOnFailure=True,
+                submodules=False,
+                retryFetch=True,
+                name='git operations',
+                description='operations of git like pull clone fetch',
+            )
+        )
+
+        factory.addStep(
             self.generateStep(["wget", getUrl],
                               self.platform,
                               'get last build ',
