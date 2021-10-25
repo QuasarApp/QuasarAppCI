@@ -10,7 +10,7 @@ class Releaser(Make):
 
 
     def getFactory(self):
-        factory = BaseModule.getFactory()
+        factory = BaseModule.getFactory(self)
 
         @util.renderer
         def getProdName(props):
@@ -49,7 +49,7 @@ class Releaser(Make):
 
     def getPropertyes(self):
 
-        base = BaseModule().getPropertyes()
+        base = BaseModule.getPropertyes(self)
 
         return base + [
             util.BooleanParameter(
