@@ -52,7 +52,7 @@ class Releaser(Make):
         base = BaseModule.getPropertyes(self)
 
         return base + [
-            util.BooleanParameter(
+            util.StringParameter(
                 name='prodName',
                 label='Name of the production server file. (by default prod.deb)',
                 default='prod.deb'
