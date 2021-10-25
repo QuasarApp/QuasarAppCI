@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from BuildBotLib.basemodule import BaseModule
 from buildbot.plugins import util, steps
+from BuildBotLib.make import Make
 
 
 class Releaser(Make):
