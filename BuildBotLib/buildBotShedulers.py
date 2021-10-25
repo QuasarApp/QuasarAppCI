@@ -74,13 +74,9 @@ class BuildBotShedulers(BuildBotModule):
                 change_filter=util.ChangeFilter(branch="prod"),
                 builderNames=buildersReleaseCode,
                 properties={
-                    'clean': True,
-                    'test': True,
-                    'release': True,
-                    'deploy': True,
                     'copyFolder': 'Distro'
                 },
-                treeStableTimer=60
+                treeStableTimer=1200
             ),
 
             schedulers.Triggerable(name="repogen",

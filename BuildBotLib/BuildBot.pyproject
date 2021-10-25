@@ -25,7 +25,8 @@
     "docs.py",
     "stepfactory.py",
     "customgithubhandler.py",
-    "customgiteahandler.py"
+    "customgiteahandler.py",
+    "releaser.py"
 
     ]
 }
