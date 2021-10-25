@@ -20,7 +20,7 @@ class Releaser(Make):
         def getUrl(props):
             baseUrl = self.destDirUrl(props)
             prodName = str(props.getProperty('prodName'))
-            return baseUrl + prodName
+            return baseUrl + '/' + prodName
 
         factory.addStep(
             steps.Git(
