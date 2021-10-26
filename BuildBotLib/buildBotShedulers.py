@@ -74,7 +74,8 @@ class BuildBotShedulers(BuildBotModule):
                 change_filter=util.ChangeFilter(branch="prod"),
                 builderNames=buildersReleaseCode,
                 properties={
-                    'copyFolder': 'Distro'
+                    'copyFolder': 'Distro',
+                    'prodName': 'prod.deb'
                 },
                 treeStableTimer=1200
             ),
