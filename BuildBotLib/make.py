@@ -271,6 +271,12 @@ class Make(BaseModule):
                                                   "repoLocation": repoLocation}
                                   )]
 
+            res += [steps.Trigger(schedulerNames=['releaser'],
+                                doStepIf=lambda step:
+                                    self.isRelease(step) and
+                                    self.isSupport(step),
+                                )]
+
         return res
 
     def getFactory(self):
