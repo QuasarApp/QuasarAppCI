@@ -36,6 +36,14 @@ class BuildBotShedulers(BuildBotModule):
                         'Wasm32Builder',
                         ]
 
+        prodBuilders = ['AndroidBuilder_v7',
+                        'AndroidBuilder_v8',
+                        'AndroidBuilder_v8Qt6',
+                        'LinuxCMakeBuilder',
+                        'LinuxCMakeBuilderQt6',
+                        'WindowsCMakeBuilder',
+                        ]
+
         buildersDeployCode = ['DocsGenerator']
         buildersReleaseCode = ['prodDeployer']
 
@@ -78,6 +86,20 @@ class BuildBotShedulers(BuildBotModule):
                     'prodName': 'prod.deb'
                 },
                 treeStableTimer=1200
+            ),
+
+            schedulers.SingleBranchScheduler(
+                name='production',
+                change_filter=util.ChangeFilter(branch="prod"),
+                builderNames=prodBuilders,
+                properties={
+                    'clean': True,
+                    'test': True,
+                    'release': False,
+                    'deploy': True,
+                    'copyFolder': 'Distro'
+                },
+                treeStableTimer=70
             ),
 
             schedulers.Triggerable(name="repogen",
