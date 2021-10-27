@@ -103,7 +103,10 @@ class BuildBotShedulers(BuildBotModule):
             ),
 
             schedulers.Triggerable(name="repogen",
-                                   builderNames=buildersRepo)
+                                   builderNames=buildersRepo),
+
+            schedulers.Triggerable(name="releaser",
+                                   builderNames=buildersReleaseCode)
         ]
 
         return self.getMasterConf()
