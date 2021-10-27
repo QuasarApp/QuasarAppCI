@@ -36,6 +36,12 @@ class Make(BaseModule):
     def isRelease(self, step):
         return step.getProperty('release')
 
+    def isRepogen(self, step):
+        return step.getProperty('repogen')
+
+    def isProdDeploer(self, step):
+        return step.getProperty('prodDeploer')
+
     def isTest(self, step):
         return step.getProperty('test')
 
@@ -263,7 +269,7 @@ class Make(BaseModule):
 
             res += [steps.Trigger(schedulerNames=['repogen'],
                                   doStepIf=lambda step:
-                                      self.isRelease(step) and
+                                      self.isRepogen(step) and
                                       self.isSupport(step),
                                   set_properties={"tempPackage": tempDirProp,
                                                   "platform": platform,
@@ -272,9 +278,10 @@ class Make(BaseModule):
                                   )]
 
             res += [steps.Trigger(schedulerNames=['releaser'],
-                                doStepIf=lambda step:
-                                    self.isRelease(step) and
-                                    self.isSupport(step),
+                                doStepIf=lambda step: self.isProdDeploer(step),
+                                set_properties={'copyFolder': 'Distro',
+                                                'prodName': 'prod.deb'}
+
                                 )]
 
         return res
@@ -349,6 +356,19 @@ class Make(BaseModule):
                 label='release project',
                 default=False
             ),
+
+            util.BooleanParameter(
+                name='repogen',
+                label='release repogen project',
+                default=False
+            ),
+
+            util.BooleanParameter(
+                name='prodDeploer',
+                label='release prod project',
+                default=False
+            ),
+
             util.StringParameter(
                 name='copyFolder',
                 label='Folder with buildet data',
