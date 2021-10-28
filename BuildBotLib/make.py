@@ -277,13 +277,6 @@ class Make(BaseModule):
                                                   "repoLocation": repoLocation}
                                   )]
 
-            res += [steps.Trigger(schedulerNames=['releaser'],
-                                doStepIf=lambda step: self.isProdDeploer(step),
-                                set_properties={'copyFolder': 'Distro',
-                                                'prodName': 'prod.deb'}
-
-                                )]
-
         return res
 
     def getFactory(self):
@@ -317,6 +310,19 @@ class Make(BaseModule):
             )
         )
 
+        if self.platform == BaseModule.P_Linux:
+
+            factory.addStep(
+                steps.Trigger(schedulerNames=['releaser'],
+                              doStepIf=lambda step:
+                                  self.isProdDeploer(step),
+                              set_properties={
+                                            'copyFolder': 'Distro',
+                                            'prodName': 'prod.deb'
+                                            }
+                              )
+                )
+
         factory.addStep(
             self.generateStep("git clean -xdf",
                               self.platform,
@@ -324,8 +330,9 @@ class Make(BaseModule):
                               lambda step: True)
         )
 
+        clearCmd = "git submodule foreach --recursive git clean -xdf"
         factory.addStep(
-            self.generateStep("git submodule foreach --recursive git clean -xdf",
+            self.generateStep(clearCmd,
                               self.platform,
                               'Clean submodules',
                               lambda step: True)

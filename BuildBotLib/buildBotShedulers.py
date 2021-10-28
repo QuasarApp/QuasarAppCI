@@ -47,7 +47,6 @@ class BuildBotShedulers(BuildBotModule):
         buildersDeployCode = ['DocsGenerator']
         buildersReleaseCode = ['prodDeployer']
 
-
         buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
 
