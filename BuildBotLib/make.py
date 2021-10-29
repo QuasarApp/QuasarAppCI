@@ -249,7 +249,7 @@ class Make(BaseModule):
             res += [steps.DirectoryUpload(
                 workersrc=util.Interpolate('%(prop:repoFolder)s'),
                 masterdest=self.getWraper(self.tempDir),
-                doStepIf=self.getWraper(self.isRelease),
+                doStepIf=self.getWraper(self.isRepogen),
                 name='copy repository files',
                 description='copy repository files to temp folder',
             )]
