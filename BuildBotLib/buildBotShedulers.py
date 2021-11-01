@@ -58,6 +58,8 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
+                    'repogen': False,
+                    'prodDeploer': False,
                     'deploy': False
                 },
                 treeStableTimer=60
@@ -70,21 +72,12 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
+                    'repogen': False,
+                    'prodDeploer': False,
                     'deploy': True,
                     'copyFolder': 'Distro'
                 },
                 treeStableTimer=60
-            ),
-
-            schedulers.SingleBranchScheduler(
-                name='release',
-                change_filter=util.ChangeFilter(branch="prod"),
-                builderNames=buildersReleaseCode,
-                properties={
-                    'copyFolder': 'Distro',
-                    'prodName': 'prod.deb'
-                },
-                treeStableTimer=1200
             ),
 
             schedulers.SingleBranchScheduler(
@@ -95,6 +88,8 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
+                    'repogen': False,
+                    'prodDeploer': True,
                     'deploy': True,
                     'copyFolder': 'Distro'
                 },
