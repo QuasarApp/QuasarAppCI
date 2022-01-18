@@ -31,7 +31,7 @@ class Docs(CMake):
                                   self.isDeploy)]
 
         def move(props):
-            return 'mv docs ' + str(props.getProperty('copyFolder'))
+            return 'mv docs/* ' + str(props.getProperty('copyFolder'))
 
         res += [self.generateStep(move,
                                   platform,
