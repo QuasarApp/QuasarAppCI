@@ -13,6 +13,8 @@ class BaseModule:
     P_Linux = 'Linux'
     P_Android = 'Android'
     P_Wasm = 'Wasm'
+    P_iOS = 'iOS'
+    P_Mac = 'Mac'
 
     def __init__(self, platform, pwd="."):
         self.home = str(Path.home())

@@ -99,7 +99,7 @@ class CMake(Make):
     def getQtMajorVersion(self, props):
         qtDir = str(props.getProperty('QTDIR', ''))
 
-        if "5." in qtDir :
+        if "5." in qtDir:
             return "5"
         elif "6." in qtDir:
             return "6"
