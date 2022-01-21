@@ -31,7 +31,7 @@ class CMake(Make):
 
     def makeCommand(self, props):
         cxx = []
-        if self.isiOS():
+        if self.isiOS(''):
             cxx = ['-allowProvisioningUpdates']
 
         return self.make(cxx)
