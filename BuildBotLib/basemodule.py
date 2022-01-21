@@ -97,7 +97,7 @@ class BaseModule:
 
         return 'make'
 
-    def makeTarget(self, target, cxxFlags=[]):
+    def makeTarget(self, target, cxxFlags=None):
         command = [self.make()]
         return command + [target]
 
