@@ -25,11 +25,13 @@ class CMake(Make):
             if cpus:
                 command += ' --parallel ' + str(cpus)
 
-        if self.isiOS(''):
-            cxxFlags += ['-allowProvisioningUpdates']
+        cxx = cxxFlags
 
-        if len(cxxFlags):
-            command += ' -- ' + ' '.join(cxxFlags)
+        if self.isiOS(''):
+            cxx += ['-allowProvisioningUpdates']
+
+        if len(cxx):
+            command += ' -- ' + ' '.join(cxx)
 
         return command
 
