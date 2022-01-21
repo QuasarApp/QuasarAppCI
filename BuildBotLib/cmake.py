@@ -144,6 +144,28 @@ class CMake(Make):
     def androidXmakeCmd(self, props):
         return self.androidXmakeSinglAbiCmd(props)
 
+    def iosXmakeCmd(self, props):
+        file = self.home + "/buildBotSecret/secret.json"
+        secret = SecretManager(file, props)
+
+        defines = self.getDefinesList(props)
+
+        defines += secret.convertToCmakeDefines()
+
+        defines += [
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
+            '-DCMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM=$XCODE_DEVELOPMENT_TEAM',
+            '-DCMAKE_TOOLCHAIN_FILE=$CMAKE_TOOL_CHAIN_FILE/',
+            '-B cmake_build'
+        ]
+
+        options = [
+            'cmake -G Xcode',
+        ]
+        options += defines
+
+        return ' '.join(options)
+
     def wasmXmakeCmd(self, props):
 
         defines = self.getDefinesList(props)
@@ -174,4 +196,3 @@ class CMake(Make):
         )
 
         return factory
-
