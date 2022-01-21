@@ -16,17 +16,21 @@ class CMake(Make):
         return "C"
 
     def make(self, cxxFlags=[]):
-        return self.makeTarget('all', cxxFlags)
+        return self.makeTarget('', cxxFlags)
 
     def makeTarget(self, target, cxxFlags=[]):
-        command = 'cmake --build cmake_build'
-        command += ' --config Release --target ' + target
+        command = 'cmake --build cmake_build --config Release'
+
+        if len(target):
+            command += ' --target ' + target
 
         cpus = multiprocessing.cpu_count()
         if cpus:
             command += ' --parallel ' + str(cpus)
 
-        command += ' -- ' + ' '.join(cxxFlags)
+        if len(cxxFlags):
+            command += ' -- ' + ' '.join(cxxFlags)
+
         return command
 
     def makeCommand(self, props):
