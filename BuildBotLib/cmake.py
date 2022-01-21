@@ -36,7 +36,7 @@ class CMake(Make):
         return command
 
     def makeCommand(self, props):
-        return self.makeTarget()
+        return self.makeTarget('')
 
     def linuxXmakeCmd(self, props):
         defines = self.getDefinesList(props)
