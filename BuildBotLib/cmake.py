@@ -15,9 +15,6 @@ class CMake(Make):
     def makePrefix(self):
         return "C"
 
-    def make(self, cxxFlags=[]):
-        return self.makeTarget('', cxxFlags)
-
     def makeTarget(self, target, cxxFlags=[]):
         command = 'cmake --build cmake_build --config Release'
 
@@ -37,7 +34,7 @@ class CMake(Make):
         return command
 
     def makeCommand(self, props):
-        return self.make()
+        return self.makeTarget()
 
     def linuxXmakeCmd(self, props):
         defines = self.getDefinesList(props)
