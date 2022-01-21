@@ -38,6 +38,12 @@ class BaseModule:
     def isWasm(self, step):
         return self.platform == BaseModule.P_Wasm
 
+    def isiOS(self, step):
+        return self.platform == BaseModule.P_iOS
+
+    def isMac(self, step):
+        return self.platform == BaseModule.P_Mac
+
     def generateCmd(self, bashString):
 
         if isinstance(bashString, list):

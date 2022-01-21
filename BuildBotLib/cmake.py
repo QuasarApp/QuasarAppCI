@@ -4,7 +4,7 @@ from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
 from buildbot.plugins import steps, util
 import multiprocessing
-import os
+
 
 class CMake(Make):
 
@@ -15,21 +15,26 @@ class CMake(Make):
     def makePrefix(self):
         return "C"
 
-    def make(self):
-        return 'cmake --build cmake_build --target all'
+    def make(self, cxxFlags=[]):
+        return self.makeTarget('all', cxxFlags)
 
-    def makeTarget(self, target):
-        return 'cmake --build cmake_build --target ' + target
-
-    def makeCommand(self, props):
-        command = self.make()
+    def makeTarget(self, target, cxxFlags=[]):
+        command = 'cmake --build cmake_build'
+        command += ' --config Release --target ' + target
 
         cpus = multiprocessing.cpu_count()
-
         if cpus:
             command += ' --parallel ' + str(cpus)
 
+        command += ' -- ' + cxxFlags.join(' ')
         return command
+
+    def makeCommand(self, props):
+        cxx = []
+        if self.isiOS():
+            cxx = ['-allowProvisioningUpdates']
+
+        return self.make(cxx)
 
     def linuxXmakeCmd(self, props):
         defines = self.getDefinesList(props)
