@@ -15,7 +15,7 @@ class CMake(Make):
     def makePrefix(self):
         return "C"
 
-    def makeTarget(self, target, cxxFlags=[]):
+    def makeTarget(self, target, cxxFlags=None):
         command = 'cmake --build cmake_build --config Release'
 
         if len(target):
@@ -25,7 +25,9 @@ class CMake(Make):
             if cpus:
                 command += ' --parallel ' + str(cpus)
 
-        cxx = cxxFlags
+        cxx = []
+        if cxxFlags is not None:
+            cxx += cxxFlags
 
         if self.isiOS(''):
             cxx += ['-allowProvisioningUpdates']
