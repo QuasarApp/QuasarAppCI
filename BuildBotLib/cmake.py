@@ -26,7 +26,7 @@ class CMake(Make):
         if cpus:
             command += ' --parallel ' + str(cpus)
 
-        command += ' -- ' + cxxFlags.join(' ')
+        command += ' -- ' + ' '.join(cxxFlags)
         return command
 
     def makeCommand(self, props):
