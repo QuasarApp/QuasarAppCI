@@ -23,10 +23,10 @@ class CMake(Make):
 
         if len(target):
             command += ' --target ' + target
-
-        cpus = multiprocessing.cpu_count()
-        if cpus:
-            command += ' --parallel ' + str(cpus)
+        else:
+            cpus = multiprocessing.cpu_count()
+            if cpus:
+                command += ' --parallel ' + str(cpus)
 
         if len(cxxFlags):
             command += ' -- ' + ' '.join(cxxFlags)
