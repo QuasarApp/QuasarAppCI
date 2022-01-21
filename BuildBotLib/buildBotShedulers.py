@@ -34,7 +34,7 @@ class BuildBotShedulers(BuildBotModule):
                         'LinuxCMakeBuilderQt6',
                         'WindowsCMakeBuilder',
                         'Wasm32Builder',
-                        'iOSCMakeBuilder',
+                        'IOSCMakeBuilder',
                         ]
 
         prodBuilders = ['AndroidBuilder_v7',
@@ -43,7 +43,7 @@ class BuildBotShedulers(BuildBotModule):
                         'LinuxCMakeBuilder',
                         'LinuxCMakeBuilderQt6',
                         'WindowsCMakeBuilder',
-                        'iOSCMakeBuilder'
+                        'IOSCMakeBuilder'
                         ]
 
         buildersDeployCode = ['DocsGenerator']
