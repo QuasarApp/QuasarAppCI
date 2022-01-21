@@ -28,17 +28,16 @@ class CMake(Make):
             if cpus:
                 command += ' --parallel ' + str(cpus)
 
+        if self.isiOS(''):
+            cxxFlags += ['-allowProvisioningUpdates']
+
         if len(cxxFlags):
             command += ' -- ' + ' '.join(cxxFlags)
 
         return command
 
     def makeCommand(self, props):
-        cxx = []
-        if self.isiOS(''):
-            cxx = ['-allowProvisioningUpdates']
-
-        return self.make(cxx)
+        return self.make()
 
     def linuxXmakeCmd(self, props):
         defines = self.getDefinesList(props)
