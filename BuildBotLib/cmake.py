@@ -161,6 +161,7 @@ class CMake(Make):
             '-DCMAKE_PREFIX_PATH=$QTDIR',
             '-DCMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM=$XCODE_DEVELOPMENT_TEAM',
             '-DCMAKE_TOOLCHAIN_FILE=$CMAKE_TOOL_CHAIN_FILE',
+            '-DPLATFORM=OS64',
             '-B cmake_build'
         ]
 
