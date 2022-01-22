@@ -21,9 +21,7 @@ class CMake(Make):
         if len(target):
             command += ' --target ' + target
         else:
-            cpus = multiprocessing.cpu_count()
-            if cpus:
-                command += ' --parallel ' + str(cpus)
+            command += ' --parallel'
 
         cxx = []
         if cxxFlags is not None:
