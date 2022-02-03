@@ -34,9 +34,9 @@ class Docs(CMake):
             return 'mv docs/* ' + str(props.getProperty('copyFolder'))
 
         res += [self.generateStep('mkdir -p Distro',
-                          platform,
-                          'make target dir',
-                          self.isDeploy)]
+                                  platform,
+                                  'make target dir',
+                                  self.isDeploy)]
 
         res += [self.generateStep(move,
                                   platform,

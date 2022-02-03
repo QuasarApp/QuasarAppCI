@@ -4,7 +4,7 @@ from BuildBotLib.make import Make
 from BuildBotLib.secretManager import SecretManager
 from buildbot.plugins import steps, util
 import multiprocessing
-import os
+
 
 class CMake(Make):
 
@@ -15,21 +15,28 @@ class CMake(Make):
     def makePrefix(self):
         return "C"
 
-    def make(self):
-        return 'cmake --build cmake_build --target all'
+    def makeTarget(self, target, cxxFlags=None):
+        command = 'cmake --build cmake_build --config Release'
 
-    def makeTarget(self, target):
-        return 'cmake --build cmake_build --target ' + target
+        if len(target):
+            command += ' --target ' + target
+        else:
+            command += ' --parallel'
 
-    def makeCommand(self, props):
-        command = self.make()
+        cxx = []
+        if cxxFlags is not None:
+            cxx += cxxFlags
 
-        cpus = multiprocessing.cpu_count()
+        if self.isiOS(''):
+            cxx += ['-allowProvisioningUpdates']
 
-        if cpus:
-            command += ' --parallel ' + str(cpus)
+        if len(cxx):
+            command += ' -- ' + ' '.join(cxx)
 
         return command
+
+    def makeCommand(self, props):
+        return self.makeTarget('')
 
     def linuxXmakeCmd(self, props):
         defines = self.getDefinesList(props)
@@ -99,7 +106,7 @@ class CMake(Make):
     def getQtMajorVersion(self, props):
         qtDir = str(props.getProperty('QTDIR', ''))
 
-        if "5." in qtDir :
+        if "5." in qtDir:
             return "5"
         elif "6." in qtDir:
             return "6"
@@ -144,6 +151,30 @@ class CMake(Make):
     def androidXmakeCmd(self, props):
         return self.androidXmakeSinglAbiCmd(props)
 
+    def iosXmakeCmd(self, props):
+        file = self.home + "/buildBotSecret/secret.json"
+        secret = SecretManager(file, props)
+
+        defines = self.getDefinesList(props)
+
+        defines += secret.convertToCmakeDefines()
+
+        defines += [
+            '-DCMAKE_PREFIX_PATH=$QTDIR',
+            '-DCMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM=$XCODE_DEVELOPMENT_TEAM',
+            '-DDEPLOYMENT_TARGET=$DEPLOYMENT_TARGET',
+            '-DCMAKE_TOOLCHAIN_FILE=$CMAKE_TOOL_CHAIN_FILE',
+            '-DPLATFORM=OS64',
+            '-B cmake_build'
+        ]
+
+        options = [
+            'cmake -G Xcode',
+        ]
+        options += defines
+
+        return ' '.join(options)
+
     def wasmXmakeCmd(self, props):
 
         defines = self.getDefinesList(props)
@@ -174,4 +205,3 @@ class CMake(Make):
         )
 
         return factory
-

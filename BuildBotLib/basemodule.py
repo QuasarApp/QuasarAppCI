@@ -13,6 +13,8 @@ class BaseModule:
     P_Linux = 'Linux'
     P_Android = 'Android'
     P_Wasm = 'Wasm'
+    P_iOS = 'iOS'
+    P_Mac = 'Mac'
 
     def __init__(self, platform, pwd="."):
         self.home = str(Path.home())
@@ -35,6 +37,12 @@ class BaseModule:
 
     def isWasm(self, step):
         return self.platform == BaseModule.P_Wasm
+
+    def isiOS(self, step):
+        return self.platform == BaseModule.P_iOS
+
+    def isMac(self, step):
+        return self.platform == BaseModule.P_Mac
 
     def generateCmd(self, bashString):
 
@@ -89,7 +97,7 @@ class BaseModule:
 
         return 'make'
 
-    def makeTarget(self, target):
+    def makeTarget(self, target, cxxFlags=None):
         command = [self.make()]
         return command + [target]
 

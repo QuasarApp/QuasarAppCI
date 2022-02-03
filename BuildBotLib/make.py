@@ -143,6 +143,12 @@ class Make(BaseModule):
 
         return command
 
+    def iosXmakeCmd(self, props):
+        return ""
+
+    def macXmakeCmd(self, props):
+        return ""
+
     def androidXmakeEnv(self, props):
         return {}
 
@@ -153,6 +159,12 @@ class Make(BaseModule):
         return {}
 
     def linuxXmakeEnv(self, props):
+        return {}
+
+    def iosXmakeEnv(self, props):
+        return {}
+
+    def macXmakeEnv(self, props):
         return {}
 
     def makePrefix(self):
@@ -168,6 +180,8 @@ class Make(BaseModule):
                 BaseModule.P_Windows: self.windowsXmakeEnv,
                 BaseModule.P_Android: self.androidXmakeEnv,
                 BaseModule.P_Wasm: self.wasmXmakeEnv,
+                BaseModule.P_iOS: self.iosXmakeEnv,
+                BaseModule.P_Mac: self.macXmakeEnv,
 
             }
 
@@ -213,6 +227,8 @@ class Make(BaseModule):
             BaseModule.P_Windows: self.windowsXmakeCmd,
             BaseModule.P_Android: self.androidXmakeCmd,
             BaseModule.P_Wasm: self.wasmXmakeCmd,
+            BaseModule.P_iOS: self.iosXmakeCmd,
+            BaseModule.P_Mac: self.macXmakeCmd,
 
         }
 
