@@ -21,7 +21,7 @@ class CMake(Make):
         if len(target):
             command += ' --target ' + target
         else:
-            command += ' --parallel'
+            command += ' --parallel 4'
 
         cxx = []
         if cxxFlags is not None:
