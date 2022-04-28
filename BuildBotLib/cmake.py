@@ -91,7 +91,7 @@ class CMake(Make):
             '-DANDROID_NDK=$ANDROID_NDK_ROOT/',
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DSIGN_ALIES="quasarapp"',
-            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
+            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_MIN_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-B cmake_build'
         ]
@@ -136,7 +136,7 @@ class CMake(Make):
             '-DANDROID_SDK=$ANDROID_SDK_ROOT/',
             '-DANDROID_SDK_ROOT=$ANDROID_SDK_ROOT/',
             '-DSIGN_ALIES="quasarapp"',
-            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_API_VERSION',
+            '-DANDROID_NATIVE_API_LEVEL=$ANDROID_MIN_API_VERSION',
             '-DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/' + toochainFile,
             '-B cmake_build'
         ]
