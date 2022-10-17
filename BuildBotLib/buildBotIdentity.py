@@ -15,8 +15,8 @@ class BuildBotIdentity(BuildBotModule):
         BuildBotModule.__init__(self, masterConf)
 
         self.masterConf['title'] = "QuasarApp CI"
-        cqtdeployer_path = 'https://github.com/QuasarApp/CQtDeployer'
-        self.masterConf['titleURL'] = cqtdeployer_path
+        quasarapp_path = 'https://github.com/QuasarApp'
+        self.masterConf['titleURL'] = quasarapp_path
 
         # the 'buildbotURL' string should point to the
         # location where the buildbot's
@@ -33,7 +33,9 @@ class BuildBotIdentity(BuildBotModule):
                                       plugins=dict(
                                         waterfall_view={},
                                         console_view={},
-                                        grid_view={}))
+                                        grid_view={}
+                                        )
+                                      )
 
         scr = SecretManager(str(Path.home()) + "/buildBotSecret/secret.json")
 
