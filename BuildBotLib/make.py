@@ -350,7 +350,7 @@ class Make(BaseModule):
             steps.FileUpload(
                 workersrc=util.Interpolate('%(prop:copyCustomArtifact)s'),
                 masterdest=self.getWraper(lambda step:
-                                              self.destDir(step) + "/" + os.path.basename(util.Interpolate('%(prop:copyCustomArtifact)s'))
+                                              self.destDir(step) + "/" + os.path.basename(step.getProperty('copyCustomArtifact'))
                                          ),
                 url=self.getWraper(self.destDirUrl),
                 doStepIf=self.getWraper(self.isCopyArtefact),
