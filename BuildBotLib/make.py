@@ -40,10 +40,13 @@ class Make(BaseModule):
         return len(step.getProperty('copyCustomFolder')) > 0
 
     def isRelease(self, step):
-        return step.getProperty('release')
+        return step.getProperty('release') and not self.isIgnreErrors(step)
 
     def isRepogen(self, step):
         return step.getProperty('repogen')
+
+    def isIgnreErrors(self, step):
+        return step.getProperty('ignoreErrors')
 
     def isProdDeploer(self, step):
         return step.getProperty('prodDeploer')
@@ -198,7 +201,7 @@ class Make(BaseModule):
 
         res = steps.Compile(
             command=self.getWraper(cmd),
-            haltOnFailure=True,
+            haltOnFailure=self.isIgnreErrors,
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda results, step: not dustepIf(step),
             name=desc + ' ' + platform,
@@ -212,7 +215,7 @@ class Make(BaseModule):
         if log:
             res = steps.Compile(
                 command=self.getWraper(cmd),
-                haltOnFailure=True,
+                haltOnFailure=self.isIgnreErrors,
                 doStepIf=lambda step: dustepIf(step),
                 hideStepIf=lambda results, step: not dustepIf(step),
                 name=desc + ' ' + platform,
@@ -403,6 +406,11 @@ class Make(BaseModule):
                 name='test',
                 label='test project ',
                 default=True
+            ),
+            util.BooleanParameter(
+                name='ignoreErrors',
+                label='gnore All failed steps',
+                default=False
             ),
             util.BooleanParameter(
                 name='release',
