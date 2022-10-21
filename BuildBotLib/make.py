@@ -40,13 +40,10 @@ class Make(BaseModule):
         return len(step.getProperty('copyCustomFolder')) > 0
 
     def isRelease(self, step):
-        return step.getProperty('release') and self.isNotIgnreErrors(step)
+        return step.getProperty('release') and step.getProperty('stopOnErrors')
 
     def isRepogen(self, step):
         return step.getProperty('repogen')
-
-    def isNotIgnreErrors(self, step):
-        return not step.getProperty('ignoreErrors')
 
     def isProdDeploer(self, step):
         return step.getProperty('prodDeploer')
@@ -201,7 +198,7 @@ class Make(BaseModule):
 
         res = steps.Compile(
             command=self.getWraper(cmd),
-            haltOnFailure=self.isNotIgnreErrors,
+            haltOnFailure=util.Interpolate('%(prop:stopOnErrors)s') == "True",
             doStepIf=lambda step: dustepIf(step),
             hideStepIf=lambda results, step: not dustepIf(step),
             name=desc + ' ' + platform,
@@ -215,7 +212,7 @@ class Make(BaseModule):
         if log:
             res = steps.Compile(
                 command=self.getWraper(cmd),
-                haltOnFailure=self.isNotIgnreErrors,
+                haltOnFailure=util.Interpolate('%(prop:stopOnErrors)s') == "True",
                 doStepIf=lambda step: dustepIf(step),
                 hideStepIf=lambda results, step: not dustepIf(step),
                 name=desc + ' ' + platform,
@@ -408,9 +405,9 @@ class Make(BaseModule):
                 default=True
             ),
             util.BooleanParameter(
-                name='ignoreErrors',
-                label='gnore All failed steps',
-                default=False
+                name='stopOnErrors',
+                label='stop build order when step failde',
+                default=True
             ),
             util.BooleanParameter(
                 name='release',
