@@ -346,7 +346,9 @@ class Make(BaseModule):
         factory.addStep(
             steps.FileDownload(
                 workersrc=util.Interpolate('%(prop:copyCustomArtifact)s'),
-                masterdest=self.getWraper(self.destDir + "/" + os.path.basename(util.Interpolate('%(prop:copyCustomArtifact)s'))),
+                masterdest=self.getWraper(lambda step:
+                                              self.destDir(step) + "/" + os.path.basename(util.Interpolate('%(prop:copyCustomArtifact)s'))
+                                          ),
                 url=self.getWraper(self.destDirUrl),
                 doStepIf=self.getWraper(self.isCopyArtefact),
                 name='copy custom artifact file',
