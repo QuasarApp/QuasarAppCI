@@ -5,7 +5,7 @@ from BuildBotLib.basemodule import BaseModule
 from buildbot.plugins import util, steps
 from BuildBotLib.secretManager import SecretManager
 import hashlib
-
+import os
 
 class Make(BaseModule):
     def __init__(self, platform):
@@ -32,6 +32,12 @@ class Make(BaseModule):
 
     def isDeploy(self, step):
         return step.getProperty('deploy')
+
+    def isCopyArtefact(self, step):
+        return len(step.getProperty('copyCustomArtifact')) > 0
+
+    def isCopyCustomFolder(self, step):
+        return len(step.getProperty('copyCustomFolder')) > 0
 
     def isRelease(self, step):
         return step.getProperty('release')
@@ -326,6 +332,28 @@ class Make(BaseModule):
             )
         )
 
+        factory.addStep(
+            steps.DirectoryUpload(
+                workersrc=util.Interpolate('%(prop:copyCustomFolder)s'),
+                masterdest=self.getWraper(self.destDir),
+                url=self.getWraper(self.destDirUrl),
+                doStepIf=self.getWraper(self.isCopyCustomFolder),
+                name='copy extra artefact file',
+                description='copy extra artefact file',
+            )
+        )
+
+        factory.addStep(
+            steps.FileDownload(
+                workersrc=util.Interpolate('%(prop:copyCustomArtifact)s'),
+                masterdest=self.getWraper(self.destDir + "/" + os.path.basename(util.Interpolate('%(prop:copyCustomArtifact)s'))),
+                url=self.getWraper(self.destDirUrl),
+                doStepIf=self.getWraper(self.isCopyArtefact),
+                name='copy custom artifact file',
+                description='copy custom artifact file',
+            )
+        )
+
         if self.platform == BaseModule.P_Linux:
 
             factory.addStep(
@@ -397,11 +425,25 @@ class Make(BaseModule):
                 label='Folder with buildet data',
                 default="Distro"
             ),
+
+            util.StringParameter(
+                name='copyCustomArtifact',
+                label='File of extra data (will be copied)',
+                default=""
+            ),
+
+            util.StringParameter(
+                name='copyCustomFolder',
+                label='Folder of extra data (will be copied)',
+                default=""
+            ),
+
             util.StringParameter(
                 name='repoFolder',
                 label='Folder with repository data',
                 default="Repo"
             ),
+
             util.StringParameter(
                 name='defines',
                 label='Custom Defines list: Example: -DHANOI_ADMOD=1',
