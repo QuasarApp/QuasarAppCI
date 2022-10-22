@@ -34,10 +34,10 @@ class Make(BaseModule):
         return step.getProperty('deploy')
 
     def isCopyArtefact(self, step):
-        return len(step.getProperty('copyCustomArtifact')) > 0
+        return len(str(step.getProperty('copyCustomArtifact'))) > 0
 
     def isCopyCustomFolder(self, step):
-        return len(step.getProperty('copyCustomFolder')) > 0
+        return len(str(step.getProperty('copyCustomFolder'))) > 0
 
     def isRelease(self, step):
         return step.getProperty('release') and step.getProperty('stopOnErrors')
