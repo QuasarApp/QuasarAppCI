@@ -100,6 +100,13 @@ class Make(BaseModule):
     def destDir(self, props):
         return '/var/www/builds/' + self.destDirPrivate(props)
 
+    def destDirCustoArtefactFile(self, props):
+
+        if self.isCopyArtefact(props):
+            return self.destDir(props) + "/" + os.path.basename(props.getProperty('copyCustomArtifact'))
+
+        return ""
+
     def tempDir(self, props):
         self.tempRepoDir = self.home + '/rTemp/' + self.tempDirPrivate(props)
         return self.tempRepoDir
@@ -348,9 +355,7 @@ class Make(BaseModule):
         factory.addStep(
             steps.FileUpload(
                 workersrc=util.Interpolate('%(prop:copyCustomArtifact)s'),
-                masterdest=self.getWraper(lambda step:
-                                              self.destDir(step) + "/" + os.path.basename(step.getProperty('copyCustomArtifact'))
-                                         ),
+                masterdest=self.getWraper(self.destDirCustoArtefactFile),
                 url=self.getWraper(self.destDirUrl),
                 doStepIf=self.getWraper(self.isCopyArtefact),
                 name='copy custom artifact file',
