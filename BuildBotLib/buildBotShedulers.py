@@ -60,7 +60,8 @@ class BuildBotShedulers(BuildBotModule):
                     'release': False,
                     'repogen': False,
                     'prodDeploer': False,
-                    'deploy': False
+                    'deploy': False,
+                    'stopOnErrors': True
                 },
                 treeStableTimer=60
             ),
@@ -75,7 +76,9 @@ class BuildBotShedulers(BuildBotModule):
                     'repogen': False,
                     'prodDeploer': False,
                     'deploy': True,
-                    'copyFolder': 'Distro'
+                    'copyFolder': 'Distro',
+                    'stopOnErrors': True
+
                 },
                 treeStableTimer=60
             ),
@@ -91,7 +94,9 @@ class BuildBotShedulers(BuildBotModule):
                     'repogen': False,
                     'prodDeploer': True,
                     'deploy': True,
-                    'copyFolder': 'Distro'
+                    'copyFolder': 'Distro',
+                    'stopOnErrors': True
+
                 },
                 treeStableTimer=70
             ),
