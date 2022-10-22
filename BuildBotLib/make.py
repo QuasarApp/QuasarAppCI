@@ -34,10 +34,12 @@ class Make(BaseModule):
         return step.getProperty('deploy')
 
     def isCopyArtefact(self, step):
-        return len(str(step.getProperty('copyCustomArtifact'))) > 0
+        val = step.getProperty('copyCustomArtifact')
+        return type(val) == str and len(val) > 0
 
     def isCopyCustomFolder(self, step):
-        return len(str(step.getProperty('copyCustomFolder'))) > 0
+        val = step.getProperty('copyCustomFolder')
+        return type(val) == str and len(val) > 0
 
     def isRelease(self, step):
         return step.getProperty('release') and step.getProperty('stopOnErrors')
@@ -338,8 +340,8 @@ class Make(BaseModule):
                 masterdest=self.getWraper(self.destDir),
                 url=self.getWraper(self.destDirUrl),
                 doStepIf=self.getWraper(self.isCopyCustomFolder),
-                name='copy extra artefact file',
-                description='copy extra artefact file',
+                name='copy extra artefact files',
+                description='copy extra artefact files (DirectoryUpload)',
             )
         )
 
@@ -352,7 +354,7 @@ class Make(BaseModule):
                 url=self.getWraper(self.destDirUrl),
                 doStepIf=self.getWraper(self.isCopyArtefact),
                 name='copy custom artifact file',
-                description='copy custom artifact file',
+                description='copy custom artifact file (FileUpload)',
             )
         )
 
