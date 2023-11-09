@@ -26,7 +26,6 @@ class BuildBotShedulers(BuildBotModule):
     def initScheduler(self):
 
         buildersCode = ['AndroidBuilder_v8Qt6',
-                        'LinuxCMakeBuilder',
                         'LinuxCMakeBuilderQt6',
                         'WindowsCMakeBuilder',
                         'Wasm32Builder',
@@ -34,7 +33,6 @@ class BuildBotShedulers(BuildBotModule):
                         ]
 
         prodBuilders = ['AndroidBuilder_v8Qt6',
-                        'LinuxCMakeBuilder',
                         'LinuxCMakeBuilderQt6',
                         'WindowsCMakeBuilder',
                         'IOSCMakeBuilder'
