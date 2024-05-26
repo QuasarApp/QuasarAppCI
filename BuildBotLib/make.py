@@ -44,9 +44,6 @@ class Make(BaseModule):
     def isRelease(self, step):
         return step.getProperty('release') and step.getProperty('stopOnErrors')
 
-    def isRepogen(self, step):
-        return step.getProperty('repogen')
-
     def isProdDeploer(self, step):
         return step.getProperty('prodDeploer')
 
@@ -277,39 +274,6 @@ class Make(BaseModule):
                                   platform,
                                   'release project',
                                   self.isRelease)]
-
-        if platform != BaseModule.P_Android:
-
-            res += [steps.DirectoryUpload(
-                workersrc=util.Interpolate('%(prop:repoFolder)s'),
-                masterdest=self.getWraper(self.tempDir),
-                doStepIf=self.getWraper(self.isRepogen),
-                name='copy repository files',
-                description='copy repository files to temp folder',
-            )]
-
-            @util.renderer
-            def tempDirProp(props):
-                return self.tempRepoDir
-
-            @util.renderer
-            def projectName(props):
-                repo = str(props.getProperty('repository'))
-                return self.getLastRepoName(repo)
-
-            @util.renderer
-            def repoLocation(props):
-                return self.defaultLocationOfQIFRepository()
-
-            res += [steps.Trigger(schedulerNames=['repogen'],
-                                  doStepIf=lambda step:
-                                      self.isRepogen(step) and
-                                      self.isSupport(step),
-                                  set_properties={"tempPackage": tempDirProp,
-                                                  "platform": platform,
-                                                  "projectName": projectName,
-                                                  "repoLocation": repoLocation}
-                                  )]
 
         return res
 
