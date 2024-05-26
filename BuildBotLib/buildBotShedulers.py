@@ -44,7 +44,6 @@ class BuildBotShedulers(BuildBotModule):
         buildersReleaseCode = ['prodDeployer']
         buildersReleaseWebCode = ['webDeployer']
 
-        buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
 
         self.masterConf['schedulers'] += [
@@ -55,7 +54,6 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
-                    'repogen': False,
                     'prodDeploer': False,
                     'deploy': False,
                     'stopOnErrors': True
@@ -70,7 +68,6 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
-                    'repogen': False,
                     'prodDeploer': False,
                     'deploy': True,
                     'copyFolder': 'Distro',
@@ -88,7 +85,6 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
-                    'repogen': False,
                     'prodDeploer': True,
                     'deploy': True,
                     'copyFolder': 'Distro',
@@ -106,7 +102,6 @@ class BuildBotShedulers(BuildBotModule):
                     'clean': True,
                     'test': True,
                     'release': False,
-                    'repogen': False,
                     'webDeploer': True,
                     'deploy': True,
                     'copyFolder': 'Distro',
@@ -115,10 +110,6 @@ class BuildBotShedulers(BuildBotModule):
                 },
                 treeStableTimer=70
             ),
-
-
-            schedulers.Triggerable(name="repogen",
-                                   builderNames=buildersRepo),
 
             schedulers.Triggerable(name="releaser",
                                    builderNames=buildersReleaseCode),

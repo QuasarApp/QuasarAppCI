@@ -401,12 +401,6 @@ class Make(BaseModule):
             ),
 
             util.BooleanParameter(
-                name='repogen',
-                label='release repogen project',
-                default=False
-            ),
-
-            util.BooleanParameter(
                 name='prodDeploer',
                 label='release prod project',
                 default=False

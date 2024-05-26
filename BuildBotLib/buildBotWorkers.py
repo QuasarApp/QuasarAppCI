@@ -26,7 +26,6 @@ class BuildBotWorkers(BuildBotModule):
             worker.Worker("LinuxCMakeBuilderQt6", password),
             worker.Worker("IOSCMakeBuilder", password),
             worker.Worker("WindowsCMakeBuilder", password),
-            worker.Worker("RepoGen", password),
             worker.Worker("Wasm32Builder", password),
             worker.Worker("DocsGenerator", password),
             worker.Worker("prodDeployer", password),
