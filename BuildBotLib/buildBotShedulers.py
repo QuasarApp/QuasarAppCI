@@ -38,8 +38,11 @@ class BuildBotShedulers(BuildBotModule):
                         'IOSCMakeBuilder'
                         ]
 
+        webBuilders = ['LinuxCMakeBuilderQt6']
+
         buildersDeployCode = ['DocsGenerator']
         buildersReleaseCode = ['prodDeployer']
+        buildersReleaseWebCode = ['webDeployer']
 
         buildersRepo = ['RepoGen']
         self.masterConf['schedulers'] = self.shedulers
@@ -95,11 +98,34 @@ class BuildBotShedulers(BuildBotModule):
                 treeStableTimer=70
             ),
 
+            schedulers.SingleBranchScheduler(
+                name='productionWeb',
+                change_filter=util.ChangeFilter(repository_re=".*quasarappsite.*", branch="prod"),
+                builderNames=webBuilders,
+                properties={
+                    'clean': True,
+                    'test': True,
+                    'release': False,
+                    'repogen': False,
+                    'webDeploer': True,
+                    'deploy': True,
+                    'copyFolder': 'Distro',
+                    'stopOnErrors': True
+
+                },
+                treeStableTimer=70
+            ),
+
+
             schedulers.Triggerable(name="repogen",
                                    builderNames=buildersRepo),
 
             schedulers.Triggerable(name="releaser",
                                    builderNames=buildersReleaseCode)
+
+            schedulers.Triggerable(name="releaserweb",
+                                  builderNames=buildersReleaseWebCode)
+
         ]
 
         return self.getMasterConf()

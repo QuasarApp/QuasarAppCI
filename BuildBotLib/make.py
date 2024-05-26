@@ -50,6 +50,9 @@ class Make(BaseModule):
     def isProdDeploer(self, step):
         return step.getProperty('prodDeploer')
 
+    def isWebDeploer(self, step):
+        return step.getProperty('webDeploer')
+
     def isTest(self, step):
         return step.getProperty('test')
 
@@ -376,6 +379,17 @@ class Make(BaseModule):
                               )
                 )
 
+            factory.addStep(
+                steps.Trigger(schedulerNames=['releaserweb'],
+                              doStepIf=lambda step:
+                                  self.isWebDeploer(step),
+                              set_properties={
+                                            'copyFolder': 'Distro',
+                                            'prodName': 'prod.deb'
+                                            }
+                              )
+                )
+
         factory.addStep(
             self.generateStep("git clean -xdf",
                               self.platform,
@@ -431,6 +445,12 @@ class Make(BaseModule):
             util.BooleanParameter(
                 name='prodDeploer',
                 label='release prod project',
+                default=False
+            ),
+
+            util.BooleanParameter(
+                name='webDeploer',
+                label='release web project',
                 default=False
             ),
 
