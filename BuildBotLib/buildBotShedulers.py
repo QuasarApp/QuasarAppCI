@@ -121,10 +121,10 @@ class BuildBotShedulers(BuildBotModule):
                                    builderNames=buildersRepo),
 
             schedulers.Triggerable(name="releaser",
-                                   builderNames=buildersReleaseCode)
+                                   builderNames=buildersReleaseCode),
 
             schedulers.Triggerable(name="releaserweb",
-                                  builderNames=buildersReleaseWebCode)
+                                   builderNames=buildersReleaseWebCode)
 
         ]
 
