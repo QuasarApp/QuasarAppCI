@@ -96,7 +96,7 @@ class BuildBotShedulers(BuildBotModule):
 
             schedulers.SingleBranchScheduler(
                 name='productionWeb',
-                change_filter=util.ChangeFilter(repository_re=".*quasarappsite.*", branch="prod"),
+                change_filter=util.ChangeFilter(branch="prodWeb"),
                 builderNames=webBuilders,
                 properties={
                     'clean': True,
