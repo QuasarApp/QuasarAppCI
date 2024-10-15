@@ -41,7 +41,8 @@ class BuildBotShedulers(BuildBotModule):
         webBuilders = ['LinuxCMakeBuilderQt6']
 
         buildersDeployCode = ['DocsGenerator']
-        buildersReleaseCode = ['prodDeployer', 'webDeployer']
+        buildersReleaseCode = ['prodDeployer']
+        buildersReleaseWebCode = ['webDeployer']
 
         self.masterConf['schedulers'] = self.shedulers
 
@@ -112,6 +113,11 @@ class BuildBotShedulers(BuildBotModule):
 
             schedulers.Triggerable(name="releaser",
                                    builderNames=buildersReleaseCode),
+
+           schedulers.Triggerable(name="releaserweb",
+                                  builderNames=buildersReleaseWebCode),
+
+
 
 
         ]
